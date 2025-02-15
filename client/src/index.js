@@ -33,10 +33,25 @@ var viirsData = await getGeojson(apiUrl + '/viirs-public');
 
 var wfigsData = await getGeojson(apiUrl + '/wfigs-public');
 
-const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle});
+//DO NOT TURN THIS SHIT ON, ITS 150MB to load once and we only have 5GB of egress on free
+//its kinda sick tho
+//var flConserve = await getGeojson(apiUrl + '/fl_conservation-public')
+
+//turned off for css styling to not use egress data cap
+/*const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle});
 
 addLayer(map , viirsLayer);
 
-const wfigsLayer = L.geoJSON(wfigsData.features , {pointToLayer : getFireIcon});
+const wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : getFireIcon});
 
 wfigsLayer.addTo(map);
+
+/*const flConserveLayer = L.geoJSON(flConserve , {weight : .25  , style : function (feature){
+    switch (feature.properties.MATYPE2){
+        case 'Federal' : return {color : '#74992e'};
+        case 'State' : return {color : '#03b6fc'};
+        case 'Local' : return {color : '#8a6436'};
+    }
+}});*/
+
+//flConserveLayer.addTo(map);
