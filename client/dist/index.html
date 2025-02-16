@@ -4,21 +4,22 @@
   </head>
   <body id="body">
     <div id="map"></div>
-    <div id="layerMenu" class="layerContainer">
-      <div class="layerSelectBox" id="wfigs">
-          <div class="layerDesc"><p>Possible Wildfires</p></div>
-          <div class="layerIcon"></div>
+    <section id="layerMenu" class="layerContainer">
+      <div class="layerSelectBox" id="viirs">
+          <div class="layerDesc" id="viirs-desc"><p>Possible Wildfires</p></div>
+          <div class="layerIcon" id="viirs-icon"></div>
       </div>
-      <div class="layerSelectBox" , id="viirs">
-        <div class="layerDesc"><p>Current Known Wildfires</p></div>
-        <div class="layerIcon"></div>
+      <div class="layerSelectBox" , id="wfigs">
+        <div class="layerDesc" id="wfigs-desc"><p>Current Known Wildfires</p></div>
+        <div class="layerIcon" id="wfigs-icon"></div>
       </div>
-      <div class="layerSelectBox" , id="fl_conserve">
-        <div class="layerDesc"><p>FL Public Lands</p></div>
-        <div class="layerIcon"></div>
+      <div class="layerSelectBox" , id="fl-conserve">
+        <div class="layerDesc" id="fl-conserve-desc"><p>FL Public Lands</p></div>
+        <div class="layerIcon" id="fl-conserve-icon"></div>
       </div>
-    </div>
+    </section>
     <script src="main.js"></script>
-    <a href="https://www.flaticon.com/free-icons/fire" title="fire icons">Fire icons created by Vectors Market - Flaticon</a>
+    <a href="https://www.flaticon.com/free-icons/fire" style="z-index: -1;"  title="fire icons">Fire icons created by Vectors Market - Flaticon</a>
+    <a href="https://www.flaticon.com/free-icons/satellite" title="satellite icons">Satellite icons created by mattbadal - Flaticon</a>
   </body>
 </html>

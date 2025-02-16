@@ -46,7 +46,7 @@ app.get('/fl_conservation-public', async (_, res) => {
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.FLCONSERVEPUBLIC};`);
   client.release();
- 
+
   const rows = result.rows
 
   res.json({ rows });

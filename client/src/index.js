@@ -29,16 +29,16 @@ var viirsStyle = {
     opacity: 0.65
 };
 
-var viirsData = await getGeojson(apiUrl + '/viirs-public');
+//turned off for css styling to not use egress data cap
+//var viirsData = await getGeojson(apiUrl + '/viirs-public');
 
-var wfigsData = await getGeojson(apiUrl + '/wfigs-public');
+//var wfigsData = await getGeojson(apiUrl + '/wfigs-public');
 
 //DO NOT TURN THIS SHIT ON, ITS 150MB to load once and we only have 5GB of egress on free
 //its kinda sick tho
 //var flConserve = await getGeojson(apiUrl + '/fl_conservation-public')
 
-//turned off for css styling to not use egress data cap
-/*const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle});
+const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle});
 
 addLayer(map , viirsLayer);
 
