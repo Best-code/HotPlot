@@ -12,7 +12,7 @@
 }
 
 #layerMenu{
-    font-size: 14px;
+    font-size: 12px;
     height: 20em;
     width: 15em;
     position: absolute;
@@ -44,6 +44,15 @@
     pointer-events: auto;
     position: relative;
     z-index: 1;
+}
+
+.layerSelectBox:hover{
+    .layerDesc{
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .layerIcon{
+        box-shadow: 0 0 15px 0 black;
+    }
 }
 
 .layerDesc{
@@ -89,7 +98,7 @@
 }
 
 #viirs-icon{
-    background-color: red;
+    background-image: url('./viirs-layer-icon.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -97,7 +106,7 @@
 }
 
 #fl-conserve-icon{
-    background-color: red;
+    background-image: url('./fl-public-icon.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

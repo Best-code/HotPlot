@@ -21,40 +21,44 @@ app.get('/viirs-public', async (_, res) => {
   const result = await client.query(`select * from ${process.env.VIIRSPUBLIC};`);
   client.release();
 
-  const rows = result.rows
+  const rows = result.rows 
 
   res.json({ rows });
 });
 
 app.get('/wfigs-public', async (_, res) => {
-  const pool = new Pool({
+  const pool = new Pool({ 
     connectionString: process.env.DATABASE_URL,
   });
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.WFIGSPUBLIC};`);
   client.release();
  
-  const rows = result.rows
+  const rows = result.rows 
 
   res.json({ rows });
 });
 
 app.get('/fl_conservation-public', async (_, res) => {
+
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   });
+
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.FLCONSERVEPUBLIC};`);
   client.release();
 
-  const rows = result.rows
+  const features = result.rows 
 
-  res.json({ rows });
+  var featureArr = [];
+
+  for(var i = 0 ; i<features.length; i++){
+      featureArr.push(features[i].geojson);
+  }
+
+  res.json({ featureArr });
 });
-
-app.get("/", (_, res) => {
-  res.json({message: "Hello Test"});
-})
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`);

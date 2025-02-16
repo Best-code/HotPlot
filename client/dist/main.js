@@ -27,7 +27,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"./node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ \"./node_modules/css-loader/dist/runtime/getUrl.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);\n// Imports\n\n\n\nvar ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./flame.png */ \"./src/flame.png\"), __webpack_require__.b);\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\nvar ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, `#body{\n    width: 100vw;\n    height: 100vh;\n    margin: 0%;\n    z-index: 0;\n}\n\n#map{\n    height: 100vh;\n    width: 100vw;\n    z-index: 0;\n}\n\n#layerMenu{\n    font-size: 14px;\n    height: 20em;\n    width: 15em;\n    position: absolute;\n    top: 6vh;\n    right: 1em;\n    background-color: transparent;\n    pointer-events: none;\n}\n\n.layerContainer{\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n    position: absolute;\n    top: 100%;\n    right: 0;\n    font-size: 12px;\n    margin-right: 4px;\n    color: white;\n}\n\n.layerSelectBox{\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    width: fit-content;\n    width: fit-content;\n    margin: 0.4em 0.7em 0.4em;\n    pointer-events: auto;\n    position: relative;\n    z-index: 1;\n}\n\n.layerDesc{\n    color: var(--color-yellow);\n    text-shadow: 0px 0px 4px black;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    cursor: pointer;\n    background-color: rgba(0, 0, 0, 0.4);\n    max-width: 10em;\n    padding: 0.2em 1.4em 0.2em 0.7em;\n    font-size: .9em;\n    border-top-left-radius: 1.4em;\n    border-bottom-left-radius: 1.4em;\n    border-top-right-radius: .5em;\n    border-bottom-right-radius: .5em;\n    margin-right: -1em;\n    color: inherit;\n    z-index: 1;\n}\n\n.layerIcon{\n    cursor: pointer;\n    width: 3.5em;\n    height: 3.5em;\n    border-radius: 3.5em;\n    box-shadow: 0 0 10px 0 black;\n    background-color: transparent;\n    cursor:pointer;\n    z-index: 1;\n    text-align: center;\n    position: relative;\n    z-index: 1;\n}\n\n#wfigs-icon{\n    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}\n\n#viirs-icon{\n    background-color: red;\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}\n\n#fl-conserve-icon{\n    background-color: red;\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}`, \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://client/./src/styles.css?./node_modules/css-loader/dist/cjs.js");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"./node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ \"./node_modules/css-loader/dist/runtime/getUrl.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);\n// Imports\n\n\n\nvar ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./flame.png */ \"./src/flame.png\"), __webpack_require__.b);\nvar ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ./viirs-layer-icon.png */ \"./src/viirs-layer-icon.png\"), __webpack_require__.b);\nvar ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ./fl-public-icon.png */ \"./src/fl-public-icon.png\"), __webpack_require__.b);\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\nvar ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);\nvar ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);\nvar ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, `#body{\n    width: 100vw;\n    height: 100vh;\n    margin: 0%;\n    z-index: 0;\n}\n\n#map{\n    height: 100vh;\n    width: 100vw;\n    z-index: 0;\n}\n\n#layerMenu{\n    font-size: 12px;\n    height: 20em;\n    width: 15em;\n    position: absolute;\n    top: 6vh;\n    right: 1em;\n    background-color: transparent;\n    pointer-events: none;\n}\n\n.layerContainer{\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n    position: absolute;\n    top: 100%;\n    right: 0;\n    font-size: 12px;\n    margin-right: 4px;\n    color: white;\n}\n\n.layerSelectBox{\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    width: fit-content;\n    width: fit-content;\n    margin: 0.4em 0.7em 0.4em;\n    pointer-events: auto;\n    position: relative;\n    z-index: 1;\n}\n\n.layerSelectBox:hover{\n    .layerDesc{\n        background-color: rgba(0, 0, 0, 0.6);\n    }\n    .layerIcon{\n        box-shadow: 0 0 15px 0 black;\n    }\n}\n\n.layerDesc{\n    color: var(--color-yellow);\n    text-shadow: 0px 0px 4px black;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    cursor: pointer;\n    background-color: rgba(0, 0, 0, 0.4);\n    max-width: 10em;\n    padding: 0.2em 1.4em 0.2em 0.7em;\n    font-size: .9em;\n    border-top-left-radius: 1.4em;\n    border-bottom-left-radius: 1.4em;\n    border-top-right-radius: .5em;\n    border-bottom-right-radius: .5em;\n    margin-right: -1em;\n    color: inherit;\n    z-index: 1;\n}\n\n.layerIcon{\n    cursor: pointer;\n    width: 3.5em;\n    height: 3.5em;\n    border-radius: 3.5em;\n    box-shadow: 0 0 10px 0 black;\n    background-color: transparent;\n    cursor:pointer;\n    z-index: 1;\n    text-align: center;\n    position: relative;\n    z-index: 1;\n}\n\n#wfigs-icon{\n    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}\n\n#viirs-icon{\n    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}\n\n#fl-conserve-icon{\n    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});\n    background-position: center;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-size: 60px;\n}`, \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://client/./src/styles.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -166,10 +166,10 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _map_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map_utils.js */ \"./src/map_utils.js\");\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n\n\n\n\n\nconst mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]) //use for us mapbounds\nconst minZoom = 4\nconst zoomStart = 7\nconst apiUrl = 'http://localhost:4242' //adjust\n\nvar mapCenter = [30.4383, -84.2807] //we adjust to be the user's location\n\n//map instance with satelite baselayer and appropriate bounds\nconst initMap = (0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.initialize_map)('map' , \n    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' , \n    'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',\n    minZoom,\n    mapBounds,\n    zoomStart,\n    mapCenter\n);\n\nconst map = initMap.map;   \nconst esriTiles = initMap.tiles;\n\nvar viirsStyle = {\n    color: '#d61313',\n    weight: 2,\n    opacity: 0.65\n};\n\n//turned off for css styling to not use egress data cap\n//var viirsData = await getGeojson(apiUrl + '/viirs-public');\n\n//var wfigsData = await getGeojson(apiUrl + '/wfigs-public');\n\n//DO NOT TURN THIS SHIT ON, ITS 150MB to load once and we only have 5GB of egress on free\n//its kinda sick tho\n//var flConserve = await getGeojson(apiUrl + '/fl_conservation-public')\n\nconst viirsLayer = L.geoJSON(viirsData , {style : viirsStyle});\n\n(0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.addLayer)(map , viirsLayer);\n\nconst wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : _map_utils_js__WEBPACK_IMPORTED_MODULE_1__.getFireIcon});\n\nwfigsLayer.addTo(map);\n\n/*const flConserveLayer = L.geoJSON(flConserve , {weight : .25  , style : function (feature){\n    switch (feature.properties.MATYPE2){\n        case 'Federal' : return {color : '#74992e'};\n        case 'State' : return {color : '#03b6fc'};\n        case 'Local' : return {color : '#8a6436'};\n    }\n}});*/\n\n//flConserveLayer.addTo(map);\n\n//# sourceURL=webpack://client/./src/index.js?");
+eval("__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {\n__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _map_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map_utils.js */ \"./src/map_utils.js\");\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n\n\n\n\nconst mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]) //use for us mapbounds\nconst minZoom = 4\nconst zoomStart = 7\nconst apiUrl = 'http://localhost:4242' //adjust\n\nvar mapCenter = [30.4383, -84.2807] //we adjust to be the user's location\n\n//map instance with satelite baselayer and appropriate bounds\nconst initMap = (0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.initialize_map)('map' , \n    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' , \n    'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',\n    minZoom,\n    mapBounds,\n    zoomStart,\n    mapCenter\n);\n\nconst map = initMap.map;   \nconst esriTiles = initMap.tiles;\n\nconst viirsLayer = await (0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.getViirs)(apiUrl);\nconst wfigsLayer = await (0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.getWfigs)(apiUrl);\n\ndocument.getElementById('viirs').addEventListener('click', ()=>{(0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.handleSmallLayer)(map ,viirsLayer);});   \ndocument.getElementById('wfigs').addEventListener('click' , ()=>{(0,_map_utils_js__WEBPACK_IMPORTED_MODULE_1__.handleSmallLayer)(map , wfigsLayer)})\n__webpack_async_result__();\n} catch(e) { __webpack_async_result__(e); } }, 1);\n\n//# sourceURL=webpack://client/./src/index.js?");
 
 /***/ }),
 
@@ -180,7 +180,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var leaf
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addLayer: () => (/* binding */ addLayer),\n/* harmony export */   getFireIcon: () => (/* binding */ getFireIcon),\n/* harmony export */   getGeojson: () => (/* binding */ getGeojson),\n/* harmony export */   initialize_map: () => (/* binding */ initialize_map),\n/* harmony export */   removeLayer: () => (/* binding */ removeLayer)\n/* harmony export */ });\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet/dist/leaflet.css */ \"./node_modules/leaflet/dist/leaflet.css\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ \"./node_modules/axios/lib/axios.js\");\n/* harmony import */ var _flame_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./flame.png */ \"./src/flame.png\");\n\n\n\n\n\n\nfunction initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){\n    var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,\n        zoom : zoom , center: center , style : { height: \"100vh\", width: \"100vw\" } , zoomControl: false});\n\n    var tiles = L.tileLayer(tileUrl, {attribution : attribution});\n\n    tiles.addTo(map);\n\n    return {\"tiles\": tiles , \"map\" : map};\n}\n\nasync function getGeojson(url){\n    \n    var features = await axios__WEBPACK_IMPORTED_MODULE_3__[\"default\"].get(url); \n    \n    var features= features.data.rows[0].geojson;\n\n    return features;\n}\n\nfunction addLayer(map , layer){\n    return layer.addTo(map);\n}\n\nfunction removeLayer(map , layer){\n    return map.removeLayer(layer);\n}\n \nfunction getFireIcon(feature, latlng){ \n    return L.marker(latlng , {icon : L.icon({iconUrl : _flame_png__WEBPACK_IMPORTED_MODULE_2__ , iconSize : [12,12]})});\n}\n\n//# sourceURL=webpack://client/./src/map_utils.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addLayer: () => (/* binding */ addLayer),\n/* harmony export */   getFireIcon: () => (/* binding */ getFireIcon),\n/* harmony export */   getFlConserve: () => (/* binding */ getFlConserve),\n/* harmony export */   getGeojson: () => (/* binding */ getGeojson),\n/* harmony export */   getViirs: () => (/* binding */ getViirs),\n/* harmony export */   getWfigs: () => (/* binding */ getWfigs),\n/* harmony export */   handleSmallLayer: () => (/* binding */ handleSmallLayer),\n/* harmony export */   initialize_map: () => (/* binding */ initialize_map),\n/* harmony export */   removeLayer: () => (/* binding */ removeLayer),\n/* harmony export */   viirsStyle: () => (/* binding */ viirsStyle)\n/* harmony export */ });\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet/dist/leaflet.css */ \"./node_modules/leaflet/dist/leaflet.css\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ \"./node_modules/axios/lib/axios.js\");\n/* harmony import */ var _flame_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./flame.png */ \"./src/flame.png\");\n\n\n\n\n\n\n\nfunction initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){\n    var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,\n        zoom : zoom , center: center , style : { height: \"100vh\", width: \"100vw\" } , zoomControl: false});\n\n    var tiles = L.tileLayer(tileUrl, {attribution : attribution});\n\n    tiles.addTo(map);\n\n    return {\"tiles\": tiles , \"map\" : map};\n}\n\n//TODO: enable querying for fl public lands on bounding box data - work out how to make efficient + user friendly\n//WIP will query on bounding box to get large polygon data\nasync function getGeojson(url , flag = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- only supported where applicable \n    if(!flag){\n        var features = await axios__WEBPACK_IMPORTED_MODULE_3__[\"default\"].get(url); \n    }\n    else{\n        var features = await axios__WEBPACK_IMPORTED_MODULE_3__[\"default\"].get(url /*+ '/' + String(boundingBox)*/);\n    }\n\n    if(!flag){\n        var features = features.data.rows[0].geojson;\n    }\n    else{\n\n        return features.data.featureArr;\n    }\n\n    return features;\n}\n\nfunction addLayer(map , layer){\n    return layer.addTo(map);\n}\n\nfunction removeLayer(map , layer){\n    return map.removeLayer(layer);\n}\n \nfunction getFireIcon(feature, latlng){ \n    return L.marker(latlng , {icon : L.icon({iconUrl : _flame_png__WEBPACK_IMPORTED_MODULE_2__ , iconSize : [12,12]})});\n}\n\nfunction viirsStyle(){ //returns style for viirs data , you make it gets used\n     return  {\n        color: '#d61313',\n        weight: 2,\n        opacity: 0.65\n    };\n}\n\nasync function getViirs(apiUrl){ //returns layer \n    var viirsData = await getGeojson(apiUrl + '/viirs-public');\n    \n    const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle()});\n\n    return viirsLayer;\n}\n\nasync function getWfigs(apiUrl){ //returns layer \n    var wfigsData = await getGeojson(apiUrl + '/wfigs-public');\n\n    const wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : getFireIcon});\n\n    return wfigsLayer;\n}\n\nasync function getFlConserve(apiUrl , boundingBox = null){ // returns layer\n    var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true)\n\n    const flConserveLayer = L.geoJSON(flConserve , {weight : .25  , style : function (feature){\n        switch (feature.properties.MATYPE2){\n            case 'Federal' : return {color : '#74992e'};\n            case 'State' : return {color : '#03b6fc'};\n            case 'Local' : return {color : '#8a6436'};\n        }\n    }});\n\n    return flConserveLayer;\n}\n\nfunction handleSmallLayer(map , layer = null){ //returns layer added or removed\n\n    if(layer != null && map.hasLayer(layer)){\n        map.removeLayer(layer);\n    }\n    else{\n        layer.addTo(map);\n    }\n}\n\n//# sourceURL=webpack://client/./src/map_utils.js?");
 
 /***/ }),
 
@@ -217,6 +217,17 @@ eval("module.exports = __webpack_require__.p + \"2b3e1faf89f94a483539.png\";\n\n
 
 /***/ }),
 
+/***/ "./src/fl-public-icon.png":
+/*!********************************!*\
+  !*** ./src/fl-public-icon.png ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"5d8d70d3e073aea92b60.png\";\n\n//# sourceURL=webpack://client/./src/fl-public-icon.png?");
+
+/***/ }),
+
 /***/ "./src/flame.png":
 /*!***********************!*\
   !*** ./src/flame.png ***!
@@ -225,6 +236,17 @@ eval("module.exports = __webpack_require__.p + \"2b3e1faf89f94a483539.png\";\n\n
 
 "use strict";
 eval("module.exports = __webpack_require__.p + \"56be189bac2a1a70f4ee.png\";\n\n//# sourceURL=webpack://client/./src/flame.png?");
+
+/***/ }),
+
+/***/ "./src/viirs-layer-icon.png":
+/*!**********************************!*\
+  !*** ./src/viirs-layer-icon.png ***!
+  \**********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"1c1aebc94306806fdbc9.png\";\n\n//# sourceURL=webpack://client/./src/viirs-layer-icon.png?");
 
 /***/ }),
 
@@ -797,6 +819,75 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && queue.d < 1) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = -1);
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && queue.d < 0 && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
