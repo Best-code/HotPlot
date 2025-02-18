@@ -4,6 +4,12 @@ import axios from "axios"
 import fireIcon from "./flame.png"
 import { noConflict } from 'leaflet';
 
+export class layerCarry{
+    constructor(obj){
+        this.obj = obj;
+    }
+}
+
 
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
     var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,
@@ -16,33 +22,27 @@ export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds
     return {"tiles": tiles , "map" : map};
 }
 
-//TODO: enable querying for fl public lands on bounding box data - work out how to make efficient + user friendly
 //WIP will query on bounding box to get large polygon data
-export async function getGeojson(url , flag = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- only supported where applicable 
-    if(!flag){
+export async function getGeojson(url , bounded = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- only supported where applicable 
+    if(!bounded){
         var features = await axios.get(url); 
     }
     else{
-        var features = await axios.get(url /*+ '/' + String(boundingBox)*/);
+        var features = await axios.get(url , {params : boundingBox});
     }
 
-    if(!flag){
+    if(!bounded){
         var features = features.data.rows[0].geojson;
+        
+        return features;
     }
     else{
-
-        return features.data.featureArr;
+        return features.data;
     }
-
-    return features;
 }
 
 export function addLayer(map , layer){
     return layer.addTo(map);
-}
-
-export function removeLayer(map , layer){
-    return map.removeLayer(layer);
 }
  
 export function getFireIcon(feature, latlng){ 
@@ -73,8 +73,8 @@ export async function getWfigs(apiUrl){ //returns layer
     return wfigsLayer;
 }
 
-export async function getFlConserve(apiUrl , boundingBox = null){ // returns layer
-    var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true)
+export async function getFlConserve(apiUrl){ // returns layer
+    var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true);
 
     const flConserveLayer = L.geoJSON(flConserve , {weight : .25  , style : function (feature){
         switch (feature.properties.MATYPE2){
@@ -87,7 +87,7 @@ export async function getFlConserve(apiUrl , boundingBox = null){ // returns lay
     return flConserveLayer;
 }
 
-export function handleSmallLayer(map , layer = null){ //returns layer added or removed
+export function handleSmallLayer(map , layer = null){ 
 
     if(layer != null && map.hasLayer(layer)){
         map.removeLayer(layer);
@@ -95,4 +95,25 @@ export function handleSmallLayer(map , layer = null){ //returns layer added or r
     else{
         layer.addTo(map);
     }
+}
+
+export async function handleFlConserve(map , flConserve , apiUrl){
+
+    if( !(flConserve.obj instanceof L.Layer)){ //layer arr is empty, layer is not on map, get current map bounds/to show layer
+
+        var currentExtent = await getFlConserve(apiUrl);
+        
+        currentExtent.addTo(map);
+
+        flConserve.obj = currentExtent;
+
+    }
+    else if (map.hasLayer(flConserve.obj)){
+
+        map.removeLayer(flConserve.obj);
+    }
+    else{
+        flConserve.obj.addTo(map);
+    }
+    
 }

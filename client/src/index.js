@@ -1,5 +1,5 @@
 import 'leaflet'
-import { addLayer, getViirs, getWfigs, handleSmallLayer, initialize_map } from "./map_utils.js"
+import { layerCarry ,handleFlConserve, addLayer, getFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map} from "./map_utils.js"
 import './styles.css'
 
 const mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]) //use for us mapbounds
@@ -25,5 +25,8 @@ const esriTiles = initMap.tiles;
 const viirsLayer = await getViirs(apiUrl);
 const wfigsLayer = await getWfigs(apiUrl);
 
+var flConserve = new layerCarry(null);
+
+document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlConserve(map , flConserve , apiUrl)});
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)})
