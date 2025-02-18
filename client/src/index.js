@@ -19,6 +19,11 @@ const initMap = initialize_map('map' ,
     mapCenter
 );
 
+
+document.getElementById('viirs-desc').innerText = 'Possible Wildfires';
+document.getElementById('wfigs-desc').innerText = 'Current Known Wildfires';
+document.getElementById('fl-conserve-desc').innerText = 'FL Public Lands';
+
 const map = initMap.map;   
 const esriTiles = initMap.tiles;
 

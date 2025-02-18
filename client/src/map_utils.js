@@ -47,7 +47,7 @@ export function addLayer(map , layer){
  
 export function getFireIcon(feature, latlng){ 
     return L.marker(latlng , {icon : L.icon({iconUrl : fireIcon , iconSize : [12,12]})});
-}
+} 
 
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
@@ -76,13 +76,19 @@ export async function getWfigs(apiUrl){ //returns layer
 export async function getFlConserve(apiUrl){ // returns layer
     var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true);
 
-    const flConserveLayer = L.geoJSON(flConserve , {weight : .25  , style : function (feature){
-        switch (feature.properties.MATYPE2){
+    const flConserveLayer = L.geoJSON(flConserve , {weight : .5  , style : function (feature){
+        switch (true){
+            case feature.properties.MANAME.includes('Wildlife Management Area') : return {color : '#4ce6ba'};
+            case feature.properties.MANAME.includes('WMA') : return {color : '#4ce6ba'};
+            case feature.properties.MANAME.includes('National Park') : return {color : '#1121ad'};
+            case feature.properties.MANAME.includes('State Forest') : return {color : '#12de45'};
+            case feature.properties.MANAME.includes('National Forest') : return {color : '#5f9c4c'}
             case 'Federal' : return {color : '#74992e'};
             case 'State' : return {color : '#03b6fc'};
             case 'Local' : return {color : '#8a6436'};
         }
-    }});
+
+    } , fillOpacity : .2});
 
     return flConserveLayer;
 }
