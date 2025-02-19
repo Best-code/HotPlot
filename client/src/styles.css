@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 #body{
     width: 100vw;
     height: 100vh;
@@ -18,7 +20,6 @@
     top: 6vh;
     right: 1em;
     background-color: transparent;
-    pointer-events: none;
 }
 
 .layerContainer{
@@ -31,6 +32,7 @@
     font-size: 12px;
     margin-right: 4px;
     color: white;
+    pointer-events: none;
 }
 
 .layerSelectBox{
@@ -58,8 +60,10 @@
 .layerDesc{
     color: var(--color-yellow);
     text-shadow: 0px 0px 4px black;
+    pointer-events: all;
     text-overflow: ellipsis;
     white-space: nowrap;
+    clear: right;
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.4);
     max-width: 10em;
@@ -75,12 +79,12 @@
 }
 
 .layerIcon{
-    cursor: pointer;
     width: 3.5em;
     height: 3.5em;
     border-radius: 3.5em;
     box-shadow: 0 0 10px 0 black;
     background-color: transparent;
+    pointer-events: all;
     cursor:pointer;
     z-index: 1;
     text-align: center;
@@ -89,7 +93,7 @@
 }
 
 #wfigs-icon{
-    background-image: url('./flame.png');
+    background-image: url('./icons/flame.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -97,7 +101,7 @@
 }
 
 #viirs-icon{
-    background-image: url('./viirs-layer-icon.png');
+    background-image: url('./icons/viirs-layer-icon.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -105,9 +109,44 @@
 }
 
 #fl-conserve-icon{
-    background-image: url('./fl-public-icon.png');
+    background-image: url('./icons/fl-public-icon.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-size: 60px;
 }
+
+#top-banner0{
+    display: flex;
+    font-size: 12px;
+    background-color: transparent;
+    pointer-events: none;
+    height: 5em;
+    width: 20em;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: .5em;
+}
+
+.hotplot-logo{
+    background-image: url('./icons/hotplot-demo-icon.png');
+    pointer-events: all;
+    z-index: inherit;
+    width: 3em;
+    height: 3.8em;   
+    cursor: pointer;
+}
+
+#hotplot-logo0{
+    position: absolute;
+    background-position: center;
+    background-position-y: 47%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 8em;
+    top: 1.2em;
+    left: 1em;
+}
+   

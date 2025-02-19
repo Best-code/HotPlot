@@ -1,16 +1,15 @@
 import 'leaflet/dist/leaflet.css'
 import "leaflet"
 import axios from "axios"
-import fireIcon from "./flame.png"
-import { noConflict } from 'leaflet';
+import fireIcon from "./icons/flame.png"
+import { noConflict } from 'leaflet'; 
 
 export class layerCarry{
     constructor(obj){
         this.obj = obj;
     }
-}
-
-
+} 
+ 
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
     var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,
         zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
@@ -39,10 +38,6 @@ export async function getGeojson(url , bounded = false, boundingBox = null){ //s
     else{
         return features.data;
     }
-}
-
-export function addLayer(map , layer){
-    return layer.addTo(map);
 }
  
 export function getFireIcon(feature, latlng){ 

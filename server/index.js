@@ -37,7 +37,7 @@ app.get('/wfigs-public', async (_, res) => {
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.WFIGSPUBLIC};`);
   client.release();
- 
+  
   const rows = result.rows 
 
   res.json({ rows });
