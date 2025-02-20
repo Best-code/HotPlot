@@ -8,7 +8,7 @@
   <body id="body">
    <div id="map"></div>
     <div id="search-bar"  class="absolute top-3 left-15 z-5" style="visibility: hidden;">
-      <form class="form relative">  
+      <form class="form relative" id="search-bar" onsubmit="return false;">  
         <button type="button" class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
           <svg
             width="17"
@@ -32,6 +32,7 @@
           class="input bg-white rounded-full px-8 text-xs py-3 border-2 border-transparent focus:outline-none focus:border-red-500 placeholder-gray-400 transition-all duration-300 shadow-md"
           placeholder="Find A Town's Forecast"
           type="text"
+          id = "search-input"
         />
         <button type="reset" class="absolute right-3 -translate-y-1/2 top-1/2 p-1">
           <svg
