@@ -29,7 +29,7 @@ app.get('/viirs-public', async (_, res) => {
 
   res.json({ rows });
 });
-
+  
 app.get('/wfigs-public', async (_, res) => {
   const pool = new Pool({ 
     connectionString: process.env.DATABASE_URL,
@@ -51,8 +51,6 @@ app.get('/fl_conservation-public', async (req, res) => {
  
   const client = await pool.connect();
 
-  var start = performance.now();
-
   const result = await client.query(
     `select geojson from ${process.env.FLCONSERVEPUBLIC};`);
 
@@ -70,6 +68,25 @@ app.get('/fl_conservation-public', async (req, res) => {
 
   res.json(featureArr);
 
+});
+
+app.get('/geocode-place', async ( req, res) => {
+
+  const pool = new Pool({ 
+    connectionString: process.env.DATABASE_URL,
+  });
+
+  const userInput = req.query.userInput;
+  const userLat = parseFloat(req.query.lat);
+  const userLon = parseFloat(req.query.lon); 
+
+  const client = await pool.connect();
+
+  const result = await client.query(`select geomatch($1 , $2 , $3)` , [userInput , userLat , userLon]);
+
+  client.release();
+
+  res.json({result});
 });
 
 app.listen(PORT, () => {

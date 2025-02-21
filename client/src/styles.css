@@ -146,7 +146,24 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-size: 8em;
-    top: 1.2em;
+    top: 1.1em;
     left: 1em;
 }
-   
+
+.search-result{
+    width: 100%;
+    height: 2em;
+    position: relative;
+    background-color: dimgray;
+    opacity: .5;
+    cursor: pointer;
+    pointer-events: all;
+    color: whitesmoke;
+
+}
+
+.search-result:hover{
+    background-color: dimgray;
+    opacity: .9;
+    color: gray;
+}
