@@ -3,9 +3,30 @@ import axios from "axios"
 export function onLoad(){ //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
 
+    (function(){ //prevents sending a shitton of requests on every keystroke with a new event credit: Kelderic on stackoverflow
+        var keystoppedTimer = null;
+
+        var keystoppedInputs = document.getElementsByTagName('input');
+
+        for (var i = 0, l = keystoppedInputs.length; i < l; i++){
+
+            keystoppedInputs[i].addEventListener('keydown', function(event){
+
+                clearTimeout(keystoppedTimer);
+
+                keystoppedTimer = setTimeout(function(){
+
+                    event.target.dispatchEvent( new Event('keystopped') );
+                }, 300);
+            }, false);
+        }
+    }());
+
+    document.getElementById('search-input').addEventListener("mouseover" , ()=>{var preSearchResults = document.getElementsByClassName('search-result'); if(preSearchResults.length > 0) {for(var i=0;i<preSearchResults.length;i++){preSearchResults[i].style.visibility = 'visible';}}});
+
 }    
 //location passed as [lat , lon] 
-export async function geoSearch(userEntry , apiUrl , location){ // takes a string and tries to match it to a place name in db
+export async function geoSearch(userEntry , apiUrl , location = [32.0 , -84.0]){ // takes a string and tries to match it to a place name in db
 
     const searchResult = await axios.get(apiUrl + '/geocode-place' , 
             {params : {"userInput" : userEntry , "lat" : location[0] , "lon" : location[1]}} );
@@ -17,11 +38,96 @@ export class geoWrap{
     constructor(obj){obj = this.obj;}
 }
 
-export function getUserCoords(mutate){ // returns false on failure
+function parseGeoMatch(tuple){ //expects a tuple formatted in the style that the postgres 'GeoMatch' function returns - or the /geosearch route returns - gives json
+    
+    const strippedTuple = tuple.replace(/[()]+/g , '');
+
+    var tupArr = strippedTuple.split(',');
+
+    for(var i =0;i<tupArr.length;i++){
+        tupArr[i] = tupArr[i].replace(/["]+/g , '');
+        tupArr[i] = tupArr[i].trim();
+    }
+
+    return tupArr;
+}
+
+export function getUserCoords(mutate , map){ // mutates carrier class passed in to have user coords in .obj or does nothing on failure
 
     if( ! ('geolocation' in navigator)){return;}
 
-    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position;} , (error)=>{return;})
-     
+    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position; map.setView(L.latLng(mutate.obj.coords.latitude , mutate.obj.coords.longitude));} , (error)=>{return;})
+
     return;
+}
+
+//through this function, the database id # for the record shown in any div on screen is stored as the 
+//"db-id" attribute and can be retrieved on click of that element
+export async function handleSearch(lat , lon , apiUrl , map){
+
+    const userInput = document.getElementById('search-input').value;
+
+    if(userInput.length < 3){
+        return;
+    }
+    else{
+        
+        var UseDefault = false;
+
+        var searchResults = null;
+
+        try{lat = parseFloat(lat); lon = parseFloat(lon)}catch(error){UseDefault=true;}
+
+        if(UseDefault){searchResults = await geoSearch(userInput, apiUrl );}else{searchResults = await geoSearch(userInput , apiUrl , [lat , lon]);}
+
+        const resultBox = document.getElementById('search-result-div');
+
+        var newDiv = null;
+
+        for(var i = 0; i < 4; i++){
+            
+
+            if(document.getElementById('result' + (i)) == null){
+
+                newDiv = document.createElement('div');
+            
+                newDiv.id = 'result' + (i);
+
+                newDiv.className = 'search-result'
+
+                resultBox.appendChild(newDiv);
+
+                const geomatchArr = parseGeoMatch(searchResults[i].geomatch);
+
+                newDiv.innerText = geomatchArr[1] + ', ' + geomatchArr[2] + ',  ' + geomatchArr[3] + ' County';
+
+
+                newDiv.setAttribute("db-id" , geomatchArr[0]) //set to database id for object for qury of the DB on click of div
+                newDiv.setAttribute('lat' , geomatchArr[6]);
+                newDiv.setAttribute('lon' , geomatchArr[7]);
+
+                newDiv.addEventListener('click' , (event)=>{searchClick(event , map);}) //TODO:implement
+            }
+            else{
+
+                var searchElement = document.getElementById('result' + i)
+
+                const geomatchArr = parseGeoMatch(searchResults[i].geomatch);
+
+                console.log(geomatchArr);
+
+                searchElement.innerText = geomatchArr[1] + ', ' + geomatchArr[2] + ',  ' + geomatchArr[3] + ' County';
+
+                searchElement.setAttribute("db-id" , geomatchArr[0]); //updates db id on new search result taking its place
+                searchElement.setAttribute('lat' , geomatchArr[6]);
+                searchElement.setAttribute('lon' , geomatchArr[7]); 
+            }
+            
+        }
+
+    }
+}
+
+function searchClick(event , map){ //TODO: make map pan to location that was clicked
+    console.log('IMPLEMENT ME!!!');
 }

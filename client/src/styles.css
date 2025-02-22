@@ -154,16 +154,15 @@
     width: 100%;
     height: 2em;
     position: relative;
-    background-color: dimgray;
-    opacity: .5;
+    background-color: transparent;
+    opacity: 1;
     cursor: pointer;
     pointer-events: all;
-    color: whitesmoke;
-
+    border-radius: .5em;
 }
 
 .search-result:hover{
-    background-color: dimgray;
-    opacity: .9;
-    color: gray;
+    background-color: whitesmoke;
+    opacity: .7;
+    color: grey;
 }

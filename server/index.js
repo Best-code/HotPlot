@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 const express = require('express');
-
+ 
 const cors = require('cors');
 const app = express();
 app.use(express.json());
@@ -14,7 +14,7 @@ app.use(cors({
 }));
 
 
-const PORT = process.env.PORT || 4242;
+const PORT = process.env.PORT || 4242; //MODIFY when hosted
 
 
 app.get('/viirs-public', async (_, res) => {
@@ -41,7 +41,7 @@ app.get('/wfigs-public', async (_, res) => {
   const rows = result.rows 
 
   res.json({ rows });
-});
+}); 
 
 app.get('/fl_conservation-public', async (req, res) => {
 
@@ -49,12 +49,8 @@ app.get('/fl_conservation-public', async (req, res) => {
     connectionString: process.env.DATABASE_URL,
   });
  
-  const client = await pool.connect();
 
-  const result = await client.query(
-    `select geojson from ${process.env.FLCONSERVEPUBLIC};`);
-
-  client.release();
+  result = await pool.query(`select geojson from ${process.env.FLCONSERVEPUBLIC};`);
 
   const features = result.rows 
 
@@ -68,6 +64,7 @@ app.get('/fl_conservation-public', async (req, res) => {
 
   res.json(featureArr);
 
+  await pool.end();
 });
 
 app.get('/geocode-place', async ( req, res) => {
@@ -75,20 +72,29 @@ app.get('/geocode-place', async ( req, res) => {
   const pool = new Pool({ 
     connectionString: process.env.DATABASE_URL,
   });
-
+ 
   const userInput = req.query.userInput;
+
+  //TODO: add error handling
   const userLat = parseFloat(req.query.lat);
   const userLon = parseFloat(req.query.lon); 
 
-  const client = await pool.connect();
+  var result = null; 
+  
+  try{
+    result = await pool.query(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
-  const result = await client.query(`select geomatch($1 , $2 , $3)` , [userInput , userLat , userLon]);
+  }catch(error){ 
+    console.log(error); //for some fucking reaosn the above fails --occasionally, no clue why
 
-  client.release();
+    result = await pool.query(`select geomatch_fallback( $1::text) as geomatch;` , [userInput]); 
+  }
 
   res.json({result});
+
+  await pool.end();
 });
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`); 
-}); 
+});     
