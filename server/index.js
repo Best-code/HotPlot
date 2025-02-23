@@ -18,12 +18,14 @@ const PORT = process.env.PORT || 4242; //MODIFY when hosted
 
 
 app.get('/viirs-public', async (_, res) => {
+
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   });
+
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.VIIRSPUBLIC};`);
-  client.release();
+  client.release(); 
 
   const rows = result.rows 
 
@@ -91,6 +93,21 @@ app.get('/geocode-place', async ( req, res) => {
   }
 
   res.json({result});
+
+  await pool.end();
+});
+
+app.get('/get-fire-forecast' , async (req , res) =>{
+
+  const pool = new Pool({ 
+    connectionString: process.env.DATABASE_URL,
+  });
+
+  const dbId = req.query.id;
+
+  var result = await pool.query(`select todays_outlook from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) );` , [dbId] );
+
+  res.json({result});  
 
   await pool.end();
 });

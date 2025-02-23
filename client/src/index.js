@@ -1,7 +1,7 @@
 import 'leaflet'
 import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map} from "./map_utils.js"
 import './styles.css'
-import { geoWrap , geoSearch, getUserCoords, onLoad, handleSearch } from './utils.js'
+import { geoWrap , geoSearch, getUserCoords, onLoad, handleSearch, getFireForecast } from './utils.js'
 
 //eliminates flashing of unstyled components -- could use SSR to fix but this works
 window.onload = onLoad;
@@ -28,7 +28,8 @@ const initMap = initialize_map('map' ,
     mapCenter
 );  
 
-const map = initMap.map;   
+const map = initMap.map;  
+
 const esriTiles = initMap.tiles;
 
 var userLocation = new geoWrap(null);
@@ -44,12 +45,13 @@ map.on("dragstart" , ()=>{var results = document.getElementsByClassName('search-
 
 //get geolocal search results if possible , if not we just use the cente rof the map
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
-    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl)}
+    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map)}
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map)}});
 
 //loaded on page load but not placed on map
 const viirsLayer = await getViirs(apiUrl);
 const wfigsLayer = await getWfigs(apiUrl);
+
 
 //deals with passing stuff to js fuctions, we need the layer saved in the global scope so we can remove, which
 //requires it be mutatable by functions, ergo the wrapper class

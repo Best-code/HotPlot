@@ -34,6 +34,13 @@ export async function geoSearch(userEntry , apiUrl , location = [32.0 , -84.0]){
     return searchResult.data.result.rows;
 }
 
+export async function getFireForecast( databaseId,  apiUrl){
+    
+    const forecast = await axios.get(apiUrl + '/get-fire-forecast'  , {params : { "id" : databaseId}});
+
+    return forecast.data.result.rows;
+}
+
 export class geoWrap{
     constructor(obj){obj = this.obj;}
 }
@@ -56,7 +63,7 @@ export function getUserCoords(mutate , map){ // mutates carrier class passed in 
 
     if( ! ('geolocation' in navigator)){return;}
 
-    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position; map.setView(L.latLng(mutate.obj.coords.latitude , mutate.obj.coords.longitude));} , (error)=>{return;})
+    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position; map.flyTo(L.latLng(mutate.obj.coords.latitude , mutate.obj.coords.longitude));} , (error)=>{return;})
 
     return;
 }
@@ -106,7 +113,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
                 newDiv.setAttribute('lat' , geomatchArr[6]);
                 newDiv.setAttribute('lon' , geomatchArr[7]);
 
-                newDiv.addEventListener('click' , (event)=>{searchClick(event , map);}) //TODO:implement
+                newDiv.addEventListener('click' , (event)=>{searchClick(event , apiUrl , map);}) //TODO:implement
             }
             else{
 
@@ -128,6 +135,20 @@ export async function handleSearch(lat , lon , apiUrl , map){
     }
 }
 
-function searchClick(event , map){ //TODO: make map pan to location that was clicked
-    console.log('IMPLEMENT ME!!!');
+export async function searchClick(event ,  apiUrl, map){ //TODO: make map pan to location that was clicked
+
+    //TODO:error handling here
+    const lat = event.target.getAttribute('lat');
+
+    const lon = event.target.getAttribute('lon');
+
+    const latln = L.latLng(lat , lon);
+
+    map.flyTo(latln);
+
+    const forecast = await getFireForecast(event.target.getAttribute('db-id') , apiUrl);
+
+
+    console.log(forecast);
+    //TODO: implement popup functionality that shows forecast
 }
