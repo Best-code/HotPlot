@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 app.use(express.urlencoded({extended : true}));
-
+   
 app.use(cors({
   origin: "http://127.0.0.1:5500", // Adjust if using a different frontend port
   credentials: true // Required for sending cookies
@@ -25,11 +25,12 @@ app.get('/viirs-public', async (_, res) => {
 
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.VIIRSPUBLIC};`);
-  client.release(); 
 
   const rows = result.rows 
 
   res.json({ rows });
+
+  client.release();   
 });
   
 app.get('/wfigs-public', async (_, res) => {
@@ -38,11 +39,12 @@ app.get('/wfigs-public', async (_, res) => {
   });
   const client = await pool.connect();
   const result = await client.query(`select * from ${process.env.WFIGSPUBLIC};`);
-  client.release();
   
   const rows = result.rows 
 
   res.json({ rows });
+
+  client.release();
 }); 
 
 app.get('/fl_conservation-public', async (req, res) => {
@@ -52,7 +54,9 @@ app.get('/fl_conservation-public', async (req, res) => {
   });
  
 
-  result = await pool.query(`select geojson from ${process.env.FLCONSERVEPUBLIC};`);
+  const client = await pool.connect();
+
+  result = await client.query(`select geojson from ${process.env.FLCONSERVEPUBLIC};`);
 
   const features = result.rows 
 
@@ -65,6 +69,8 @@ app.get('/fl_conservation-public', async (req, res) => {
   }
 
   res.json(featureArr);
+
+  client.release(); 
 
   await pool.end();
 });
@@ -82,19 +88,23 @@ app.get('/geocode-place', async ( req, res) => {
   const userLon = parseFloat(req.query.lon); 
 
   var result = null; 
+
+  const client = await pool.connect();
   
   try{
-    result = await pool.query(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
+    result = await client.query(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
   }catch(error){ 
     console.log(error); //for some fucking reaosn the above fails --occasionally, no clue why
-
-    result = await pool.query(`select geomatch_fallback( $1::text) as geomatch;` , [userInput]); 
+    console.log(userInput);  
+    result = await client.query(`select geomatch_fallback( $1::text) as geomatch;` , [userInput]); 
   }
 
   res.json({result});
 
-  await pool.end();
+  client.release(); 
+
+  await pool.end(); 
 });
 
 app.get('/get-fire-forecast' , async (req , res) =>{

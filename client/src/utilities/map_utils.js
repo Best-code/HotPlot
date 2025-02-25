@@ -1,14 +1,14 @@
 import 'leaflet/dist/leaflet.css'
 import "leaflet"
 import axios from "axios"
-import fireIcon from "./icons/flame.png"
+import fireIcon from "../icons/flame.png"
 import { noConflict } from 'leaflet'; 
 
 export class layerCarry{
     constructor(obj){
         this.obj = obj;
     }
-} 
+}     
  
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
     var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,
@@ -43,7 +43,7 @@ export async function getGeojson(url , bounded = false, boundingBox = null){ //s
 export function getFireIcon(feature, latlng){ 
     return L.marker(latlng , {icon : L.icon({iconUrl : fireIcon , iconSize : [12,12]})});
 } 
-
+ 
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
         color: '#d61313',
@@ -65,9 +65,9 @@ export async function getWfigs(apiUrl){ //returns layer
 
     const wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : getFireIcon});
 
-    return wfigsLayer;
+    return wfigsLayer;   
 }
-
+  
 export async function getFlConserve(apiUrl){ // returns layer
     var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true);
 
@@ -78,9 +78,9 @@ export async function getFlConserve(apiUrl){ // returns layer
             case feature.properties.MANAME.includes('National Park') : return {color : '#1121ad'};
             case feature.properties.MANAME.includes('State Forest') : return {color : '#12de45'};
             case feature.properties.MANAME.includes('National Forest') : return {color : '#5f9c4c'}
-            case 'Federal' : return {color : '#74992e'};
-            case 'State' : return {color : '#03b6fc'};
-            case 'Local' : return {color : '#8a6436'};
+            case feature.properties.MANAME.includes('Federal') : return {color : '#74992e'};
+            case feature.properties.MANAME.includes('Water Management') : return {color : '#03b6fc'};
+            case feature.properties.MANAME.includes('Local') : return {color : '#8a6436'};
         }
 
     } , fillOpacity : .2});
@@ -96,7 +96,7 @@ export function handleSmallLayer(map , layer = null){
     else{
         layer.addTo(map);
     }
-}
+} 
 
 export async function handleFlConserve(map , flConserve , apiUrl){
 

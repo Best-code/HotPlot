@@ -8,54 +8,33 @@
   <body id="body">
    <div id="map"></div>
     <div id="search-bar"  class="absolute top-3 left-15 z-5 " style="visibility: hidden;">
-      <form class="form relative" id="search-bar" onsubmit="return false;">  
-        <button type="button" class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
-          <svg
-            width="17"
-            height="16"
-            fill="none"  
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-labelledby="search"
-            class="w-5 h-5 text-gray-700"
-          >
-            <path
-              d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
-              stroke="currentColor"
-              stroke-width="1.333"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </button>
-        <input
-          class="w-90 input bg-white rounded-full px-8 text-xs py-3 border-2 border-transparent focus:outline-none focus:border-red-500 placeholder-gray-400 transition-all duration-300 shadow-md"
-          placeholder="Find A Location's Fire Forecast"
-          type="text"
-          autocomplete="off"
-          id = "search-input"
-        />
-        <button type="reset" class="absolute right-3 -translate-y-1/2 top-1/2 p-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5 text-gray-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-      </form>
+        <div class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
+    <input
+      type="text"
+      autocomplete="off"
+      id="search-input"
+      placeholder="Find Your Fire Forecast"
+      class="w-full h-full pl-4 outline-none placeholder-gray-500 text-xs"
+    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      x="0px"
+      y="0px"
+      width="22"
+      height="22"
+      viewBox="0 0 30 30"
+      fill="#6B7280"
+    >
+      <path
+        d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
+      ></path>
+    </svg>
+  </div>
     </div>
     <section id="top-banner0" class="top-banner">
         <div id="hotplot-logo0" class="hotplot-logo"></div>
     </section>
-    <div class="absolute top-14 left-20.5 h-45 w-80 grid-cols-1 gap-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white" id="search-result-div"></div>
+    <div class="absolute top-14 left-19 h-45 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white" id="search-result-div"></div>
     <section id="layerMenu" class="layerContainer">
       <div class="layerSelectBox" id="viirs">
           <div class="layerDesc" id="viirs-desc"></div>
@@ -70,6 +49,14 @@
         <div class="layerIcon" id="fl-conserve-icon"></div>
       </div>
     </section>
+    <div id="result-info-popup" class="result-popup w-180 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-800 bg-white" style="visibility: hidden;">
+      <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+        <span class="sr-only">Close menu</span>
+        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
     <script src="main.js"></script>
     <a href="https://www.flaticon.com/free-icons/fire" style="z-index: -1;"  title="fire icons">Fire icons created by Vectors Market - Flaticon</a>
     <a href="https://www.flaticon.com/free-icons/satellite" title="satellite icons">Satellite icons created by mattbadal - Flaticon</a>

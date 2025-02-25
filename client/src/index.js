@@ -1,17 +1,16 @@
 import 'leaflet'
-import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map} from "./map_utils.js"
+import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map} from "./utilities/map_utils.js"
 import './styles.css'
-import { geoWrap , geoSearch, getUserCoords, onLoad, handleSearch, getFireForecast } from './utils.js'
+import { geoWrap , getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
 
 //eliminates flashing of unstyled components -- could use SSR to fix but this works
 window.onload = onLoad;
 
-const mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]) //use for us mapbounds
-const minZoom = 4
-const zoomStart = 7      
-const apiUrl = 'http://localhost:4242' //adjust   
-
-var mapCenter = [39.4383, -84.2807] //we adjust to be the user's location
+const mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]); //use for us mapbounds
+const minZoom = 4;
+const zoomStart = 4;   
+const apiUrl = 'http://localhost:4242'; //adjust   
+const usCenter = [38,-100]; //about the cente rof the us, starting value if geoloc is declined
 
 //map instance with satelite baselayer and appropriate bounds
 
@@ -21,29 +20,24 @@ document.getElementById('fl-conserve-desc').innerText = 'FL Public Lands';
 
 const initMap = initialize_map('map' , 
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' , 
-    'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    'Tiles &copy; Esri and the GIS User Community',
     minZoom, 
     mapBounds,
     zoomStart,
-    mapCenter
+    usCenter
 );  
 
 const map = initMap.map;  
-
 const esriTiles = initMap.tiles;
+
+map.locate({setView: true, maxZoom: 6}); //sets map to userlocation if approved
 
 var userLocation = new geoWrap(null);
 
 //try and get user location and set map center to it
 getUserCoords(userLocation , map);
 
-var mapCenter = null; //maintained as current center of the map. Use for location search if location service declined?
-map.on("dragend" , ()=>{mapCenter = map.getCenter()} );
-
-//if we have search results visible we remove them from view when map dragged
-map.on("dragstart" , ()=>{var results = document.getElementsByClassName('search-result'); for(var i =0;i<results.length;i++){results[i].style.visibility = 'hidden';}})
-
-//get geolocal search results if possible , if not we just use the cente rof the map
+//get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
     if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map)}
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map)}});

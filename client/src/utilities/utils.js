@@ -2,6 +2,7 @@ import axios from "axios"
 
 export function onLoad(){ //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
+    document.getElementById('result-info-popup').style.visibility = 'visible';
 
     (function(){ //prevents sending a shitton of requests on every keystroke with a new event credit: Kelderic on stackoverflow
         var keystoppedTimer = null;
@@ -22,7 +23,9 @@ export function onLoad(){ //simply to render tailwind componeents visible after 
         }
     }());
 
-    document.getElementById('search-input').addEventListener("mouseover" , ()=>{var preSearchResults = document.getElementsByClassName('search-result'); if(preSearchResults.length > 0) {for(var i=0;i<preSearchResults.length;i++){preSearchResults[i].style.visibility = 'visible';}}});
+    //if we have search results visible we remove them from view when map dragged
+    document.getElementById('body').addEventListener("click" , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
+    document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.transition = 'height .4s'; infoBox.style.height = 0; infoBox.style.visibility = 'hidden';});
 
 }    
 //location passed as [lat , lon] 
@@ -63,7 +66,7 @@ export function getUserCoords(mutate , map){ // mutates carrier class passed in 
 
     if( ! ('geolocation' in navigator)){return;}
 
-    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position; map.flyTo(L.latLng(mutate.obj.coords.latitude , mutate.obj.coords.longitude));} , (error)=>{return;})
+    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position;} , (error)=>{return;})
 
     return;
 }
@@ -135,7 +138,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
     }
 }
 
-export async function searchClick(event ,  apiUrl, map){ //TODO: make map pan to location that was clicked
+export async function searchClick(event ,  apiUrl, map){ 
 
     //TODO:error handling here
     const lat = event.target.getAttribute('lat');
@@ -144,11 +147,27 @@ export async function searchClick(event ,  apiUrl, map){ //TODO: make map pan to
 
     const latln = L.latLng(lat , lon);
 
-    map.flyTo(latln);
+    map.flyTo(latln); 
+
+    //var pulsingIcon = L.icon.pulse({iconSize:[12,12]});
+
+    //var marker = L.marker(latln,{icon: pulsingIcon}).addTo(map); //TODO:fix /implement marker add/remove
 
     const forecast = await getFireForecast(event.target.getAttribute('db-id') , apiUrl);
 
+    document.getElementById('result-info-popup').style.visibility = 'visible'; 
+    document.getElementById('result-info-popup').style.height = '15em';
+    
 
     console.log(forecast);
     //TODO: implement popup functionality that shows forecast
+
+    
+}
+
+//TODO: function that loads-reloads forecast information inside the search result popup div
+export function resultPopup(content){
+
+
+
 }
