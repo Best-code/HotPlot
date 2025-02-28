@@ -11,7 +11,7 @@ export class layerCarry{
 }     
  
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
-    var map = L.map(id , {zoomDelta : 0.25, minZoom : minZoom , maxBounds : maxBounds,
+    var map = L.map(id , {zoomDelta : 0.5, minZoom : minZoom , maxBounds : maxBounds,
         zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
 
     var tiles = L.tileLayer(tileUrl, {attribution : attribution});
@@ -22,7 +22,7 @@ export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds
 }
 
 //WIP will query on bounding box to get large polygon data
-export async function getGeojson(url , bounded = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- only supported where applicable 
+export async function getGeojson(url , bounded = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- not supported 
     if(!bounded){
         var features = await axios.get(url); 
     }

@@ -1,4 +1,7 @@
 import axios from "axios"
+import mIcon from "../icons/M.png"
+import DIcon from "../icons/D.png"
+import VDIcon from "../icons/VD.png"
 
 export function onLoad(){ //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
@@ -23,9 +26,10 @@ export function onLoad(){ //simply to render tailwind componeents visible after 
         }
     }());
 
-    //if we have search results visible we remove them from view when map dragged
+    //if we have search results visible we remove them from view when map dragged/ focus out/etc
     document.getElementById('body').addEventListener("click" , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
-    document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.transition = 'height .4s'; infoBox.style.height = 0; infoBox.style.visibility = 'hidden';});
+    document.getElementById('search-input').addEventListener('blur' ,()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length >0){results[0].remove();}} , {} );
+    document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden';});
 
 }    
 //location passed as [lat , lon] 
@@ -48,7 +52,7 @@ export class geoWrap{
     constructor(obj){obj = this.obj;}
 }
 
-function parseGeoMatch(tuple){ //expects a tuple formatted in the style that the postgres 'GeoMatch' function returns - or the /geosearch route returns - gives json
+function parseGeoMatch(tuple){ //expects a tuple formatted in the style that the postgres 'GeoMatch' function returns - or the /geosearch route returns - gives arr
     
     const strippedTuple = tuple.replace(/[()]+/g , '');
 
@@ -77,7 +81,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
 
     const userInput = document.getElementById('search-input').value;
 
-    if(userInput.length < 3){
+    if(userInput.length < 2){
         return;
     }
     else{
@@ -92,9 +96,22 @@ export async function handleSearch(lat , lon , apiUrl , map){
 
         const resultBox = document.getElementById('search-result-div');
 
+        console.log(searchResults.length);
+        
+        if(searchResults.length == 0){
+
+            try{
+                var results = document.getElementsByClassName('search-result');
+
+                while(results.length > 0){results[0].remove()};
+
+                return;
+            }catch(error){return};
+        }
+
         var newDiv = null;
 
-        for(var i = 0; i < 4; i++){
+        for(var i = 0; i < searchResults.length; i++){
             
 
             if(document.getElementById('result' + (i)) == null){
@@ -116,7 +133,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
                 newDiv.setAttribute('lat' , geomatchArr[6]);
                 newDiv.setAttribute('lon' , geomatchArr[7]);
 
-                newDiv.addEventListener('click' , (event)=>{searchClick(event , apiUrl , map);}) //TODO:implement
+                newDiv.addEventListener('mousedown' , (event)=>{searchClick(event , apiUrl , map);}) //TODO:implement
             }
             else{
 
@@ -147,7 +164,7 @@ export async function searchClick(event ,  apiUrl, map){
 
     const latln = L.latLng(lat , lon);
 
-    map.flyTo(latln); 
+    map.flyTo(latln , 8); 
 
     //var pulsingIcon = L.icon.pulse({iconSize:[12,12]});
 
@@ -156,18 +173,79 @@ export async function searchClick(event ,  apiUrl, map){
     const forecast = await getFireForecast(event.target.getAttribute('db-id') , apiUrl);
 
     document.getElementById('result-info-popup').style.visibility = 'visible'; 
-    document.getElementById('result-info-popup').style.height = '15em';
+    document.getElementById('result-info-popup').style.height = '10em';
     
+    console.log(forecast[0]);
 
-    console.log(forecast);
+    await fireForecastResultPopup(forecast[0] , lat , lon , apiUrl);
     //TODO: implement popup functionality that shows forecast
 
     
 }
 
 //TODO: function that loads-reloads forecast information inside the search result popup div
-export function resultPopup(content){
+export async function fireForecastResultPopup(content , lat , lon , apiUrl){ //expects dict with info, lat and lon are for popping up nearby fires or suspected fires
+
+    var forecastTb = document.getElementById('forecast-tbody');
+
+    if(forecastTb.hasChildNodes()){
+        while(forecastTb.firstChild){forecastTb.removeChild(forecastTb.firstChild); console.log('here');}
+    }
+
+    createForecastPane(forecastTb , content , apiUrl);
 
 
+}
 
+function createForecastPane(parent , content , apiUrl){ //appends forecast header as children of parent , content is dict
+
+    var topRow = document.createElement('tr');
+    var imgRow = document.createElement('tr');
+    var descRow = document.createElement('tr');
+
+    parent.appendChild(topRow);
+    parent.appendChild(imgRow);
+    parent.appendChild(descRow);
+
+    for(let key in content){
+
+        createForecastHeader(topRow , key);
+
+        createForecastIcon( imgRow ,content[key]);
+    }
+
+}
+
+//forecast takes the form of a str that is either M , D or VD
+function createForecastIcon(parent , forecast){ //adds forecast icon to table base don what forecast is (calls to db) 
+
+        if(!(forecast in {'D':1 , 'VD':1 ,'M':1})){console.log(forecast);return;}
+
+        var td = document.createElement('td');
+
+        td.className = 'fire-forecast-img-td';
+
+        parent.appendChild(td);
+
+        var img = document.createElement('img');
+
+        img.className = 'fire-forecast-img';
+
+        if(forecast == 'M'){img.src = mIcon;}
+        else if(forecast == 'D'){img.src = DIcon}
+        else if(forecast == 'VD'){img.src = VDIcon}
+        else{console.log('fix me')} //need to fix
+
+        td.appendChild(img);
+
+}
+
+function createForecastHeader(parent , text){
+
+    var dayHeader = document.createElement('td');
+
+    dayHeader.className = 'forecast-pane-header';
+
+    parent.appendChild(dayHeader);
+    dayHeader.innerText = text;
 }

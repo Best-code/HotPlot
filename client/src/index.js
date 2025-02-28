@@ -30,6 +30,7 @@ const initMap = initialize_map('map' ,
 const map = initMap.map;  
 const esriTiles = initMap.tiles;
 
+map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
 map.locate({setView: true, maxZoom: 6}); //sets map to userlocation if approved
 
 var userLocation = new geoWrap(null);

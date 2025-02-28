@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
   </head>
-  <body id="body">
+  <body id="body" class = "overflow-hidden">
    <div id="map"></div>
     <div id="search-bar"  class="absolute top-3 left-15 z-5 " style="visibility: hidden;">
         <div class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
@@ -24,6 +24,7 @@
       height="22"
       viewBox="0 0 30 30"
       fill="#6B7280"
+      id="search-bar-svg"
     >
       <path
         d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
@@ -34,7 +35,7 @@
     <section id="top-banner0" class="top-banner">
         <div id="hotplot-logo0" class="hotplot-logo"></div>
     </section>
-    <div class="absolute top-14 left-19 h-45 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white" id="search-result-div"></div>
+    <div class="absolute top-14 left-19 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white" id="search-result-div"></div>
     <section id="layerMenu" class="layerContainer">
       <div class="layerSelectBox" id="viirs">
           <div class="layerDesc" id="viirs-desc"></div>
@@ -49,16 +50,22 @@
         <div class="layerIcon" id="fl-conserve-icon"></div>
       </div>
     </section>
-    <div id="result-info-popup" class="result-popup w-180 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-800 bg-white" style="visibility: hidden;">
-      <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
-        <span class="sr-only">Close menu</span>
-        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+
+    <div id="result-info-popup" class="result-popup w-1/1 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden" style="visibility: hidden;">
+    <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+      <span class="sr-only">Close menu</span>
+      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg></button>
+      <div class="w-1/1 h-1/1 hidden overflow-x-auto overflow-y-hidden inline-flex" id="results-hold">
+        <div id="wildfire-risk-forecast" class="w-1/2 h-1/1 float-left overflow-x-auto overflow-y-hidden">
+          <table id="forecast-tb">
+            <tbody id="forecast-tbody"></tbody>
+          </table>
+        </div>
+        <div id="wildfires-near-me" class="w-1/2 h-1/1 float-right inline-flex overflow-x-auto overflow-y-hidden"></div>
+      </div>
     </div>
     <script src="main.js"></script>
-    <a href="https://www.flaticon.com/free-icons/fire" style="z-index: -1;"  title="fire icons">Fire icons created by Vectors Market - Flaticon</a>
-    <a href="https://www.flaticon.com/free-icons/satellite" title="satellite icons">Satellite icons created by mattbadal - Flaticon</a>
   </body>
 </html>

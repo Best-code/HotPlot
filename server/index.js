@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(cors({
   origin: "http://127.0.0.1:5500", // Adjust if using a different frontend port
   credentials: true // Required for sending cookies
-}));
+})); 
 
 
 const PORT = process.env.PORT || 4242; //MODIFY when hosted
@@ -43,7 +43,7 @@ app.get('/wfigs-public', async (_, res) => {
   const rows = result.rows 
 
   res.json({ rows });
-
+ 
   client.release();
 }); 
 
@@ -90,8 +90,11 @@ app.get('/geocode-place', async ( req, res) => {
   var result = null; 
 
   const client = await pool.connect();
-  
+
   try{
+
+    var thresh = client.query('SET pg_trgm.similarity_threshold = 0.1;');
+
     result = await client.query(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
   }catch(error){ 
@@ -99,10 +102,10 @@ app.get('/geocode-place', async ( req, res) => {
     console.log(userInput);  
     result = await client.query(`select geomatch_fallback( $1::text) as geomatch;` , [userInput]); 
   }
-
+ 
   res.json({result});
 
-  client.release(); 
+  await client.release(); 
 
   await pool.end(); 
 });
@@ -115,12 +118,17 @@ app.get('/get-fire-forecast' , async (req , res) =>{
 
   const dbId = req.query.id;
 
-  var result = await pool.query(`select todays_outlook from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) );` , [dbId] );
+  const client = await pool.connect();
+
+  var result = await client.query(`select date , day_1 , day_2 , day_3 , day_4 , day_5 , day_6 , day_7 from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) );` , [dbId] );
 
   res.json({result});  
 
+
+  await client.release();
   await pool.end();
 });
+
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`); 
