@@ -45,7 +45,8 @@ export async function getFireForecast( databaseId,  apiUrl){
     
     const forecast = await axios.get(apiUrl + '/get-fire-forecast'  , {params : { "id" : databaseId}});
 
-    return forecast.data.result.rows;
+    console.log(forecast.data);
+    return forecast.data;
 }
 
 export class geoWrap{
@@ -95,8 +96,6 @@ export async function handleSearch(lat , lon , apiUrl , map){
         if(UseDefault){searchResults = await geoSearch(userInput, apiUrl );}else{searchResults = await geoSearch(userInput , apiUrl , [lat , lon]);}
 
         const resultBox = document.getElementById('search-result-div');
-
-        console.log(searchResults.length);
         
         if(searchResults.length == 0){
 
@@ -141,8 +140,6 @@ export async function handleSearch(lat , lon , apiUrl , map){
 
                 const geomatchArr = parseGeoMatch(searchResults[i].geomatch);
 
-                console.log(geomatchArr);
-
                 searchElement.innerText = geomatchArr[1] + ', ' + geomatchArr[2] + ',  ' + geomatchArr[3] + ' County';
 
                 searchElement.setAttribute("db-id" , geomatchArr[0]); //updates db id on new search result taking its place
@@ -170,34 +167,28 @@ export async function searchClick(event ,  apiUrl, map){
 
     //var marker = L.marker(latln,{icon: pulsingIcon}).addTo(map); //TODO:fix /implement marker add/remove
 
+
+    fireForecastResultPopup(event , lat , lon , apiUrl);
+}
+
+//TODO: function that loads-reloads forecast information inside the search result popup div
+export async function fireForecastResultPopup(event, lat , lon , apiUrl){ //expects dict with info, lat and lon are for popping up nearby fires or suspected fires
+
     const forecast = await getFireForecast(event.target.getAttribute('db-id') , apiUrl);
 
     document.getElementById('result-info-popup').style.visibility = 'visible'; 
     document.getElementById('result-info-popup').style.height = '10em';
-    
-    console.log(forecast[0]);
-
-    await fireForecastResultPopup(forecast[0] , lat , lon , apiUrl);
-    //TODO: implement popup functionality that shows forecast
-
-    
-}
-
-//TODO: function that loads-reloads forecast information inside the search result popup div
-export async function fireForecastResultPopup(content , lat , lon , apiUrl){ //expects dict with info, lat and lon are for popping up nearby fires or suspected fires
 
     var forecastTb = document.getElementById('forecast-tbody');
 
     if(forecastTb.hasChildNodes()){
-        while(forecastTb.firstChild){forecastTb.removeChild(forecastTb.firstChild); console.log('here');}
+        while(forecastTb.firstChild){forecastTb.removeChild(forecastTb.firstChild);}
     }
 
-    createForecastPane(forecastTb , content , apiUrl);
-
-
+    createForecastPane(forecastTb , forecast , apiUrl);
 }
 
-function createForecastPane(parent , content , apiUrl){ //appends forecast header as children of parent , content is dict
+function createForecastPane(parent , forecast){ //appends forecast header as children of parent , content is dict
 
     var topRow = document.createElement('tr');
     var imgRow = document.createElement('tr');
@@ -206,20 +197,18 @@ function createForecastPane(parent , content , apiUrl){ //appends forecast heade
     parent.appendChild(topRow);
     parent.appendChild(imgRow);
     parent.appendChild(descRow);
+    
+    for(let key in forecast['weeklyForecast']){
 
-    for(let key in content){
+        createForecastHeader(topRow , forecast['weeklyForecast'][key]['weekDay'] + '  ' + forecast['weeklyForecast'][key]["dayOfMonth"]);
 
-        createForecastHeader(topRow , key);
-
-        createForecastIcon( imgRow ,content[key]);
+        createForecastIcon( imgRow ,forecast['weeklyForecast'][key]['forecast']);
     }
 
 }
 
 //forecast takes the form of a str that is either M , D or VD
 function createForecastIcon(parent , forecast){ //adds forecast icon to table base don what forecast is (calls to db) 
-
-        if(!(forecast in {'D':1 , 'VD':1 ,'M':1})){console.log(forecast);return;}
 
         var td = document.createElement('td');
 
@@ -232,6 +221,7 @@ function createForecastIcon(parent , forecast){ //adds forecast icon to table ba
         img.className = 'fire-forecast-img';
 
         if(forecast == 'M'){img.src = mIcon;}
+        else if(forecast == 'W'){img.src = mIcon;}
         else if(forecast == 'D'){img.src = DIcon}
         else if(forecast == 'VD'){img.src = VDIcon}
         else{console.log('fix me')} //need to fix

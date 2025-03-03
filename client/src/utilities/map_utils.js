@@ -71,6 +71,8 @@ export async function getWfigs(apiUrl){ //returns layer
 export async function getFlConserve(apiUrl){ // returns layer
     var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true);
 
+    console.log(flConserve);
+
     const flConserveLayer = L.geoJSON(flConserve , {weight : .5  , style : function (feature){
         switch (true){
             case feature.properties.MANAME.includes('Wildlife Management Area') : return {color : '#4ce6ba'};

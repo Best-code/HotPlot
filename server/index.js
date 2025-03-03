@@ -1,7 +1,11 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 const express = require('express');
- 
+const dayjs = require('dayjs');
+var customFormat = require('dayjs/plugin/customParseFormat');
+dayjs().format();
+dayjs.extend(customFormat);
+
 const cors = require('cors');
 const app = express();
 app.use(express.json());
@@ -44,7 +48,7 @@ app.get('/wfigs-public', async (_, res) => {
 
   res.json({ rows });
  
-  client.release();
+  client.release(); 
 }); 
 
 app.get('/fl_conservation-public', async (req, res) => {
@@ -58,6 +62,8 @@ app.get('/fl_conservation-public', async (req, res) => {
 
   result = await client.query(`select geojson from ${process.env.FLCONSERVEPUBLIC};`);
 
+  console.log(result);
+  
   const features = result.rows 
 
   var featureArr = [];
@@ -120,9 +126,39 @@ app.get('/get-fire-forecast' , async (req , res) =>{
 
   const client = await pool.connect();
 
-  var result = await client.query(`select date , day_1 , day_2 , day_3 , day_4 , day_5 , day_6 , day_7 from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) );` , [dbId] );
+  var result = await client.query(`select date , day_1 , day_2 , day_3 , day_4 , day_5 , day_6 , day_7 from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) ) limit 1;` , [dbId] );
 
-  res.json({result});  
+  var forecast = result.rows[0];
+
+  startDate = new dayjs(result.rows[0]['date'] , 'YYYY-MM-DD');
+
+  delete forecast.date;
+
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  var forecast_values = {};
+
+  forecast_values['forecast_date'] = startDate.format('YYYY/MM/DD');
+
+  forecast_values['weeklyForecast'] = {};
+
+  for (let key in forecast){
+
+    daySpecificForecast = {};
+
+    daySpecificForecast['forecast'] = forecast[key];
+
+    daySpecificForecast['weekDay'] = days[startDate.day()];
+
+    daySpecificForecast['dayOfMonth'] = startDate.format('DD')
+
+    forecast_values['weeklyForecast'][key] = daySpecificForecast;
+
+    startDate = startDate.add(1 , 'day');
+  }
+
+  console.log(forecast_values);
+  res.json(forecast_values);  
 
 
   await client.release();

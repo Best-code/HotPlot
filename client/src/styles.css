@@ -166,7 +166,23 @@
 }
 
 .search-result:hover{
-    background-color: whitesmoke;
+    background-color: rgb(113, 109, 109);
     opacity: .7;
-    color: grey;
+    color: white;
+}
+
+.fire-forecast-img-td{
+    border-radius: .3em;
+    align-items: center;
+}
+
+.fire-forecast-img{
+    border-radius: 1em;
+    height: 100%;
+    width: 100%;
+}
+
+.forecast-pane-header{
+    text-align: center;
+    width: 10%;
 }
