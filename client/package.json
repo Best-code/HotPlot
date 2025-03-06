@@ -25,7 +25,10 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@mapbox/vector-tile": "^2.0.3",
     "axios": "^1.7.9",
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "leaflet-vector-tile-layer": "^0.16.1",
+    "pbf": "^4.0.1"
   }
 }

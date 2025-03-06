@@ -1,5 +1,5 @@
 import 'leaflet'
-import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map} from "./utilities/map_utils.js"
+import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles} from "./utilities/map_utils.js"
 import './styles.css'
 import { geoWrap , getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
 
@@ -55,3 +55,6 @@ var flConserve = new layerCarry(null);
 document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlConserve(map , flConserve , apiUrl)});
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
+
+
+handleFlPublicTiles(map , flConserve , apiUrl);

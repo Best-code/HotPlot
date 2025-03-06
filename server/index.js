@@ -61,8 +61,6 @@ app.get('/fl_conservation-public', async (req, res) => {
   const client = await pool.connect();
 
   result = await client.query(`select geojson from ${process.env.FLCONSERVEPUBLIC};`);
-
-  console.log(result);
   
   const features = result.rows 
 
@@ -157,7 +155,7 @@ app.get('/get-fire-forecast' , async (req , res) =>{
     startDate = startDate.add(1 , 'day');
   }
 
-  console.log(forecast_values);
+
   res.json(forecast_values);  
 
 
@@ -165,6 +163,27 @@ app.get('/get-fire-forecast' , async (req , res) =>{
   await pool.end();
 });
 
+app.get('/publicTiles' , async (req , res) =>{
+
+  const pool = new Pool({ 
+    connectionString: process.env.DATABASE_URL,
+  });
+
+  console.log(req.query);
+
+  var x = parseInt(req.query.x);
+  var y = parseInt(req.query.y);
+  var z = parseInt(req.query.z);
+
+  const tile = await pool.query('select getPublicLandsTile($1::int , $2::int , $3::int);' , [x,y,z])
+
+  console.log(tile); 
+
+  res.send(tile.rows[0].getpubliclandstile);
+
+  pool.end();
+
+})
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`); 

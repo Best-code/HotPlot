@@ -3,12 +3,13 @@ import "leaflet"
 import axios from "axios"
 import fireIcon from "../icons/flame.png"
 import { noConflict } from 'leaflet'; 
+import  vectorTileLayer from 'leaflet-vector-tile-layer'
 
 export class layerCarry{
     constructor(obj){
         this.obj = obj;
     }
-}     
+}      
  
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
     var map = L.map(id , {zoomDelta : 0.5, minZoom : minZoom , maxBounds : maxBounds,
@@ -119,4 +120,13 @@ export async function handleFlConserve(map , flConserve , apiUrl){
         flConserve.obj.addTo(map);
     }
     
+}
+
+export async function handleFlPublicTiles(map , flConserve , apiUrl){
+
+    var url = apiUrl + '/publicTiles';
+
+    const flVectorTiles = vectorTileLayer(url , {s : '' , style : {color : '#d61313'}});
+
+    flVectorTiles.addTo(map);
 }
