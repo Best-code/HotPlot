@@ -169,15 +169,11 @@ app.get('/publicTiles' , async (req , res) =>{
     connectionString: process.env.DATABASE_URL,
   });
 
-  console.log(req.query);
-
-  var x = parseInt(req.query.x);
+  var x = parseInt(req.query.x); //TODO: error handling
   var y = parseInt(req.query.y);
   var z = parseInt(req.query.z);
 
   const tile = await pool.query('select getPublicLandsTile($1::int , $2::int , $3::int);' , [x,y,z])
-
-  console.log(tile); 
 
   res.send(tile.rows[0].getpubliclandstile);
 

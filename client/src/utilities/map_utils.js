@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css'
 import "leaflet"
 import axios from "axios"
 import fireIcon from "../icons/flame.png"
-import { noConflict } from 'leaflet'; 
+import { bounds, noConflict } from 'leaflet'; 
 import  vectorTileLayer from 'leaflet-vector-tile-layer'
 
 export class layerCarry{
@@ -42,53 +42,55 @@ export async function getGeojson(url , bounded = false, boundingBox = null){ //s
 }
  
 export function getFireIcon(feature, latlng){ 
-    return L.marker(latlng , {icon : L.icon({iconUrl : fireIcon , iconSize : [12,12]})});
+    return L.marker(latlng , {icon : getFirePic() , riseOnHover : true});
+
 } 
+
+function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize : size})}
  
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
         color: '#d61313',
-        weight: 2,
-        opacity: 0.65
+        weight: 1.5,
+        opacity: 0.5
     };
 }
 
+function viirsOnEach(feature , layer){
+
+    layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Satelite Hotspot' , layer);});
+    
+    layer.on('mouseover' , (layer)=>{layer.target.setStyle({weight: 5 , opacity: 0.75})});
+
+    layer.on('mouseout' , (layer)=> layer.target.setStyle(viirsStyle()));
+}
+
 export async function getViirs(apiUrl){ //returns layer 
+
     var viirsData = await getGeojson(apiUrl + '/viirs-public');
     
-    const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle()});
+    const viirsLayer = L.geoJSON(viirsData , {style : viirsStyle(), onEachFeature : viirsOnEach});
 
     return viirsLayer;
 }
 
+function wfigsOnEach(feature, layer){
+
+    layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Known Wildfire' , layer);});
+
+    layer.on('mouseover', (layer)=>{ layer.target.setIcon(getFirePic([21,21]))});
+
+    layer.on('mouseout' , (layer)=>{layer.target.setIcon(getFirePic())});
+    
+}
+
 export async function getWfigs(apiUrl){ //returns layer 
+
     var wfigsData = await getGeojson(apiUrl + '/wfigs-public');
 
-    const wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : getFireIcon});
+    const wfigsLayer = L.geoJSON(wfigsData , {pointToLayer : getFireIcon , onEachFeature : wfigsOnEach});
 
     return wfigsLayer;   
-}
-  
-export async function getFlConserve(apiUrl){ // returns layer
-    var flConserve = await getGeojson(apiUrl + '/fl_conservation-public' , true);
-
-    console.log(flConserve);
-
-    const flConserveLayer = L.geoJSON(flConserve , {weight : .5  , style : function (feature){
-        switch (true){
-            case feature.properties.MANAME.includes('Wildlife Management Area') : return {color : '#4ce6ba'};
-            case feature.properties.MANAME.includes('WMA') : return {color : '#4ce6ba'};
-            case feature.properties.MANAME.includes('National Park') : return {color : '#1121ad'};
-            case feature.properties.MANAME.includes('State Forest') : return {color : '#12de45'};
-            case feature.properties.MANAME.includes('National Forest') : return {color : '#5f9c4c'}
-            case feature.properties.MANAME.includes('Federal') : return {color : '#74992e'};
-            case feature.properties.MANAME.includes('Water Management') : return {color : '#03b6fc'};
-            case feature.properties.MANAME.includes('Local') : return {color : '#8a6436'};
-        }
-
-    } , fillOpacity : .2});
-
-    return flConserveLayer;
 }
 
 export function handleSmallLayer(map , layer = null){ 
@@ -101,32 +103,83 @@ export function handleSmallLayer(map , layer = null){
     }
 } 
 
-export async function handleFlConserve(map , flConserve , apiUrl){
-
-    if( !(flConserve.obj instanceof L.Layer)){ //layer arr is empty, layer is not on map, get current map bounds/to show layer
-
-        var currentExtent = await getFlConserve(apiUrl);
-        
-        currentExtent.addTo(map);
-
-        flConserve.obj = currentExtent;
-
-    }
-    else if (map.hasLayer(flConserve.obj)){
-
-        map.removeLayer(flConserve.obj);
-    }
-    else{
-        flConserve.obj.addTo(map);
-    }
-    
-}
-
 export async function handleFlPublicTiles(map , flConserve , apiUrl){
 
     var url = apiUrl + '/publicTiles';
 
-    const flVectorTiles = vectorTileLayer(url , {s : '' , style : {color : '#d61313'}});
+    if(!(flConserve.obj instanceof L.Layer)){
 
-    flVectorTiles.addTo(map);
+        //TODO:break out bounds into config file
+        flConserve.obj = vectorTileLayer(url , {s : '' , style : getFlPublicStyle , 
+            bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -80.585]), updateInterval : 500 , 
+            updateWhenZooming : false , minZoom : 8 , interactive : true 
+        });
+
+        flConserve.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Public Lands');})
+
+        flConserve.obj.addTo(map);
+    }
+    else if(flConserve.obj instanceof L.Layer){
+
+        if(!(map.hasLayer(flConserve.obj))){
+            flConserve.obj.addTo(map);
+        }
+        else{
+            map.removeLayer(flConserve.obj);
+        }
+    }
 }
+
+function getFlPublicStyle(feature , layerName , zoom){
+
+    return {color : getFlPublicColors(feature) , opacity : 0.3 , weight : 0.1
+        };
+}
+
+function getFlPublicColors(feature){
+    switch(true){
+        case feature.properties.name.includes('Wildlife Management Area') : return '#4ce6ba';
+        case feature.properties.name.includes('WMA') : return '#4ce6ba';
+        case feature.properties.name.includes('National Park') : return '#1121ad';
+        case feature.properties.name.includes('State Forest') : return '#12de45';
+        case feature.properties.name.includes('National Forest') : return '#5f9c4c';
+        case feature.properties.name.includes('Water Management') : return '#03b6fc';
+        case feature.properties.managing_agency_type.includes('Federal') : return '#74992e';
+        case feature.properties.managing_agency_type.includes('Local') : return '#deb773';
+        case feature.properties.managing_agency_type.includes('State') : return '#2fa8d4';
+    }
+}
+
+function featurePopup(feature , headerText , layer = null ){
+
+    var section = document.getElementById('feature-click-popup');
+
+    var header = document.getElementById('feature-click-header');
+
+    var body = document.getElementById('feature-click-body');
+
+    if(body.hasChildNodes()){while(body.firstChild){body.removeChild(body.lastChild);}}
+
+    header.innerText = headerText;
+
+    for (let key in feature.properties){
+        
+        var featureAttr = document.createElement('div');
+        featureAttr.className = 'feature-click-attr';
+        featureAttr.id = 'feature-click-attr-'+key;
+
+        featureAttr.style.height = '70px';
+        featureAttr.style.width = '100%';
+
+        featureAttr.innerText = key + ' ' +feature.properties[key];
+
+
+        body.appendChild(featureAttr);
+    }
+
+    section.style.visibility = 'visible';
+    section.style.display = 'block';
+    section.style.opacity = 1;
+}
+
+

@@ -52,7 +52,7 @@
     </section>
 
     <div id="result-info-popup" class="result-popup w-1/1 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden" style="visibility: hidden;">
-    <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+    <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none">
       <span class="sr-only">Close menu</span>
       <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -62,9 +62,20 @@
           <tbody id="forecast-tbody" class="w-1/1 overflow-x-auto static"></tbody>
         </table>
       </div>
-        <div id="wildfires-near-me" class="w-1/2 h-1/1 float-right inline-flex overflow-x-auto overflow-y-hidden"></div>
+      <div id="wildfires-near-me" class="w-1/2 h-1/1 float-right inline-flex overflow-x-auto overflow-y-hidden"></div>
       </div>
     </div>
+
+    <section id="feature-click-popup" class="h-100 w-78 absolute left-5 top-25 transition-all duration-200" style="display: none;">
+      <button type="button" id="feature-popup-close" class="absolute right-0 rounded-md p-1 items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+      <div id="feature-click-box" class=" bg-white h-100 w-70 absolute top-0 left-0 rounded-lg">
+        <div id="feature-click-header" class="aboslute top-0 w-1/1 h-1/5 block"></div>
+        <div id="feature-click-body" , class="h-4/5 w-1/1 overflow-y-auto overflow-x-auto block"></div>
+      </div>
+    </section>
     <script src="main.js"></script>
   </body>
 </html>

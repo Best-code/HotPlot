@@ -30,7 +30,7 @@ export function onLoad(){ //simply to render tailwind componeents visible after 
     document.getElementById('body').addEventListener("click" , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
     document.getElementById('search-input').addEventListener('blur' ,()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length >0){results[0].remove();}} , {} );
     document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden';});
-
+    document.getElementById('feature-popup-close').addEventListener('click' , ()=>{var popupSection = document.getElementById('feature-click-popup'); popupSection.style.opacity = 0; popupSection.style.visibility = 'hidden';});
 }    
 //location passed as [lat , lon] 
 export async function geoSearch(userEntry , apiUrl , location = [32.0 , -84.0]){ // takes a string and tries to match it to a place name in db
@@ -161,7 +161,7 @@ export async function searchClick(event ,  apiUrl, map){
 
     const latln = L.latLng(lat , lon);
 
-    map.flyTo(latln , 8); 
+    map.flyTo(latln , 10); 
 
     //var pulsingIcon = L.icon.pulse({iconSize:[12,12]});
 

@@ -31,7 +31,7 @@ const map = initMap.map;
 const esriTiles = initMap.tiles;
 
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
-map.locate({setView: true, maxZoom: 6}); //sets map to userlocation if approved
+map.locate({setView: true, maxZoom: 10}); //sets map to userlocation if approved
 
 var userLocation = new geoWrap(null);
 
@@ -44,17 +44,21 @@ document.getElementById('search-input').addEventListener("keystopped" , ()=>{
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map)}});
 
 //loaded on page load but not placed on map
-const viirsLayer = await getViirs(apiUrl);
-const wfigsLayer = await getWfigs(apiUrl);
+var viirsLayer = null;
+var wfigsLayer = null;
 
+try{
+    viirsLayer = await getViirs(apiUrl);
+}catch(error){}
+
+try{
+    wfigsLayer = await getWfigs(apiUrl);
+}catch(error){}
 
 //deals with passing stuff to js fuctions, we need the layer saved in the global scope so we can remove, which
 //requires it be mutatable by functions, ergo the wrapper class
 var flConserve = new layerCarry(null); 
 
-document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlConserve(map , flConserve , apiUrl)});
+document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlPublicTiles(map , flConserve , apiUrl);});
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
-
-
-handleFlPublicTiles(map , flConserve , apiUrl);
