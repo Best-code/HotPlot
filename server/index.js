@@ -191,6 +191,9 @@ app.get('/publicTiles' , async (req , res) =>{
     case  z > 14:
       simplify = 0;
       break;
+    default:
+      simplify = 25;
+      break;
   }
 
   const tile = await pool.query('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
