@@ -173,7 +173,27 @@ app.get('/publicTiles' , async (req , res) =>{
   var y = parseInt(req.query.y);
   var z = parseInt(req.query.z);
 
-  const tile = await pool.query('select getPublicLandsTile($1::int , $2::int , $3::int);' , [x,y,z])
+  var simplify = null;
+
+  switch(true){
+    case z < 10:
+      simplify = 400;
+      break;
+    case z <= 12:
+      simplify = 200;
+      break;
+    case z > 12 && z <= 13:
+      simplify = 100
+      break;
+    case z > 13 && z <= 14:
+      simplify = 50;
+      break;
+    case  z > 14:
+      simplify = 0;
+      break;
+  }
+
+  const tile = await pool.query('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
 
   res.send(tile.rows[0].getpubliclandstile);
 
