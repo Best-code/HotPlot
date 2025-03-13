@@ -116,6 +116,14 @@
     background-size: 60px;
 }
 
+#fl-private-icon{
+    background-image: url('./icons/fl-public-icon.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 60px;  
+}
+
 #top-banner0{
     display: flex;
     font-size: 12px;

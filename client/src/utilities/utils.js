@@ -38,14 +38,14 @@ export async function geoSearch(userEntry , apiUrl , location = [32.0 , -84.0]){
     const searchResult = await axios.get(apiUrl + '/geocode-place' , 
             {params : {"userInput" : userEntry , "lat" : location[0] , "lon" : location[1]}} );
 
-    return searchResult.data.result.rows;
+    return searchResult.data;
 }
 
 export async function getFireForecast( databaseId,  apiUrl){
     
     const forecast = await axios.get(apiUrl + '/get-fire-forecast'  , {params : { "id" : databaseId}});
 
-    console.log(forecast.data);
+
     return forecast.data;
 }
 

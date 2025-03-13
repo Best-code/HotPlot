@@ -32,7 +32,8 @@ export async function getGeojson(url , bounded = false, boundingBox = null){ //s
     }
 
     if(!bounded){
-        var features = features.data.rows[0].geojson;
+
+        var features = features.data.geojson;
         
         return features;
     }
@@ -111,7 +112,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
 
         //TODO:break out bounds into config file
         flConserve.obj = vectorTileLayer(url , {s : '' , style : getFlPublicStyle , 
-            bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -80.585]), updateInterval : 500 , 
+            bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
             updateWhenZooming : false , minZoom : 8 , interactive : true 
         });
 
@@ -132,7 +133,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
 
 function getFlPublicStyle(feature , layerName , zoom){
 
-    return {color : getFlPublicColors(feature) , opacity : 0.3 , weight : 0.1
+    return {fillColor : getFlPublicColors(feature), fillOpacity: .3 , color : '#ebf0f0',  weight : 0.2
         };
 }
 
@@ -141,6 +142,7 @@ function getFlPublicColors(feature){
         case feature.properties.name.includes('Wildlife Management Area') : return '#4ce6ba';
         case feature.properties.name.includes('WMA') : return '#4ce6ba';
         case feature.properties.name.includes('National Park') : return '#1121ad';
+        case feature.properties.name.includes('State Park') : return '#2a48b0';
         case feature.properties.name.includes('State Forest') : return '#12de45';
         case feature.properties.name.includes('National Forest') : return '#5f9c4c';
         case feature.properties.name.includes('Water Management') : return '#03b6fc';
@@ -150,7 +152,42 @@ function getFlPublicColors(feature){
     }
 }
 
-function featurePopup(feature , headerText , layer = null ){
+export async function handlePrivateTiles(map , privateLands , apiUrl){
+
+    const url = apiUrl + '/privateTiles';
+
+    if(!(privateLands.obj instanceof L.Layer)){
+
+        //TODO:break out bounds into config file
+        privateLands.obj = vectorTileLayer(url , {s : '' , style : getPrivateStyle(), 
+            bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
+            updateWhenZooming : false , minZoom : 12 , interactive : true 
+        });
+
+        privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})
+
+        privateLands.obj.addTo(map);
+    }
+    else if(privateLands.obj instanceof L.Layer){
+
+        if(!(map.hasLayer(privateLands.obj))){
+            privateLands.obj.addTo(map);
+        }
+        else{
+            map.removeLayer(privateLands.obj);
+        }
+    }
+}
+
+function getPrivateStyle(){
+    return {color: '#910c12', 
+        fill : true  , 
+        fillColor : '#ffffff00' , 
+        opacity : 1.0 , 
+        weight : 1} 
+}
+
+function featurePopup(feature , headerText , layer = null ){ //right now it just runs through all the properties we send over as a dict
 
     var section = document.getElementById('feature-click-popup');
 

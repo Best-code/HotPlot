@@ -1,5 +1,5 @@
 import 'leaflet'
-import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles} from "./utilities/map_utils.js"
+import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles} from "./utilities/map_utils.js"
 import './styles.css'
 import { geoWrap , getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
 
@@ -17,6 +17,7 @@ const usCenter = [38,-100]; //about the cente rof the us, starting value if geol
 document.getElementById('viirs-desc').innerText = 'Possible Wildfires';
 document.getElementById('wfigs-desc').innerText = 'Current Wildfires';
 document.getElementById('fl-conserve-desc').innerText = 'FL Public Lands';
+document.getElementById('fl-private-desc').innerText = 'FL Private Lands';
 
 const initMap = initialize_map('map' , 
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' , 
@@ -58,7 +59,10 @@ try{
 //deals with passing stuff to js fuctions, we need the layer saved in the global scope so we can remove, which
 //requires it be mutatable by functions, ergo the wrapper class
 var flConserve = new layerCarry(null); 
+var privateLands = new layerCarry(null);
+
 
 document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlPublicTiles(map , flConserve , apiUrl);});
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
+document.getElementById('fl-private').addEventListener('click' , ()=>{handlePrivateTiles(map , privateLands , apiUrl)});
