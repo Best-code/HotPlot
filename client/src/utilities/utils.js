@@ -82,7 +82,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
 
     const userInput = document.getElementById('search-input').value;
 
-    if(userInput.length < 2){
+    if(userInput.length < 0){
         return;
     }
     else{
@@ -161,7 +161,7 @@ export async function searchClick(event ,  apiUrl, map){
 
     const latln = L.latLng(lat , lon);
 
-    map.flyTo(latln , 10); 
+    map.setView(latln , 10); 
 
     //var pulsingIcon = L.icon.pulse({iconSize:[12,12]});
 

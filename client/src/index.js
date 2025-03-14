@@ -1,5 +1,5 @@
 import 'leaflet'
-import { layerCarry ,handleFlConserve, getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles} from "./utilities/map_utils.js"
+import { layerCarry , getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles} from "./utilities/map_utils.js"
 import './styles.css'
 import { geoWrap , getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
 

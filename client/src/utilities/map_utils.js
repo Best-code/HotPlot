@@ -51,9 +51,9 @@ function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize
  
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
-        color: '#d61313',
+        color: '#f76605',
         weight: 1.5,
-        opacity: 0.5
+        opacity: 0.7
     };
 }
 
