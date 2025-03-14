@@ -32,11 +32,13 @@ const map = initMap.map;
 const esriTiles = initMap.tiles;
 
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
-map.locate({setView: true, maxZoom: 10}); //sets map to userlocation if approved
+
+map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11);});
+var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
 
 var userLocation = new geoWrap(null);
 
-//try and get user location and set map center to it
+//try and get user location 
 getUserCoords(userLocation , map);
 
 //get geolocal search results if possible

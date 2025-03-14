@@ -182,19 +182,22 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
 }
 
 function getPrivateStyle(){
-    return {color: '#910c12', 
+    return {
+        color: '#910c12', 
         fill : true  , 
         fillColor : '#ffffff00' , 
         opacity : 1.0 , 
-        weight : 1} 
+        weight : 1.5
+    };
 }
 
 function handlePrivateLandTooltip(feature , map, privateLands){
-    var toolTip =  L.tooltip(feature.latlng , {opacity : .5}).setContent(feature.layer.properties.owner_name);
+
+    var toolTip =  L.tooltip(feature.latlng , {opacity : .5 , content : (layer)=>{return getPrivateTooltipContent(feature.layer.properties.owner_name);} })
 
     privateLands.obj.on('mousemove' , (feature)=>{
             toolTip.removeFrom(map);
-            toolTip = L.tooltip(feature.latlng , {opacity : .5}).setContent(feature.layer.properties.owner_name);
+            toolTip = L.tooltip(feature.latlng , {opacity : .5 , content : (layer)=>{return getPrivateTooltipContent(feature.layer.properties.owner_name);}});
             map.openTooltip(toolTip);
 
     });
@@ -217,6 +220,10 @@ function handlePrivateLandTooltip(feature , map, privateLands){
         privateLands.obj.off('mouseout');
         privateLands.obj.off('zoomstart');
      });
+}
+
+function getPrivateTooltipContent(ownerName){
+    return '<div>' +ownerName+'</div>';
 }
 
 function featurePopup(feature , headerText , layer = null ){ //right now it just runs through all the properties we send over as a dict
