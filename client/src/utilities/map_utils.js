@@ -141,11 +141,11 @@ function getFlPublicColors(feature){
     switch(true){
         case feature.properties.name.includes('Wildlife Management Area') : return '#4ce6ba';
         case feature.properties.name.includes('WMA') : return '#4ce6ba';
-        case feature.properties.name.includes('National Park') : return '#1121ad';
-        case feature.properties.name.includes('State Park') : return '#2a48b0';
+        case feature.properties.name.includes('National Park') : return '#121d7a';
+        case feature.properties.name.includes('State Park') : return '#0b21db';
         case feature.properties.name.includes('State Forest') : return '#12de45';
         case feature.properties.name.includes('National Forest') : return '#5f9c4c';
-        case feature.properties.name.includes('Water Management') : return '#03b6fc';
+        case feature.properties.name.includes('Water Management') : return '#5ccacc';
         case feature.properties.managing_agency_type.includes('Federal') : return '#74992e';
         case feature.properties.managing_agency_type.includes('Local') : return '#deb773';
         case feature.properties.managing_agency_type.includes('State') : return '#2fa8d4';
@@ -166,6 +166,8 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
 
         privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})
 
+        privateLands.obj.on('mouseover' , (feature)=>{ handlePrivateLandTooltip(feature , map , privateLands); });
+
         privateLands.obj.addTo(map);
     }
     else if(privateLands.obj instanceof L.Layer){
@@ -185,6 +187,36 @@ function getPrivateStyle(){
         fillColor : '#ffffff00' , 
         opacity : 1.0 , 
         weight : 1} 
+}
+
+function handlePrivateLandTooltip(feature , map, privateLands){
+    var toolTip =  L.tooltip(feature.latlng , {opacity : .5}).setContent(feature.layer.properties.owner_name);
+
+    privateLands.obj.on('mousemove' , (feature)=>{
+            toolTip.removeFrom(map);
+            toolTip = L.tooltip(feature.latlng , {opacity : .5}).setContent(feature.layer.properties.owner_name);
+            map.openTooltip(toolTip);
+
+    });
+
+    function remov(feature){
+        toolTip.removeFrom(map); 
+        privateLands.obj.off('mousemove'); 
+        privateLands.obj.off('mouseout');
+        privateLands.obj.off('zoomstart');
+        map.off('zoomstart' , remov);
+    }
+
+    map.on('zoomstart', remov);
+
+    privateLands.obj.on('mouseout' , (feature)=>{
+        toolTip.removeFrom(map); 
+        map.off('zoomstart' , remov);
+        toolTip = null; 
+        privateLands.obj.off('mousemove'); 
+        privateLands.obj.off('mouseout');
+        privateLands.obj.off('zoomstart');
+     });
 }
 
 function featurePopup(feature , headerText , layer = null ){ //right now it just runs through all the properties we send over as a dict
@@ -218,5 +250,3 @@ function featurePopup(feature , headerText , layer = null ){ //right now it just
     section.style.display = 'block';
     section.style.opacity = 1;
 }
-
-
