@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css'
 import "leaflet"
 import axios from "axios"
 import fireIcon from "../icons/flame.png"
-import { bounds, noConflict } from 'leaflet'; 
+import locationIcon from '../icons/Location/location-icon.png'
 import  vectorTileLayer from 'leaflet-vector-tile-layer'
 
 export class layerCarry{
@@ -47,7 +47,29 @@ export function getFireIcon(feature, latlng){
 
 } 
 
-function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize : size})}
+function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize : size});}
+
+export function getLocationIcon(size = [20,20]){return L.icon({iconUrl : locationIcon , iconSize : size});}
+
+export function addLocationMarker(map , icon , carrier, latlng , opacity = 1.0){
+
+    var marker = new L.Marker(latlng , {icon : icon , opacity : opacity});
+
+    marker.addTo(map);
+
+    carrier.obj = marker;
+
+    return;
+}
+
+export function removeLocationMarker(map , marker){
+
+    if(marker == null){
+        return;
+    }
+
+    map.removeLayer(marker);
+}
  
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
@@ -79,7 +101,7 @@ function wfigsOnEach(feature, layer){
 
     layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Known Wildfire' , layer);});
 
-    layer.on('mouseover', (layer)=>{ layer.target.setIcon(getFirePic([21,21]))});
+    layer.on('mouseover', (layer)=>{ layer.target.setIcon(getFirePic([25,25]))});
 
     layer.on('mouseout' , (layer)=>{layer.target.setIcon(getFirePic())});
     
@@ -133,7 +155,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
 
 function getFlPublicStyle(feature , layerName , zoom){
 
-    return {fillColor : getFlPublicColors(feature), fillOpacity: .3 , color : '#ebf0f0',  weight : 0.2
+    return {fillColor : getFlPublicColors(feature), fillOpacity: .3 , color : '#ebf0f0',  weight : 0.3
         };
 }
 

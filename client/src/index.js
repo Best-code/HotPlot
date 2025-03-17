@@ -1,5 +1,5 @@
 import 'leaflet'
-import { layerCarry , getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles} from "./utilities/map_utils.js"
+import { layerCarry , getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles, addLocationMarker , getLocationIcon , removeLocationMarker} from "./utilities/map_utils.js"
 import './styles.css'
 import { geoWrap , getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
 
@@ -11,6 +11,13 @@ const minZoom = 4;
 const zoomStart = 4;   
 const apiUrl = 'http://localhost:4242'; //adjust   
 const usCenter = [38,-100]; //about the cente rof the us, starting value if geoloc is declined
+
+const locationIcon = new layerCarry(getLocationIcon([40,40])); //consistent style across iterations
+
+
+/*this global will change based on whatever location marker is currently placed on the map , 
+defaulting to wherever the userlocation is , or, if null then nowhere*/
+var locationMarker = new layerCarry(null); 
 
 //map instance with satelite baselayer and appropriate bounds
 
@@ -33,7 +40,7 @@ const esriTiles = initMap.tiles;
 
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
 
-map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11);});
+map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
 var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
 
 var userLocation = new geoWrap(null);
@@ -43,8 +50,8 @@ getUserCoords(userLocation , map);
 
 //get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
-    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map)}
-    else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map)}});
+    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
+    else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map , locationMarker , locationIcon.obj)}});
 
 //loaded on page load but not placed on map
 var viirsLayer = null;
@@ -68,3 +75,4 @@ document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlP
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
 document.getElementById('fl-private').addEventListener('click' , ()=>{handlePrivateTiles(map , privateLands , apiUrl)});
+document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden'; removeLocationMarker(map , locationMarker.obj)});

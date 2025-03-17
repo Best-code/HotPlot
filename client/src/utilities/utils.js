@@ -2,6 +2,7 @@ import axios from "axios"
 import mIcon from "../icons/M.png"
 import DIcon from "../icons/D.png"
 import VDIcon from "../icons/VD.png"
+import { addLocationMarker, getLocationIcon, removeLocationMarker } from "./map_utils";
 
 export function onLoad(){ //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
@@ -29,7 +30,6 @@ export function onLoad(){ //simply to render tailwind componeents visible after 
     //if we have search results visible we remove them from view when map dragged/ focus out/etc
     document.getElementById('body').addEventListener("click" , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
     document.getElementById('search-input').addEventListener('blur' ,()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length >0){results[0].remove();}} , {} );
-    document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden';});
     document.getElementById('feature-popup-close').addEventListener('click' , ()=>{var popupSection = document.getElementById('feature-click-popup'); popupSection.style.opacity = 0; popupSection.style.visibility = 'hidden';});
 }    
 //location passed as [lat , lon] 
@@ -78,7 +78,7 @@ export function getUserCoords(mutate , map){ // mutates carrier class passed in 
 
 //through this function, the database id # for the record shown in any div on screen is stored as the 
 //"db-id" attribute and can be retrieved on click of that element
-export async function handleSearch(lat , lon , apiUrl , map){
+export async function handleSearch(lat , lon , apiUrl , map , locationMarker , locationIcon){
 
     const userInput = document.getElementById('search-input').value;
 
@@ -132,7 +132,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
                 newDiv.setAttribute('lat' , geomatchArr[6]);
                 newDiv.setAttribute('lon' , geomatchArr[7]);
 
-                newDiv.addEventListener('mousedown' , (event)=>{searchClick(event , apiUrl , map);}) //TODO:implement
+                newDiv.addEventListener('mousedown' , (event)=>{searchClick(event , apiUrl , map , locationMarker , locationIcon);}) //TODO:implement
             }
             else{
 
@@ -152,7 +152,7 @@ export async function handleSearch(lat , lon , apiUrl , map){
     }
 }
 
-export async function searchClick(event ,  apiUrl, map){ 
+export async function searchClick(event ,  apiUrl, map , locationMarker , locationIcon){ 
 
     //TODO:error handling here
     const lat = event.target.getAttribute('lat');
@@ -163,18 +163,20 @@ export async function searchClick(event ,  apiUrl, map){
 
     map.setView(latln , 10); 
 
-    //var pulsingIcon = L.icon.pulse({iconSize:[12,12]});
+    const dbId = event.target.getAttribute('db-id'); 
 
-    //var marker = L.marker(latln,{icon: pulsingIcon}).addTo(map); //TODO:fix /implement marker add/remove
+    removeLocationMarker(map , locationMarker.obj);
+
+    addLocationMarker(map , locationIcon , locationMarker , latln);
 
 
-    fireForecastResultPopup(event , lat , lon , apiUrl);
+    fireForecastResultPopup(event ,dbId , apiUrl);
 }
 
 //TODO: function that loads-reloads forecast information inside the search result popup div
-export async function fireForecastResultPopup(event, lat , lon , apiUrl){ //expects dict with info, lat and lon are for popping up nearby fires or suspected fires
+export async function fireForecastResultPopup(event, dbId, apiUrl){ //expects dict with info, lat and lon are for popping up nearby fires or suspected fires
 
-    const forecast = await getFireForecast(event.target.getAttribute('db-id') , apiUrl);
+    const forecast = await getFireForecast(dbId, apiUrl);
 
     document.getElementById('result-info-popup').style.visibility = 'visible'; 
     document.getElementById('result-info-popup').style.height = '10em';

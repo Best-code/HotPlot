@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express'); 
+const compression = require('compression');
 const dayjs = require('dayjs');
 const neon = require('@neondatabase/serverless');
 var customFormat = require('dayjs/plugin/customParseFormat');
@@ -9,6 +10,7 @@ dayjs.extend(customFormat);
 const cors = require('cors');
 const app = express();
 app.use(express.json());
+app.use(compression({filter : (req , res)=>{return true;} , level : 3}));
 
 app.use(express.urlencoded({extended : true}));
    
@@ -23,25 +25,73 @@ const PORT = process.env.PORT || 4242; //MODIFY when hosted
 
 app.get('/viirs-public', async (_, res) => {
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
+
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  var result = null;
   
-  const result = await conn(`select * from ${process.env.VIIRSPUBLIC};`);
+  try{
+    result = await conn(`select * from ${process.env.VIIRSPUBLIC};`);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
 
   res.json(result[0]);
 });
   
 app.get('/wfigs-public', async (_, res) => {
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
 
-  const result = await conn(`select * from ${process.env.WFIGSPUBLIC};`);
+  try{
 
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  var result = null;
+
+  try{
+    result = await conn(`select * from ${process.env.WFIGSPUBLIC};`);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+  
   res.json(result[0]);
 }); 
 
 app.get('/geocode-place', async ( req, res) => {
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
+
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
  
   const userInput = req.query.userInput;
 
@@ -53,14 +103,12 @@ app.get('/geocode-place', async ( req, res) => {
 
   try{
 
-    var thresh = await conn('SET pg_trgm.similarity_threshold = 0.1;');
-
     result = await conn(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
   }catch(error){ 
-    console.log(error); //for some fucking reaosn the above fails --occasionally, no clue why
-    console.log(userInput);  
-    result = await conn(`select geomatch_fallback( $1::text) as geomatch;` , [userInput]); 
+    res.status(500);
+    res.send();
+    return;
   }
   
 
@@ -69,11 +117,31 @@ app.get('/geocode-place', async ( req, res) => {
 
 app.get('/get-fire-forecast' , async (req , res) =>{
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
+
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
 
   const dbId = req.query.id;
 
-  var result = await conn(`select date , day_1 , day_2 , day_3 , day_4 , day_5 , day_6 , day_7 from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) ) limit 1;` , [dbId] );
+  var result = null;
+
+  try{
+
+    result = await conn(`select date , day_1 , day_2 , day_3 , day_4 , day_5 , day_6 , day_7 from ${process.env.FIRE_OUTLOOK} outlook where ST_Intersects( outlook.geometry  , (select geometry::geometry from ${process.env.GEOCODE} where id = $1) ) limit 1;` , [dbId] );
+  }
+  catch(error){
+    res.status(500);
+    res.send(); 
+    return; 
+  }
 
   var forecast = result[0];
 
@@ -87,7 +155,7 @@ app.get('/get-fire-forecast' , async (req , res) =>{
 
   forecast_values['forecast_date'] = startDate.format('YYYY/MM/DD');
 
-  forecast_values['weeklyForecast'] = {};
+  forecast_values['weeklyForecast'] = {}; 
 
   for (let key in forecast){
 
@@ -110,19 +178,40 @@ app.get('/get-fire-forecast' , async (req , res) =>{
 
 app.get('/publicTiles' , async (req , res) =>{
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
 
-  var x = parseInt(req.query.x); //TODO: error handling
-  var y = parseInt(req.query.y);
-  var z = parseInt(req.query.z);
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  try{
+
+    var x = parseInt(req.query.x); //TODO: error handling
+    var y = parseInt(req.query.y);
+    var z = parseInt(req.query.z);
+  }
+  catch(error){
+    res.status(400);
+    res.send('invalid tile query');
+    return;
+  }
 
   var simplify = null;
 
   switch(true){
     case z < 10:
+      simplify = 600;
+      break;
+    case z >= 10 && z < 12:
       simplify = 300; 
       break;
-    case z <= 12:
+    case z == 12:
       simplify = 100;
       break;
     case z > 12 && z <= 13:
@@ -139,7 +228,17 @@ app.get('/publicTiles' , async (req , res) =>{
       break;
   }
 
-  const tile = await conn('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
+  var tile = null;
+
+  try{
+    tile = await conn('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
 
   res.send(tile[0].getpubliclandstile);
 
@@ -147,11 +246,29 @@ app.get('/publicTiles' , async (req , res) =>{
  
 app.get('/privateTiles' , async (req , res) =>{
 
-  const conn = neon.neon(process.env.DATABASE_URL);
+  var conn = null;
 
-  var x = parseInt(req.query.x); //TODO: error handling
-  var y = parseInt(req.query.y);
-  var z = parseInt(req.query.z);
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  try{
+
+    var x = parseInt(req.query.x); //TODO: error handling
+    var y = parseInt(req.query.y);
+    var z = parseInt(req.query.z);
+  }
+  catch(error){
+    res.status(400);
+    res.send('invalid tile query');
+    return;
+  }
 
   var acresGreaterThan = null;
   var simplify = null;
@@ -182,7 +299,16 @@ app.get('/privateTiles' , async (req , res) =>{
       simplify = 0;
   }
 
-  const tile = await conn('select getPrivateLandsTile($1::int , $2::int , $3::int , $4::int , $5::int)' , [x,y,z , simplify, acresGreaterThan]);
+  var tile = null;
+
+  try{
+    tile = await conn('select getPrivateLandsTile($1::int , $2::int , $3::int , $4::int , $5::int)' , [x,y,z , simplify, acresGreaterThan]);
+  }
+  catch(eror){
+    res.status(500);
+    res.send();
+    return;
+  }
 
   res.send(tile[0].getprivatelandstile);  
 }) 
