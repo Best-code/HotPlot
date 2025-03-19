@@ -42,7 +42,8 @@ map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; va
 
 //sets map to initial user locaion and allows for snapping to user position from navbar
 map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
-var initialLocation = map.locate({maximumAge : 1000}); //sets map to userlocation if approved
+map.on('locationerror' , (error)=>{console.log(error);})
+var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
 
 //hoestly may drop the below section to just use the leaflet api instead of making a new request
 var userLocation = new geoWrap(null);
@@ -52,7 +53,7 @@ getUserCoords(userLocation);
 
 //get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
-    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
+    if(initialLocation.latlng instanceof L.latLng){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map , locationMarker , locationIcon.obj)}});
 
 

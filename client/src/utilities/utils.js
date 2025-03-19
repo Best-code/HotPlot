@@ -72,7 +72,7 @@ export function getUserCoords(mutate){ // mutates carrier class passed in to hav
 
     if( ! ('geolocation' in navigator)){return;}
 
-    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position;} , (error)=>{return;})
+    navigator.geolocation.getCurrentPosition((position)=>{mutate.obj = position;} , (error)=>{return;} , {maximumAge : 90000} );
 
     return;
 }
