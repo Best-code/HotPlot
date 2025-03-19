@@ -41,7 +41,7 @@ const esriTiles = initMap.tiles;
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
 
 //sets map to initial user locaion and allows for snapping to user position from navbar
-map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
+map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); removeLocationMarker(map, locationMarker.obj); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
 map.on('locationerror' , (error)=>{console.log(error);})
 var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
 
