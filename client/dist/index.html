@@ -7,7 +7,7 @@
   </head>
   <body id="body" class = "overflow-hidden">
    <div id="map"></div>
-    <div id="search-bar"  class="absolute top-3 left-15 z-5 " style="visibility: hidden;">
+    <div id="search-bar"  class="absolute top-3 left-20 z-5 " style="visibility: hidden;">
         <div class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
     <input
       type="text"
@@ -35,7 +35,7 @@
     <section id="top-banner0" class="top-banner">
         <div id="hotplot-logo0" class="hotplot-logo"></div>
     </section>
-    <div class="absolute top-14 left-19 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white" id="search-result-div"></div>
+    <div id="search-result-div" class="absolute top-14 left-23 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white"></div>
     <section id="layerMenu" class="layerContainer">
       <div class="layerSelectBox" id="viirs">
           <div class="layerDesc" id="viirs-desc"></div>
@@ -53,6 +53,45 @@
         <div class="layerDesc" id="fl-private-desc"></div>
         <div class="layerIcon" id="fl-private-icon"></div>
       </div>
+    </section>
+
+    <section id="navigation-bottom-right" class="absolute bottom-15 right-7 w-50 h-16 block">
+      <div id="navbar-bottom-right" class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-4 grid-rows-1 gap-2">
+        <div id="zoom-in" class="pl-1" style="pointer-events: all; cursor: pointer;">
+            <svg class="w-1/1 h-1/1"
+            xmlns="http://www.w3.org/2000/svg" 
+            xmlns:xlink="http://www.w3.org/1999/xlink" 
+            zoomAndPan="magnify" 
+            viewBox="0 0 375 374.999991" 
+            preserveAspectRatio="xMidYMid meet" 
+            version="1.0">
+            <g transform = "scale(1.7,1.7) translate(-75 , -75)">
+              <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 127.499996, 184.499988)" fill="#ffffff" stroke-linejoin="miter" d="M 0.00000516333 6.000017 L 160.000016 6.000017 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/>
+              <path stroke-linecap="butt" transform="matrix(0, 0.75, -0.75, 0, 191.999992, 128.999992)" fill="#ffffff" stroke-linejoin="miter" d="M 0.0000112947 5.99999 L 160.000022 5.99999 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/>
+            </g>
+          </svg>
+        </div>
+        <div id="zoom-out" style="pointer-events: all; cursor: pointer;">
+          <svg class="w-1/1 h-1/1"
+          xmlns="http://www.w3.org/2000/svg" 
+          xmlns:xlink="http://www.w3.org/1999/xlink" 
+          zoomAndPan="magnify" 
+          viewBox="0 0 375 374.999991"  
+          preserveAspectRatio="xMidYMid meet" version="1.0">
+          <g transform="scale(1.7,1.7) translate(-44,-73)">
+            <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 90.499996, 182.999988)" fill="#ffffff" stroke-linejoin="miter" d="M 0.00000516333 6.000016 L 160.000016 6.000016 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/></svg>
+          </g>
+        </div>
+        <div id="locate-me" style="pointer-events: all; cursor: pointer;">
+          <svg class="w-1/1 h-1/1" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="scale(0.5, 0.5) translate(2, 9)">
+              <path d="M16 1L15 0L0 6V8L7 9L8 16H10L16 1Z" fill="#ffffff"/>
+            </g>
+            </svg>
+        </div>
+        <div id="info"></div>
+      </div>
+      <div id="basemaps-bottom-right" class="w-1/1 h-7 mt-2 rounded-full bg-[#000000] opacity-70"></div>
     </section>
 
     <div id="result-info-popup" class="result-popup w-1/1 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden" style="visibility: hidden;">

@@ -12,7 +12,7 @@ export class layerCarry{
 }      
  
 export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
-    var map = L.map(id , {zoomDelta : 0.5, minZoom : minZoom , maxBounds : maxBounds,
+    var map = L.map(id , {zoomDelta : 1, minZoom : minZoom , maxBounds : maxBounds,
         zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
 
     var tiles = L.tileLayer(tileUrl, {attribution : attribution});
@@ -22,7 +22,7 @@ export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds
     return {"tiles": tiles , "map" : map};
 }
 
-//WIP will query on bounding box to get large polygon data
+//WIP will query on bounding box to get large polygon data - dont bother
 export async function getGeojson(url , bounded = false, boundingBox = null){ //specify bounding box for spatial query based on current map bounds -- not supported 
     if(!bounded){
         var features = await axios.get(url); 
@@ -42,18 +42,22 @@ export async function getGeojson(url , bounded = false, boundingBox = null){ //s
     }
 }
  
+//returns marker placable on map
 export function getFireIcon(feature, latlng){ 
     return L.marker(latlng , {icon : getFirePic() , riseOnHover : true});
 
 } 
 
+//returning fire img as L.icon - used above
 function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize : size});}
 
+//ios-style location icon png modify L.icon options here
 export function getLocationIcon(size = [20,20]){return L.icon({iconUrl : locationIcon , iconSize : size});}
 
+//marker creating function
 export function addLocationMarker(map , icon , carrier, latlng , opacity = 1.0){
 
-    var marker = new L.Marker(latlng , {icon : icon , opacity : opacity});
+    var marker = new L.Marker(latlng , {icon : icon , opacity : opacity , interactive : false});
 
     marker.addTo(map);
 
@@ -70,7 +74,8 @@ export function removeLocationMarker(map , marker){
 
     map.removeLayer(marker);
 }
- 
+
+//dictates satelite hotspot layer styling, modify here
 export function viirsStyle(){ //returns style for viirs data , you make it gets used
      return  {
         color: '#f76605',
@@ -79,6 +84,7 @@ export function viirsStyle(){ //returns style for viirs data , you make it gets 
     };
 }
 
+//defines function to be executed on each polygon in hotspot layer on render
 function viirsOnEach(feature , layer){
 
     layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Satelite Hotspot' , layer);});
@@ -88,6 +94,7 @@ function viirsOnEach(feature , layer){
     layer.on('mouseout' , (layer)=> layer.target.setStyle(viirsStyle()));
 }
 
+//makes request to server
 export async function getViirs(apiUrl){ //returns layer 
 
     var viirsData = await getGeojson(apiUrl + '/viirs-public');
@@ -97,6 +104,7 @@ export async function getViirs(apiUrl){ //returns layer
     return viirsLayer;
 }
 
+//function to execute on renger of known wildfire points, set event listeners, etc..
 function wfigsOnEach(feature, layer){
 
     layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Known Wildfire' , layer);});
@@ -107,6 +115,7 @@ function wfigsOnEach(feature, layer){
     
 }
 
+//server call
 export async function getWfigs(apiUrl){ //returns layer 
 
     var wfigsData = await getGeojson(apiUrl + '/wfigs-public');
@@ -116,6 +125,7 @@ export async function getWfigs(apiUrl){ //returns layer
     return wfigsLayer;   
 }
 
+//turn simple geojson layers on or off, pass the layer itself and the current map object
 export function handleSmallLayer(map , layer = null){ 
 
     if(layer != null && map.hasLayer(layer)){
@@ -126,6 +136,8 @@ export function handleSmallLayer(map , layer = null){
     }
 } 
 
+//requests and handles on/off for vector tiled public lands data - we may combine public and private
+//into one function and let params decide behaviour....
 export async function handleFlPublicTiles(map , flConserve , apiUrl){
 
     var url = apiUrl + '/publicTiles';
@@ -135,7 +147,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
         //TODO:break out bounds into config file
         flConserve.obj = vectorTileLayer(url , {s : '' , style : getFlPublicStyle , 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 8 , interactive : true 
+            updateWhenZooming : false , minZoom : 8 , interactive : true , zIndex : 2
         });
 
         flConserve.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Public Lands');})
@@ -153,12 +165,14 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
     }
 }
 
+//publiclands style - obv
 function getFlPublicStyle(feature , layerName , zoom){
 
     return {fillColor : getFlPublicColors(feature), fillOpacity: .3 , color : '#ebf0f0',  weight : 0.3
         };
 }
 
+//color scheme, based on name or managing agency of land polygon
 function getFlPublicColors(feature){
     switch(true){
         case feature.properties.name.includes('Wildlife Management Area') : return '#4ce6ba';
@@ -174,6 +188,8 @@ function getFlPublicColors(feature){
     }
 }
 
+//requests and handles on/off for vector tiled private lands data - we may combine public and private
+//into one function and let params decide behaviour....
 export async function handlePrivateTiles(map , privateLands , apiUrl){
 
     const url = apiUrl + '/privateTiles';
@@ -183,7 +199,7 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
         //TODO:break out bounds into config file
         privateLands.obj = vectorTileLayer(url , {s : '' , style : getPrivateStyle(), 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 12 , interactive : true 
+            updateWhenZooming : false , minZoom : 12 , interactive : true , zIndex : 1
         });
 
         privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})
@@ -213,6 +229,8 @@ function getPrivateStyle(){
     };
 }
 
+//creates tooltip that follows mouse moves on hover of feature
+//leaflet supports this with its native tile layers - but not with extensions, so we have to recreate
 function handlePrivateLandTooltip(feature , map, privateLands){
 
     var toolTip =  L.tooltip(feature.latlng , {opacity : .5 , content : (layer)=>{return getPrivateTooltipContent(feature.layer.properties.owner_name);} })
@@ -244,10 +262,12 @@ function handlePrivateLandTooltip(feature , map, privateLands){
      });
 }
 
+//returns html element as text that becomes tooltip content
 function getPrivateTooltipContent(ownerName){
     return '<div>' +ownerName+'</div>';
 }
 
+//generalized function for onclick feature popups
 function featurePopup(feature , headerText , layer = null ){ //right now it just runs through all the properties we send over as a dict
 
     var section = document.getElementById('feature-click-popup');

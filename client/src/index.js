@@ -40,20 +40,29 @@ const esriTiles = initMap.tiles;
 
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
 
+//sets map to initial user locaion and allows for snapping to user position from navbar
 map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
-var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
+var initialLocation = map.locate({maximumAge : 1000}); //sets map to userlocation if approved
 
+//hoestly may drop the below section to just use the leaflet api instead of making a new request
 var userLocation = new geoWrap(null);
 
 //try and get user location 
-getUserCoords(userLocation , map);
+getUserCoords(userLocation);
 
 //get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
     if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map , locationMarker , locationIcon.obj)}});
 
-//loaded on page load but not placed on map
+
+//navbar events
+document.getElementById('zoom-in').addEventListener('click' , ()=>{map.zoomIn(1);});
+document.getElementById('zoom-out').addEventListener('click' , ()=>{map.zoomOut(1);});
+document.getElementById('locate-me').addEventListener('click' , ()=>{map.locate();});
+//end navbar events
+
+//loaded smaller geojson based layers on page load but not placed on map
 var viirsLayer = null;
 var wfigsLayer = null;
 
@@ -75,4 +84,4 @@ document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlP
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
 document.getElementById('fl-private').addEventListener('click' , ()=>{handlePrivateTiles(map , privateLands , apiUrl)});
-document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden'; removeLocationMarker(map , locationMarker.obj)});
+document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden'; if(locationMarker.obj instanceof L.Marker){removeLocationMarker(map , locationMarker.obj);}});

@@ -17,7 +17,7 @@
     height: 20em;
     width: 15em;
     position: absolute;
-    top: 6vh;
+    top: 12vh;
     right: 1em;
     background-color: transparent;
 }
@@ -134,7 +134,7 @@
     z-index: 1;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 1em;
     border-radius: .5em;
 }
 
@@ -174,7 +174,7 @@
 }
 
 .search-result:hover{
-    background-color: rgb(200, 190, 190);
+    background-color: #9c9898;
     opacity: .7;
     color: white;
 }
