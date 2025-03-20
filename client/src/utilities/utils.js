@@ -2,7 +2,7 @@ import axios from "axios"
 import mIcon from "../icons/M.png"
 import DIcon from "../icons/D.png"
 import VDIcon from "../icons/VD.png"
-import { addLocationMarker, getLocationIcon, removeLocationMarker } from "./map_utils";
+import { addLocationMarker, removeLocationMarker } from "./map_utils";
 
 export function onLoad(){ //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';

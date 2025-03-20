@@ -231,7 +231,9 @@ app.get('/publicTiles' , async (req , res) =>{
   var tile = null;
 
   try{
+    
     tile = await conn('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
+
   }
   catch(error){
     res.status(500);
@@ -239,7 +241,7 @@ app.get('/publicTiles' , async (req , res) =>{
     return;
   }
 
-
+  
   res.send(tile[0].getpubliclandstile);
 
 })
@@ -276,7 +278,7 @@ app.get('/privateTiles' , async (req , res) =>{
   switch(true){
     case z >= 12 && z < 13:
       acresGreaterThan = 100;
-      simplify = 50;
+      simplify = 100;
       break;
     case z >= 13 && z <= 14:
       acresGreaterThan = 20;
