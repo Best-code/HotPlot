@@ -19,21 +19,19 @@ app.use(cors({
   credentials: true // Required for sending cookies
 })); 
 
-
 const PORT = process.env.PORT || 4242; //MODIFY when hosted
-
 
 app.get('/viirs-public', async (_, res) => {
 
   var conn = null;
 
   try{
-
     conn = neon.neon(process.env.DATABASE_URL);
   }
   catch(error){
+    console.log("Error connecting to the Neon Database")
     res.status(500);
-    res.send();
+    res.send(error);
     return;
   }
 
