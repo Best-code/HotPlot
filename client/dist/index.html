@@ -109,17 +109,18 @@
       </div>
     </div>
 
-    <section id="feature-click-popup" class="h-100 w-78 absolute left-5 top-25 transition-all duration-200" style="display: none;">
-      <button type="button" id="feature-popup-close" class="absolute right-0 rounded-md p-1 items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+    <section id="feature-click-popup" class="h-fit w-fit absolute left-5 top-25 transition-all duration-200" style="display: none;">
+      <button type="button" id="feature-popup-close" class="z-20 absolute lg:right-[.75em] right-0 m-1 rounded-md items-center justify-center text-black hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg></button>
 
       <!-- Style this to be nice :) -->
-      <div id="feature-click-box" class="bg-white flex flex-col h-100 w-70 absolute top-0 left-0 rounded-lg">
-        <div id="feature-click-header" class="aboslute top-0 w-1/1 h-1/5 block"></div>
-        <div id="feature-click-body" , class="h-4/5 w-1/1 overflow-y-auto overflow-x-auto block"></div>
-      </div>
+      <div id="feature-click-box" class="z-10 bg-white flex flex-col lg:max-h-[32rem] md:max-h-[26rem] max-h-[20rem] lg:max-w-[18rem] md:max-w-[15rem] max-w-[13rem] rounded-2xl border border-gray-200 transition-all duration-200">
+        <div id="feature-click-header" class="flex md:text-xl text-xl font-black text-black justify-center items-center w-full rounded-t-2xl bg-gray-100 drop-shadow-lg pb-4 pt-2"></div>
+        <div id="feature-click-body" class="h-full w-full overflow-y-auto overflow-x-hidden text-black scrollbar-hide lg:p-2 p-1 lg:px-6 px-3"></div>
+        <div class="absolute bottom-0 left-0 w-full lg:h-6 md:h-5 h-3 bg-gradient-to-t from-gray-600 to-transparent pointer-events-none rounded-b-2xl"></div>
+    </div>
     </section>
     <script src="main.js"></script>
   </body>
