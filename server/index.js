@@ -96,8 +96,19 @@ app.get('/geocode-place', async ( req, res) => {
   const userInput = req.query.userInput;
 
   //TODO: add error handling
-  const userLat = parseFloat(req.query.lat);
-  const userLon = parseFloat(req.query.lon); 
+  try{
+    const userLat = parseFloat(req.query.lat);
+    const userLon = parseFloat(req.query.lon); 
+
+    if(isNaN(userLat) || isNaN(userLon)){
+      throw new Error('invalid lat/lon');
+    }
+  }
+  catch(error){
+    res.status(400);
+    res.send(error.message);
+    return;
+  }
 
   var result = null; 
 
@@ -195,10 +206,14 @@ app.get('/publicTiles' , async (req , res) =>{
     var x = parseInt(req.query.x); //TODO: error handling
     var y = parseInt(req.query.y);
     var z = parseInt(req.query.z);
+
+    if(isNaN(x) || isNaN(y) || isNaN(z)){
+      throw new Error('invalid tile query');
+    }
   }
   catch(error){
     res.status(400);
-    res.send('invalid tile query');
+    res.send(error.message);
     return;
   }
 
@@ -244,7 +259,7 @@ app.get('/publicTiles' , async (req , res) =>{
   
   res.send(tile[0].getpubliclandstile);
 
-})
+});
  
 app.get('/privateTiles' , async (req , res) =>{
 
@@ -265,10 +280,14 @@ app.get('/privateTiles' , async (req , res) =>{
     var x = parseInt(req.query.x); //TODO: error handling
     var y = parseInt(req.query.y);
     var z = parseInt(req.query.z);
+
+    if(isNaN(x) || isNaN(y) || isNaN(z)){
+      throw new Error('invalid tile query');
+    }
   }
   catch(error){
     res.status(400);
-    res.send('invalid tile query');
+    res.send(error.message);
     return;
   }
 
@@ -313,7 +332,58 @@ app.get('/privateTiles' , async (req , res) =>{
   }
 
   res.send(tile[0].getprivatelandstile);  
-}) 
+});
+
+app.get('/get-fires-near-me', async (req, res) => {
+
+  var conn = null;
+
+  try{
+
+    conn = neon.neon(process.env.DATABASE_URL);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  try{
+
+    var queryLat = parseFloat(req.query.lat);
+    var queryLon = parseFloat(req.query.lon); 
+    var radius = parseInt(req.query.distance); // in miles
+
+    if(isNaN(queryLat) || isNaN(queryLon) || isNaN(radius)){
+      res.status(400);
+      res.send('invalid lat/lon');
+      return;
+    }
+  }
+  catch(error){
+    res.status(400);
+    res.send(error.message);
+    return;
+  }
+
+  var wildfires = null;
+  var hotspots = null;
+
+  try{
+    wildfires = await conn( 'select * from wildfiresNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
+    hotspots = await conn( 'select * from hotspotsNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
+  }
+  catch(error){
+    res.status(500);
+    res.send();
+    return;
+  }
+
+  res.json({
+    'wildfires': wildfires,
+    'hotspots': hotspots
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`); 
