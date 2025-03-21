@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
-#body{
+#body {
     width: 100vw;
     height: 100vh;
     margin: 0%;
     z-index: 0;
 }
 
-#map{
+#map {
     height: 100vh;
     width: 100vw;
     z-index: 0;
 }
 
-#layerMenu{
+#layerMenu {
     height: 20em;
     width: 15em;
     position: absolute;
@@ -22,7 +22,7 @@
     background-color: transparent;
 }
 
-.layerContainer{
+.layerContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -35,7 +35,7 @@
     pointer-events: none;
 }
 
-.layerSelectBox{
+.layerSelectBox {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -47,17 +47,18 @@
     z-index: 1;
 }
 
-.layerSelectBox:hover{
-    .layerDesc{
+.layerSelectBox:hover {
+    .layerDesc {
         background-color: rgba(0, 0, 0, 0.6);
     }
-    .layerIcon{
+
+    .layerIcon {
         box-shadow: 0 0 15px 0 black;
         font-size: 1.03em;
     }
 }
 
-.layerDesc{
+.layerDesc {
     color: var(--color-yellow);
     text-shadow: 0px 0px 4px black;
     pointer-events: all;
@@ -78,21 +79,21 @@
     z-index: 1;
 }
 
-.layerIcon{
+.layerIcon {
     width: 3.5em;
     height: 3.5em;
     border-radius: 3.5em;
     box-shadow: 0 0 10px 0 black;
     background-color: transparent;
     pointer-events: all;
-    cursor:pointer;
+    cursor: pointer;
     z-index: 1;
     text-align: center;
     position: relative;
     z-index: 1;
 }
 
-#wfigs-icon{
+#wfigs-icon {
     background-image: url('./icons/flame.png');
     background-position: center;
     background-size: cover;
@@ -100,7 +101,7 @@
     background-size: 60px;
 }
 
-#viirs-icon{
+#viirs-icon {
     background-image: url('./icons/viirs-layer-icon.png');
     background-position: center;
     background-size: cover;
@@ -108,7 +109,7 @@
     background-size: 60px;
 }
 
-#fl-conserve-icon{
+#fl-conserve-icon {
     background-image: url('./icons/fl-public-icon.png');
     background-position: center;
     background-size: cover;
@@ -116,15 +117,15 @@
     background-size: 60px;
 }
 
-#fl-private-icon{
+#fl-private-icon {
     background-image: url('./icons/FL_PRIVATE.png');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat; 
-    background-size: 60px;  
+    background-repeat: no-repeat;
+    background-size: 60px;
 }
 
-#top-banner0{
+#top-banner0 {
     display: flex;
     font-size: 12px;
     background-color: transparent;
@@ -138,16 +139,16 @@
     border-radius: .5em;
 }
 
-.hotplot-logo{
+.hotplot-logo {
     background-image: url('./icons/hotplot-demo-icon.png');
     pointer-events: all;
     z-index: inherit;
     width: 3em;
-    height: 3.8em;   
+    height: 3.8em;
     cursor: pointer;
 }
 
-#hotplot-logo0{
+#hotplot-logo0 {
     position: absolute;
     background-position: center;
     background-position-y: 47%;
@@ -158,7 +159,7 @@
     left: 1em;
 }
 
-.search-result{
+.search-result {
     width: 100%;
     height: 2em;
     position: relative;
@@ -173,24 +174,24 @@
     padding-top: .2em;
 }
 
-.search-result:hover{
+.search-result:hover {
     background-color: #9c9898;
     opacity: .7;
     color: white;
 }
 
-.fire-forecast-img-td{
+.fire-forecast-img-td {
     border-radius: .3em;
     align-items: center;
 }
 
-.fire-forecast-img{
+.fire-forecast-img {
     border-radius: 1em;
     height: 100%;
     width: 100%;
 }
 
-.forecast-pane-header{
+.forecast-pane-header {
     text-align: center;
     width: 10%;
 }
@@ -202,6 +203,76 @@
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.lowRiskGradient {
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(to right, white 0%, transparent 1%, transparent 98%, white 100%),
+        linear-gradient(to top, #0F6B1F, #3FA34D 25%, white);
+
+}
+
+.lowMedRiskGradient {
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(to right, white 0%, transparent 1%, transparent 98%, white 100%),
+        linear-gradient(to top, #F9A10F, white);
+
+}
+
+.highMedRiskGradient {
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(to right, white 0%, transparent 1%, transparent 98%, white 100%),
+        linear-gradient(to top, #F9560F, #F77218 25%, white);
+
+}
+
+.highRiskGradient {
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(to right, white 0%, transparent 1%, transparent 98%, white 100%),
+        linear-gradient(to top, #F73718, #F9560F 25%, white);
+
+}
+
+/* const medRiskGradient = "bg-[linear-gradient(to_top,_#F9A10F_0%,_#ffffff_100%)]"
+const medHighRiskGradient = "bg-[linear-gradient(to_top,_#F9560F_0%,_#F77218_25%,_#ffffff_100%)]"
+const highRiskGradient = "bg-[linear-gradient(to_top,_#F73718_0%,_#F9560F_25%,_#ffffff_100%)]" */
+
+/* bg-[linear-gradient(to_top,_#0F6B1F_0%,_#3FA34D_25%,_#ffffff_100%)] bg-no-repeat bg-[length:100%_100%] */
+
+.result-info-popup-height {
+    height: 7.5em;
+}
+
+@media (max-width: 1000px) {
+    .result-info-popup-height {
+        height: 5.5em;
+}
+}
+
+@media (max-width: 600px) {
+    .result-info-popup-height {
+        height: 3em;
+    }
+}
+
+@media (max-width: 340px) {
+    .result-info-popup-height {
+        visibility: hidden;
+    }
 }
