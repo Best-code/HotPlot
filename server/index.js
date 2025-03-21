@@ -97,8 +97,8 @@ app.get('/geocode-place', async ( req, res) => {
 
   //TODO: add error handling
   try{
-    const userLat = parseFloat(req.query.lat);
-    const userLon = parseFloat(req.query.lon); 
+    var userLat = parseFloat(req.query.lat);
+    var userLon = parseFloat(req.query.lon); 
 
     if(isNaN(userLat) || isNaN(userLon)){
       throw new Error('invalid lat/lon');
@@ -117,6 +117,7 @@ app.get('/geocode-place', async ( req, res) => {
     result = await conn(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
   }catch(error){ 
+    console.log(error);
     res.status(500);
     res.send();
     return;
