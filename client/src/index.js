@@ -60,7 +60,7 @@ document.getElementById('search-input').addEventListener("keystopped" , ()=>{
 //navbar events
 document.getElementById('zoom-in').addEventListener('click' , ()=>{map.zoomIn(1);});
 document.getElementById('zoom-out').addEventListener('click' , ()=>{map.zoomOut(1);});
-document.getElementById('locate-me').addEventListener('click' , ()=>{map.locate();});
+document.getElementById('locate-me').addEventListener('click' , ()=>{map.locate(600000);});
 //end navbar events
 
 //loaded smaller geojson based layers on page load but not placed on map
