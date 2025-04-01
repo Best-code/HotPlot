@@ -94,7 +94,7 @@
   </section>
 
   <div id="result-info-popup"
-    class="result-popup w-full h-0 absolute flex bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden"
+    class="result-popup result-info-popup-height w-full h-0 absolute flex bottom-0 rounded-md transition-all ease-in-out duration-700 bg-transparent overflow-hidden"
     style="visibility: hidden;">
     <button type="button" id="result-popup-close"
       class="absolute left-0 rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none">
@@ -107,7 +107,7 @@
     <!-- <div class="w-screen h-full flex flex-row overflow-x-auto overflow-y-hidden items-center justify-center" id="results-hold"> -->
       <!-- Forecast -->
       <div id="forecast-tbody"
-        class="flex flex-col w-full pb-2 rounded-lg lg:px-12 md:px-8 sm:px-4 px-2 overflow-x-auto items-center justify-center transition-all duration-200">
+        class="flex flex-col w-4/5 h-full rounded-t-lg overflow-x-auto items-center justify-center transition-all duration-200">
       </div>
     <!-- </div> -->
     <div id="wildfires-near-me" class="w-fit h-full float-right inline-flex overflow-x-auto overflow-y-hidden">
@@ -133,9 +133,11 @@
       </div>
       <div id="feature-click-body"
         class="h-full w-full overflow-y-auto overflow-x-hidden text-black scrollbar-hide lg:p-2 p-1 lg:px-6 px-3"></div>
-      <div
+
+      <!--  Bottom shadow
+        <div
         class="absolute bottom-0 left-0 w-full lg:h-6 md:h-5 h-3 bg-gradient-to-t from-gray-600 to-transparent pointer-events-none rounded-b-2xl">
-      </div>
+      </div> -->
     </div>
   </section>
   <script src="main.js"></script>
