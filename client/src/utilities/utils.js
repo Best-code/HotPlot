@@ -230,7 +230,7 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     var daySpan = document.createElement("span");
     daySpan.className = "lg:text-xl md:text-lg text-md text-center";
     console.log(forecast);
-    daySpan.innerText = forecast['weekDay'].slice(0,3) + " " + forecast['dayOfMonth'];
+    daySpan.innerText = forecast['weekDay'].slice(0, 3) + " " + forecast['dayOfMonth'];
     forecastCol.appendChild(daySpan);
 
     // The div for the icons
@@ -284,34 +284,44 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
 
 }
 
-export async function getNearbyFires(lat, lon, apiUrl){
-    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125} });
+export async function getNearbyFires(lat, lon, apiUrl) {
+    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125 } });
     return fires.data;
 }
 
-export async function firesNearbyPopUp(event, apiUrl){
-    var lat  = event.target.getAttribute('lat');
+export async function firesNearbyPopUp(event, apiUrl) {
+    var lat = event.target.getAttribute('lat');
     var lon = event.target.getAttribute('lon');
 
     const fires = await getNearbyFires(lat, lon, apiUrl);
 
     var fireDiv = document.getElementById("wild-fires-nearby");
     // Clean old nearby stuff
-    if (fireDiv.hasChildNodes()) {while (fireDiv.firstChild) { fireDiv.removeChild(fireDiv.firstChild); }}
+    if (fireDiv.hasChildNodes()) { while (fireDiv.firstChild) { fireDiv.removeChild(fireDiv.firstChild); } }
 
 
-    console.log("GETTING FIRES NEARBY")
-    for(var fire of fires.wildfires){
+    // Nearby Fire DIVS
+
+
+    var nearbyDiv = document.createElement('div');
+    nearbyDiv.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
+
+    var nearbySpan = document.createElement('span');
+    nearbySpan.className = "text-lg font-black text-center"
+    nearbySpan.innerText = "Nearby Wild Fires";
+
+    nearbyDiv.appendChild(nearbySpan);
+    fireDiv.appendChild(nearbyDiv);
+
+    for (var fire of fires.wildfires) {
+
         var div = document.createElement('div');
-        div.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
+        div.className = "w-48 items-center justify-center h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
 
-        var lat = document.createElement('span');
-        lat.innerText = "LAT: " + fire.wildfires.geometry.coordinates[0];
-        var lon = document.createElement('span');
-        lon.innerText = "LON: " + fire.wildfires.geometry.coordinates[1];
+        var county = document.createElement('span');
+        county.innerText = fire.wildfires.properties.POOCounty + " County"
 
-        div.appendChild(lat);
-        div.appendChild(lon);
+        div.appendChild(county);
 
         fireDiv.appendChild(div)
     }
