@@ -93,7 +93,7 @@ app.get('/geocode-place', async ( req, res) => {
     return;
   }
  
-  const userInput = req.query.userInput;
+  const userInput = req.query.userInput; //sanitize
 
   //TODO: add error handling
   try{
