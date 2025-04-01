@@ -46,10 +46,7 @@ export async function geoSearch(userEntry, apiUrl, location = [32.0, -84.0]) { /
 }
 
 export async function getFireForecast(databaseId, apiUrl) {
-
     const forecast = await axios.get(apiUrl + '/get-fire-forecast', { params: { "id": databaseId } });
-
-
     return forecast.data;
 }
 
@@ -152,7 +149,6 @@ export async function handleSearch(lat, lon, apiUrl, map, locationMarker, locati
             }
 
         }
-
     }
 }
 
@@ -175,6 +171,7 @@ export async function searchClick(event, apiUrl, map, locationMarker, locationIc
 
 
     fireForecastResultPopup(event, dbId, apiUrl);
+    firesNearbyPopUp(event, apiUrl);
 }
 
 //TODO: function that loads-reloads forecast information inside the search result popup div
@@ -183,7 +180,10 @@ export async function fireForecastResultPopup(event, dbId, apiUrl) { //expects d
     const forecast = await getFireForecast(dbId, apiUrl);
 
     document.getElementById('result-info-popup').style.visibility = 'visible';
-    // document.getElementById('result-info-popup').style.height = '7.5em';
+    document.getElementById('result-info-popup').style.height = '7.5em';
+    document.getElementById('result-popup-close').style.visibility = 'visible';
+    document.getElementById('wild-fires-nearby').style.height = '7.5em';
+    document.getElementById('wild-fires-nearby').style.visibility = 'visible';
 
     var forecastTb = document.getElementById('forecast-tbody');
 
@@ -210,7 +210,6 @@ function createForecastPane(parent, forecast) { //appends forecast header as chi
         createForecastCol(col, forecast['weeklyForecast'][key]);
         row.appendChild(col);
     }
-
 }
 
 //forecast takes the form of a str that is either M , D or VD
@@ -283,4 +282,37 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     riskSpan.innerText = risk;
     forecastCol.appendChild(riskSpan);
 
+}
+
+export async function getNearbyFires(lat, lon, apiUrl){
+    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125} });
+    return fires.data;
+}
+
+export async function firesNearbyPopUp(event, apiUrl){
+    var lat  = event.target.getAttribute('lat');
+    var lon = event.target.getAttribute('lon');
+
+    const fires = await getNearbyFires(lat, lon, apiUrl);
+
+    var fireDiv = document.getElementById("wild-fires-nearby");
+    // Clean old nearby stuff
+    if (fireDiv.hasChildNodes()) {while (fireDiv.firstChild) { fireDiv.removeChild(fireDiv.firstChild); }}
+
+
+    console.log("GETTING FIRES NEARBY")
+    for(var fire of fires.wildfires){
+        var div = document.createElement('div');
+        div.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
+
+        var lat = document.createElement('span');
+        lat.innerText = "LAT: " + fire.wildfires.geometry.coordinates[0];
+        var lon = document.createElement('span');
+        lon.innerText = "LON: " + fire.wildfires.geometry.coordinates[1];
+
+        div.appendChild(lat);
+        div.appendChild(lon);
+
+        fireDiv.appendChild(div)
+    }
 }

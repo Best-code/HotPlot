@@ -1,61 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  </head>
-  <body id="body" class = "overflow-hidden">
-   <div id="map"></div>
-    <div id="search-bar"  class="absolute top-3 left-20 z-5 " style="visibility: hidden;">
-        <div class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
-    <input
-      type="text"
-      autocomplete="off"
-      id="search-input"
-      placeholder="Find Your Fire Forecast"
-      class="w-full h-full pl-4 outline-none placeholder-gray-500 text-xs"
-    />
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
-      width="22"
-      height="22"
-      viewBox="0 0 30 30"
-      fill="#6B7280"
-      id="search-bar-svg"
-    >
-      <path
-        d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-      ></path>
-    </svg>
-  </div>
-    </div>
-    <section id="top-banner0" class="top-banner">
-        <div id="hotplot-logo0" class="hotplot-logo"></div>
-    </section>
-    <div id="search-result-div" class="absolute top-14 left-23 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white"></div>
-    <section id="layerMenu" class="layerContainer">
-      <div class="layerSelectBox" id="viirs">
-          <div class="layerDesc" id="viirs-desc"></div>
-          <div class="layerIcon" id="viirs-icon"></div>
-      </div>
-      <div class="layerSelectBox" , id="wfigs">
-        <div class="layerDesc" id="wfigs-desc"></div>
-        <div class="layerIcon" id="wfigs-icon"></div>
-      </div>
-      <div class="layerSelectBox" , id="fl-conserve">
-        <div class="layerDesc" id="fl-conserve-desc"></div>
-        <div class="layerIcon" id="fl-conserve-icon"></div>
-      </div>
-      <div class="layerSelectBox" , id="fl-private">
-        <div class="layerDesc" id="fl-private-desc"></div>
-        <div class="layerIcon" id="fl-private-icon"></div>
-      </div>
-    </section>
 
-  <section id="navigation-bottom-right" class="absolute bottom-15 right-7 w-50 h-16 block">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body id="body" class="overflow-hidden">
+  <div id="map"></div>
+  <div id="search-bar" class="absolute top-3 left-20 z-5 " style="visibility: hidden;">
+    <div
+      class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
+      <input type="text" autocomplete="off" id="search-input" placeholder="Find Your Fire Forecast"
+        class="w-full h-full pl-4 outline-none placeholder-gray-500 text-xs" />
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22" height="22" viewBox="0 0 30 30" fill="#6B7280"
+        id="search-bar-svg">
+        <path
+          d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+        </path>
+      </svg>
+    </div>
+  </div>
+  <section id="top-banner0" class="top-banner">
+    <div id="hotplot-logo0" class="hotplot-logo"></div>
+  </section>
+  <div id="search-result-div"
+    class="absolute top-14 left-23 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white">
+  </div>
+  <section id="layerMenu" class="layerContainer">
+    <div class="layerSelectBox" id="viirs">
+      <div class="layerDesc" id="viirs-desc"></div>
+      <div class="layerIcon" id="viirs-icon"></div>
+    </div>
+    <div class="layerSelectBox" , id="wfigs">
+      <div class="layerDesc" id="wfigs-desc"></div>
+      <div class="layerIcon" id="wfigs-icon"></div>
+    </div>
+    <div class="layerSelectBox" , id="fl-conserve">
+      <div class="layerDesc" id="fl-conserve-desc"></div>
+      <div class="layerIcon" id="fl-conserve-icon"></div>
+    </div>
+    <div class="layerSelectBox" , id="fl-private">
+      <div class="layerDesc" id="fl-private-desc"></div>
+      <div class="layerIcon" id="fl-private-icon"></div>
+    </div>
+  </section>
+
+  <section id="navigation-bottom-right" class="absolute bottom-30 right-7 w-50 h-16 block z-10">
     <div id="navbar-bottom-right"
       class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-4 grid-rows-1 gap-2">
       <div id="zoom-in" class="pl-1" style="pointer-events: all; cursor: pointer;">
@@ -94,9 +86,9 @@
   </section>
 
   <div id="result-info-popup"
-    class="result-popup result-info-popup-height w-full h-0 absolute flex bottom-0 rounded-md transition-all ease-in-out duration-700 bg-transparent overflow-hidden"
+    class="result-popup result-info-popup-height w-screen h-full absolute flex flex-row bottom-0 rounded-md transition-all ease-in-out duration-700 bg-transparent overflow-x-auto"
     style="visibility: hidden;">
-    <button type="button" id="result-popup-close"
+    <button type="button" id="result-popup-close" style="visibility: hidden;"
       class="absolute left-0 rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none">
       <span class="sr-only">Close menu</span>
       <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -105,13 +97,14 @@
       </svg>
     </button>
     <!-- <div class="w-screen h-full flex flex-row overflow-x-auto overflow-y-hidden items-center justify-center" id="results-hold"> -->
-      <!-- Forecast -->
-      <div id="forecast-tbody"
-        class="flex flex-col w-4/5 h-full rounded-t-lg overflow-x-auto items-center justify-center transition-all duration-200">
-      </div>
-    <!-- </div> -->
-    <div id="wildfires-near-me" class="w-fit h-full float-right inline-flex overflow-x-auto overflow-y-hidden">
-      <!-- Wilf fires near me in here -->
+    <!-- Forecast -->
+    <div id="forecast-tbody"
+      class="flex flex-col min-w-4/5 w-full h-full items-center justify-center transition-all duration-200">
+
+    </div>
+    <div id="wild-fires-nearby" style="height: 0em; visibility: hidden;"
+      class="w-full max-h-full flex overflow-x-auto bg-white overflow-y-hidden">
+
     </div>
   </div>
   </div>
