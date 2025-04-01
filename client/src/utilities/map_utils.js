@@ -11,13 +11,15 @@ export class layerCarry{
     }
 }      
  
-export function initialize_map (id , tileUrl , attribution , minZoom , maxBounds , zoom , center){
-    var map = L.map(id , {zoomDelta : 1, minZoom : minZoom , maxBounds : maxBounds,
-        zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
+export function initialize_map (id = null, tileUrl = null, attribution = null , minZoom = null , maxBounds = null, zoom = null, center = null){
+    var map = null;
+
+    if(id != null){
+        map = L.map(id , {zoomDelta : 1, minZoom : minZoom , maxBounds : maxBounds,
+            zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
+    }
 
     var tiles = L.tileLayer(tileUrl, {attribution : attribution});
-
-    tiles.addTo(map);
 
     return {"tiles": tiles , "map" : map};
 }
@@ -147,7 +149,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
         //TODO:break out bounds into config file
         flConserve.obj = vectorTileLayer(url , {s : '' , style : getFlPublicStyle , 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 8 , interactive : true , zIndex : 2
+            updateWhenZooming : false , minZoom : 8 , interactive : true , zIndex : 4
         });
 
         flConserve.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Public Lands');})
@@ -199,7 +201,7 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
         //TODO:break out bounds into config file
         privateLands.obj = vectorTileLayer(url , {s : '' , style : getPrivateStyle(), 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 12 , interactive : true , zIndex : 1
+            updateWhenZooming : false , minZoom : 12 , interactive : true , zIndex : 3
         });
 
         privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})

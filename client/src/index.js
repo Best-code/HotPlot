@@ -10,7 +10,7 @@ const mapBounds = L.latLngBounds([[-20 , 0], [ 90,-180]]); //use for us mapbound
 const minZoom = 4;
 const zoomStart = 4;   
 const apiUrl = 'http://localhost:4242'; //adjust   
-const usCenter = [38,-100]; //about the cente rof the us, starting value if geoloc is declined
+const defCenter = [32,-80]; //about the cente rof the us, starting value if geoloc is declined
 
 const locationIcon = new layerCarry(getLocationIcon([40,40])); //consistent style across iterations
 
@@ -26,24 +26,30 @@ document.getElementById('wfigs-desc').innerText = 'Current Wildfires';
 document.getElementById('fl-conserve-desc').innerText = 'FL Public Lands';
 document.getElementById('fl-private-desc').innerText = 'FL Private Lands';
 
-const initMap = initialize_map('map' , 
+const satMap = initialize_map('map' , 
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' , 
     'Tiles &copy; Esri and the GIS User Community',
     minZoom, 
     mapBounds,
     zoomStart,
-    usCenter
-);  
+    defCenter
+);
 
-const map = initMap.map;  
-const esriTiles = initMap.tiles;
+const transitMap = initialize_map(null, 
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    'Tiles &copy; Esri and the GIS User Community'
+);
+
+const map = satMap.map;  
+const esriTiles = satMap.tiles;
+const transitTiles = transitMap.tiles;
+
+esriTiles.addTo(map); //adds satelite base to map as the default
 
 map.on('dragstart' , ()=>{document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while(results.length > 0){results[0].remove();}});
 
 //sets map to initial user locaion and allows for snapping to user position from navbar
 map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11); removeLocationMarker(map, locationMarker.obj); addLocationMarker(map , locationIcon.obj , locationMarker , locationEvent.latlng);});
-map.on('locationerror' , (error)=>{console.log(error);})
-var initialLocation = map.locate({maximumAge : 100000}); //sets map to userlocation if approved
 
 //hoestly may drop the below section to just use the leaflet api instead of making a new request
 var userLocation = new geoWrap(null);
@@ -51,16 +57,18 @@ var userLocation = new geoWrap(null);
 //try and get user location 
 getUserCoords(userLocation);
 
+map.locate({maximumAge : 600000}); //sets map to userlocation if approved
+
 //get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
-    if(initialLocation.latlng instanceof L.latLng){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
+    if(userLocation.obj instanceof GeolocationPosition){handleSearch(userLocation.obj.coords.latitude , userLocation.obj.coords.longitude , apiUrl , map ,  locationMarker , locationIcon.obj)}
     else{const center = map.getCenter();  handleSearch(center.lat , center.lng , apiUrl , map , locationMarker , locationIcon.obj)}});
 
 
 //navbar events
 document.getElementById('zoom-in').addEventListener('click' , ()=>{map.zoomIn(1);});
 document.getElementById('zoom-out').addEventListener('click' , ()=>{map.zoomOut(1);});
-document.getElementById('locate-me').addEventListener('click' , ()=>{map.locate();});
+document.getElementById('locate-me').addEventListener('click' , ()=>{map.locate(600000);});
 //end navbar events
 
 //loaded smaller geojson based layers on page load but not placed on map
