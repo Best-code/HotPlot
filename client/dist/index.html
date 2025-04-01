@@ -35,7 +35,7 @@
     <section id="top-banner0" class="top-banner">
         <div id="hotplot-logo0" class="hotplot-logo"></div>
     </section>
-    <div id="search-result-div" class="absolute top-14 left-23 w-80 pt-0 grid-cols-1 text-left text-base overflow-auto overscroll-contain px-3 z-10 truncate overflow-x-hidden text-black rounded-md flex flex-col bg-white shadow-lg  transition-all duration-300 max-h-0 empty:opacity-0 empty:border-0 empty:shadow-none empty:p-0 empty:bg-transparent [&:not(:empty)]:max-h-48 [&:not(:empty)]:pt-2 [&:not(:empty)]:pb-2 [&:not(:empty)]:pointer-events-auto [&:not(:empty)]:bg-white"></div>
+    <div id="search-result-div" class="absolute top-14 left-23 h-50 w-80 pt-2 grid-cols-1 text-left text-base overflow-auto overscroll-contain pointer-events-none z-1 truncate overflow-x-hidden text-white"></div>
     <section id="layerMenu" class="layerContainer">
       <div class="layerSelectBox" id="viirs">
           <div class="layerDesc" id="viirs-desc"></div>
@@ -55,72 +55,90 @@
       </div>
     </section>
 
-    <section id="navigation-bottom-right" class="absolute bottom-15 right-7 w-50 h-16 block">
-      <div id="navbar-bottom-right" class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-4 grid-rows-1 gap-2">
-        <div id="zoom-in" class="pl-1" style="pointer-events: all; cursor: pointer;">
-            <svg class="w-1/1 h-1/1"
-            xmlns="http://www.w3.org/2000/svg" 
-            xmlns:xlink="http://www.w3.org/1999/xlink" 
-            zoomAndPan="magnify" 
-            viewBox="0 0 375 374.999991" 
-            preserveAspectRatio="xMidYMid meet" 
-            version="1.0">
-            <g transform = "scale(1.7,1.7) translate(-75 , -75)">
-              <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 127.499996, 184.499988)" fill="#ffffff" stroke-linejoin="miter" d="M 0.00000516333 6.000017 L 160.000016 6.000017 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/>
-              <path stroke-linecap="butt" transform="matrix(0, 0.75, -0.75, 0, 191.999992, 128.999992)" fill="#ffffff" stroke-linejoin="miter" d="M 0.0000112947 5.99999 L 160.000022 5.99999 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/>
-            </g>
-          </svg>
-        </div>
-        <div id="zoom-out" style="pointer-events: all; cursor: pointer;">
-          <svg class="w-1/1 h-1/1"
-          xmlns="http://www.w3.org/2000/svg" 
-          xmlns:xlink="http://www.w3.org/1999/xlink" 
-          zoomAndPan="magnify" 
-          viewBox="0 0 375 374.999991"  
-          preserveAspectRatio="xMidYMid meet" version="1.0">
-          <g transform="scale(1.7,1.7) translate(-44,-73)">
-            <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 90.499996, 182.999988)" fill="#ffffff" stroke-linejoin="miter" d="M 0.00000516333 6.000016 L 160.000016 6.000016 " stroke="#ffffff" stroke-width="25" stroke-opacity="1" stroke-miterlimit="4"/></svg>
+  <section id="navigation-bottom-right" class="absolute bottom-15 right-7 w-50 h-16 block">
+    <div id="navbar-bottom-right"
+      class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-4 grid-rows-1 gap-2">
+      <div id="zoom-in" class="pl-1" style="pointer-events: all; cursor: pointer;">
+        <svg class="w-1/1 h-1/1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          zoomAndPan="magnify" viewBox="0 0 375 374.999991" preserveAspectRatio="xMidYMid meet" version="1.0">
+          <g transform="scale(1.7,1.7) translate(-75 , -75)">
+            <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 127.499996, 184.499988)" fill="#ffffff"
+              stroke-linejoin="miter" d="M 0.00000516333 6.000017 L 160.000016 6.000017 " stroke="#ffffff"
+              stroke-width="25" stroke-opacity="1" stroke-miterlimit="4" />
+            <path stroke-linecap="butt" transform="matrix(0, 0.75, -0.75, 0, 191.999992, 128.999992)" fill="#ffffff"
+              stroke-linejoin="miter" d="M 0.0000112947 5.99999 L 160.000022 5.99999 " stroke="#ffffff"
+              stroke-width="25" stroke-opacity="1" stroke-miterlimit="4" />
           </g>
-        </div>
-        <div id="locate-me" style="pointer-events: all; cursor: pointer;">
-          <svg class="w-1/1 h-1/1" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g transform="scale(0.5, 0.5) translate(2, 9)">
-              <path d="M16 1L15 0L0 6V8L7 9L8 16H10L16 1Z" fill="#ffffff"/>
-            </g>
-            </svg>
-        </div>
-        <div id="info"></div>
+        </svg>
       </div>
-      <div id="basemaps-bottom-right" class="w-1/1 h-7 mt-2 rounded-full bg-[#000000] opacity-70"></div>
-    </section>
-
-    <div id="result-info-popup" class="result-popup w-1/1 h-0 absolute bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden" style="visibility: hidden;">
-    <button type="button" id="result-popup-close" class="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none">
-      <span class="sr-only">Close menu</span>
-      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg></button>
-      <div class="w-1/1 h-1/1 hidden overflow-x-auto overflow-y-hidden static" id="results-hold">
-        <table id="forecast-tb">
-          <tbody id="forecast-tbody" class="w-1/1 overflow-x-auto static"></tbody>
-        </table>
+      <div id="zoom-out" style="pointer-events: all; cursor: pointer;">
+        <svg class="w-1/1 h-1/1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          zoomAndPan="magnify" viewBox="0 0 375 374.999991" preserveAspectRatio="xMidYMid meet" version="1.0">
+          <g transform="scale(1.7,1.7) translate(-44,-73)">
+            <path stroke-linecap="butt" transform="matrix(0.75, 0, 0, 0.75, 90.499996, 182.999988)" fill="#ffffff"
+              stroke-linejoin="miter" d="M 0.00000516333 6.000016 L 160.000016 6.000016 " stroke="#ffffff"
+              stroke-width="25" stroke-opacity="1" stroke-miterlimit="4" />
+        </svg>
+        </g>
       </div>
-      <div id="wildfires-near-me" class="w-1/2 h-1/1 float-right inline-flex overflow-x-auto overflow-y-hidden"></div>
+      <div id="locate-me" style="pointer-events: all; cursor: pointer;">
+        <svg class="w-1/1 h-1/1" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="scale(0.5, 0.5) translate(2, 9)">
+            <path d="M16 1L15 0L0 6V8L7 9L8 16H10L16 1Z" fill="#ffffff" />
+          </g>
+        </svg>
       </div>
+      <div id="info"></div>
     </div>
+    <div id="basemaps-bottom-right" class="w-1/1 h-7 mt-2 rounded-full bg-[#000000] opacity-70"></div>
+  </section>
 
-    <section id="feature-click-popup" class="h-100 w-78 absolute left-5 top-25 transition-all duration-200" style="display: none;">
-      <button type="button" id="feature-popup-close" class="absolute right-0 rounded-md p-1 items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
-        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  <div id="result-info-popup"
+    class="result-popup w-full h-0 absolute flex bottom-0 rounded-md transition-all ease-in-out duration-700 bg-white overflow-hidden"
+    style="visibility: hidden;">
+    <button type="button" id="result-popup-close"
+      class="absolute left-0 rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none">
+      <span class="sr-only">Close menu</span>
+      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <!-- <div class="w-screen h-full flex flex-row overflow-x-auto overflow-y-hidden items-center justify-center" id="results-hold"> -->
+      <!-- Forecast -->
+      <div id="forecast-tbody"
+        class="flex flex-col w-full pb-2 rounded-lg lg:px-12 md:px-8 sm:px-4 px-2 overflow-x-auto items-center justify-center transition-all duration-200">
+      </div>
+    <!-- </div> -->
+    <div id="wildfires-near-me" class="w-fit h-full float-right inline-flex overflow-x-auto overflow-y-hidden">
+      <!-- Wilf fires near me in here -->
+    </div>
+  </div>
+  </div>
+
+  <section id="feature-click-popup" class="h-fit w-fit absolute left-5 top-25 transition-all duration-200"
+    style="display: none;">
+    <button type="button" id="feature-popup-close"
+      class="z-20 absolute lg:right-[.75em] right-0 m-1 rounded-md items-center justify-center text-black hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
+      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg></button>
 
-      <!-- Style this to be nice :) -->
-      <div id="feature-click-box" class="bg-white flex flex-col h-100 w-70 absolute top-0 left-0 rounded-lg">
-        <div id="feature-click-header" class="aboslute top-0 w-1/1 h-1/5 block"></div>
-        <div id="feature-click-body" , class="h-4/5 w-1/1 overflow-y-auto overflow-x-auto block"></div>
+    <!-- Style this to be nice :) -->
+    <div id="feature-click-box"
+      class="z-10 bg-white flex flex-col lg:max-h-[32rem] md:max-h-[26rem] max-h-[20rem] lg:max-w-[18rem] md:max-w-[15rem] max-w-[13rem] rounded-2xl border border-gray-200 transition-all duration-200">
+      <div id="feature-click-header"
+        class="flex md:text-xl text-xl font-black text-black justify-center items-center w-full rounded-t-2xl bg-gray-100 drop-shadow-lg pb-4 pt-2">
       </div>
-    </section>
-    <script src="main.js"></script>
-  </body>
+      <div id="feature-click-body"
+        class="h-full w-full overflow-y-auto overflow-x-hidden text-black scrollbar-hide lg:p-2 p-1 lg:px-6 px-3"></div>
+      <div
+        class="absolute bottom-0 left-0 w-full lg:h-6 md:h-5 h-3 bg-gradient-to-t from-gray-600 to-transparent pointer-events-none rounded-b-2xl">
+      </div>
+    </div>
+  </section>
+  <script src="main.js"></script>
+</body>
+
 </html>

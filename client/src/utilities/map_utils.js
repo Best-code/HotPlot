@@ -269,6 +269,60 @@ function getPrivateTooltipContent(ownerName){
     return '<div>' +ownerName+'</div>';
 }
 
+const keyMap = {
+    "CalculatedAcres": ["Acres", 1],
+    "ContainmentDateTime": ["Containment DT", 1],
+    "ControlDateTime": ["Control DT", 1],
+    "DailyAcres": ["Daily Acres", 1],
+    "DiscoveryAcres": ["Discovery Acres", 1],
+    "Fatalities": ["Fatalities", 1],
+    "FinalAcres": ["Final Acres", 1],
+    "FireCause": ["Fire Cause", 1],
+    "FireCauseGeneral": ["Fire Cause General", 0],
+    "FireDiscoveryAge": ["Fire Discovery Age", 0],
+    "FireDiscoveryDateTime": ["Fire Discovery DT", 1],
+    "FireMgmtComplexity": ["Fire Mgmt Complexity", 0],
+    "FireOutDateTime": ["Fire Out DT", 1],
+    "GACC": ["G A C C", 0],
+    "GlobalID": ["Global ID", 0],
+    "ICS209ReportDateTime": ["ICS 209 Report DT", 0],
+    "IncidentManagementOrganization": ["Incident Management Organization", 0],
+    "IncidentName": ["Incident Name", 0],
+    "IncidentTypeCategory": ["Incident Type Category", 0],
+    "IncidentTypeKind": ["Incident Type Kind", 0],
+    "Injuries": ["Injuries", 1],
+    "IrwinID": ["Irwin ID", 0],
+    "IsValid": ["Is Valid", 0],
+    "ModifiedOnAge": ["Modified On Age", 0],
+    "ModifiedOnDateTime": ["Modified On Date Time", 0],
+    "OBJECTID": ["Object ID", 0],
+    "OtherStructuresDestroyed": ["Other Structures Destroyed", 1],
+    "POOCounty": ["POO County", 0],
+    "POOState": ["POO State", 0],
+    "PercentContained": ["Percent Contained", 1],
+    "PredominantFuelGroup": ["Predominant Fuel Group", 0],
+    "PredominantFuelModel": ["Predominant Fuel Model", 0],
+    "PrimaryFuelModel": ["Primary Fuel Model", 0],
+    "ResidencesDestroyed": ["Residences Destroyed", 1],
+    "TotalIncidentPersonnel": ["Total Incident Personnel", 1],
+    "UniqueFireIdentifier": ["Unique Fire Identifier", 1]
+};
+
+function importantKey(key)
+{
+    if(keyMap.hasOwnProperty(key))
+        return keyMap[key][1];
+
+    return 1;
+}
+
+function keyTranslate(key){
+    if(keyMap.hasOwnProperty(key))
+        return keyMap[key][0];
+
+    return key;
+}
+
 //generalized function for onclick feature popups
 function featurePopup(feature , headerText , layer = null ){ //right now it just runs through all the properties we send over as a dict
 
@@ -284,14 +338,19 @@ function featurePopup(feature , headerText , layer = null ){ //right now it just
 
     for (let key in feature.properties){
         
+        if(!importantKey(key))
+            continue;
+
+        if(["0", "null", null].includes(feature.properties[key]))
+            continue;
+        console.log(key)
+
         var featureAttr = document.createElement('div');
-        featureAttr.className = 'feature-click-attr';
+        featureAttr.className = 'text-md text-left p-2';
         featureAttr.id = 'feature-click-attr-'+key;
 
-        featureAttr.style.height = '70px';
-        featureAttr.style.width = '100%';
-
-        featureAttr.innerText = key + ' ' +feature.properties[key];
+        let formattedKey = keyTranslate(key);
+        featureAttr.innerText = formattedKey + ': ' + feature.properties[key];
 
 
         body.appendChild(featureAttr);

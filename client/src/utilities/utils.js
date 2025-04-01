@@ -193,35 +193,37 @@ export async function fireForecastResultPopup(event, dbId, apiUrl){ //expects di
 
 function createForecastPane(parent , forecast){ //appends forecast header as children of parent , content is dict
 
-    var topRow = document.createElement('tr');
-    var imgRow = document.createElement('tr');
-    var descRow = document.createElement('tr');
+    var row = document.createElement('tr');
+    row.className = "w-full flex flex-row text-md justify-between items-center"
 
-    parent.appendChild(topRow);
-    parent.appendChild(imgRow);
-    parent.appendChild(descRow);
+    // var imgRow = document.createElement('tr');
+    // imgRow.className = "w-full flex flex-row"
+    // var descRow = document.createElement('tr');
+
+    parent.appendChild(row);
+    // parent.appendChild(imgRow);
+    // parent.appendChild(descRow);
     
     for(let key in forecast['weeklyForecast']){
 
-        createForecastHeader(topRow , forecast['weeklyForecast'][key]['weekDay'] + '  ' + forecast['weeklyForecast'][key]["dayOfMonth"]);
-
-        createForecastIcon( imgRow ,forecast['weeklyForecast'][key]['forecast']);
+        var col = document.createElement('div');
+        col.className = "flex flex-col w-full gap-y-2 items-left justify-center"
+        createForecastHeader(col , forecast['weeklyForecast'][key]['weekDay'], forecast['weeklyForecast'][key]["dayOfMonth"]);
+        createForecastIcon( col ,forecast['weeklyForecast'][key]['forecast']);
+        row.appendChild(col);
     }
 
 }
 
 //forecast takes the form of a str that is either M , D or VD
-function createForecastIcon(parent , forecast){ //adds forecast icon to table base don what forecast is (calls to db) 
+function createForecastIcon(parent , forecast){ //adds forecast icon to table based on what forecast is (calls to db) 
 
-        var td = document.createElement('td');
-
-        td.className = 'fire-forecast-img-td';
-
+        var td = document.createElement('div');
         parent.appendChild(td);
 
         var img = document.createElement('img');
 
-        img.className = 'fire-forecast-img';
+        img.className = "lg:w-20 md:w-16 w-12 aspect-square transition-all duration-200"
 
         if(forecast == 'M'){img.src = mIcon;}
         else if(forecast == 'W'){img.src = mIcon;}
@@ -233,12 +235,19 @@ function createForecastIcon(parent , forecast){ //adds forecast icon to table ba
 
 }
 
-function createForecastHeader(parent , text){
+function createForecastHeader(parent , day, number){
 
-    var dayHeader = document.createElement('td');
+    var dayDiv = document.createElement('div');
+    var daySpan = document.createElement('span')
+    var numberSpan = document.createElement('span')
 
-    dayHeader.className = 'forecast-pane-header';
 
-    parent.appendChild(dayHeader);
-    dayHeader.innerText = text;
+    dayDiv.className = "flex lg:flex-row lg:gap-x-2 flex-col h-fit w-full text-left justify-left transition-all duration-200"
+    daySpan.innerText = day;
+    numberSpan.innerText = number;
+
+    dayDiv.append(daySpan);
+    dayDiv.append(numberSpan);
+
+    parent.appendChild(dayDiv);
 }
