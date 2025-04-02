@@ -6,10 +6,11 @@ import VDIcon from "../icons/VD.png"
 import fireEmoji from "../icons/fireEmoji.png"
 import { addLocationMarker, getLocationIcon, removeLocationMarker } from "./map_utils";
 
+const upArrow = "M12 19V5M5 12l7-7 7 7"
+const xButton = "M6 18L18 6M6 6l12 12"
 
 export function onLoad() { //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
-    document.getElementById('result-info-popup').style.visibility = 'visible';
 
     (function () { //prevents sending a shitton of requests on every keystroke with a new event credit: Kelderic on stackoverflow
         var keystoppedTimer = null;
@@ -34,7 +35,44 @@ export function onLoad() { //simply to render tailwind componeents visible after
     document.getElementById('hotplot-logo0').addEventListener('click', () => { window.location.reload(); });
     document.getElementById('body').addEventListener("click", () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } });
     document.getElementById('search-input').addEventListener('blur', () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } }, {});
-    document.getElementById('feature-popup-close').addEventListener('click', () => { var popupSection = document.getElementById('feature-click-popup'); popupSection.style.opacity = 0; popupSection.style.visibility = 'hidden'; });
+    document.getElementById('feature-popup-close').addEventListener('click', () => {
+        var popupSection = document.getElementById('feature-click-popup');
+        popupSection.style.opacity = 0;
+        popupSection.style.visibility = 'hidden';
+    });
+    
+
+    // Close / open the bottom menu
+    document.getElementById("result-popup-close").addEventListener('click', () => {
+        // Closing the bottom bar
+        if (document.getElementById("result-popup-close").style.bottom != "0px") {
+            // Lowering the button down and changing the button to an X
+            document.getElementById("result-popup-close").style.bottom = 0;
+            document.getElementById("SVG-Box").setAttribute("d", upArrow);
+
+            // Moving navigation back to normal
+            document.getElementById('navigation-bottom-right').style.bottom = '1.75rem';
+
+            // Setting height to 0
+            document.getElementById('result-info-popup').style.visibility = 'visible';
+            document.getElementById('result-info-popup').style.height = 0;
+
+        }
+        else {
+            // Opening the bottom bar
+            // Raising the button
+            document.getElementById("result-popup-close").style.bottom = '7.5em';
+            document.getElementById("SVG-Box").setAttribute("d", xButton);
+
+            // Moving the navigation up
+            document.getElementById('navigation-bottom-right').style.bottom = '7.5em';
+
+            // Opening the bottom menu for the first time
+            document.getElementById('result-info-popup').style.visibility = 'visible';
+            document.getElementById('result-info-popup').style.height = '7.5em';
+        }
+
+    })
 }
 //location passed as [lat , lon] 
 export async function geoSearch(userEntry, apiUrl, location = [32.0, -84.0]) { // takes a string and tries to match it to a place name in db
@@ -179,11 +217,18 @@ export async function fireForecastResultPopup(event, dbId, apiUrl) { //expects d
 
     const forecast = await getFireForecast(dbId, apiUrl);
 
+    // Moving the navigation up
+    document.getElementById('navigation-bottom-right').style.bottom = '7.5em';
+
+    // Opening the bottom menu for the first time
     document.getElementById('result-info-popup').style.visibility = 'visible';
     document.getElementById('result-info-popup').style.height = '7.5em';
+    document.getElementById("result-popup-close").style.bottom = '7.5em';
+
+    // Displaying the x for the first time
     document.getElementById('result-popup-close').style.visibility = 'visible';
-    document.getElementById('wild-fires-nearby').style.height = '7.5em';
-    document.getElementById('wild-fires-nearby').style.visibility = 'visible';
+
+
 
     var forecastTb = document.getElementById('forecast-tbody');
 
@@ -222,20 +267,20 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     const medHighRiskGradient = "highMedRiskGradient"
     const highRiskGradient = "highRiskGradient"
 
-    forecastCol.className = "flex flex-col w-24 h-full items-center justify-center gap-y-2 py-1 "
+    forecastCol.className = "flex flex-col min-w-12 h-full items-center justify-center gap-y-2 py-1 "
 
     parent.appendChild(forecastCol);
 
     // The Day and Number on top
     var daySpan = document.createElement("span");
-    daySpan.className = "lg:text-xl md:text-lg text-md text-center";
+    daySpan.className = "lg:text-xl md:text-lg text-md text-center mx-4";
     console.log(forecast);
     daySpan.innerText = forecast['weekDay'].slice(0, 3) + " " + forecast['dayOfMonth'];
     forecastCol.appendChild(daySpan);
 
     // The div for the icons
     var iconDiv = document.createElement('div');
-    iconDiv.className = ("flex flex-row gap-x-1 w-full items-center justify-center h-full")
+    iconDiv.className = ("flex flex-col lg:flex-row gap-x-0.5 w-full items-center justify-center h-full")
     forecastCol.appendChild(iconDiv);
 
     var count;
@@ -272,7 +317,7 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
 
     for (var x = 0; x < count; x++) {
         var img = document.createElement('img');
-        img.className = "lg:w-6 md:w-5 w-3 aspect-square transition-all duration-200 drop-shadow-2xl hover:scale-[125%]"
+        img.className = "lg:w-4 md:w-3 w-2 aspect-square transition-all duration-200 drop-shadow-2xl hover:scale-110"
         img.src = fireEmoji;
         iconDiv.appendChild(img);
     }
@@ -302,9 +347,8 @@ export async function firesNearbyPopUp(event, apiUrl) {
 
     // Nearby Fire DIVS
 
-
     var nearbyDiv = document.createElement('div');
-    nearbyDiv.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
+    nearbyDiv.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4 items-center justify-center";
 
     var nearbySpan = document.createElement('span');
     nearbySpan.className = "text-lg font-black text-center"
