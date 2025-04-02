@@ -33,6 +33,12 @@ export function onLoad() { //simply to render tailwind componeents visible after
     document.getElementById('search-input').addEventListener('blur', () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } }, {});
     document.getElementById('feature-popup-close').addEventListener('click', () => { var popupSection = document.getElementById('feature-click-popup'); popupSection.style.opacity = 0; popupSection.style.visibility = 'hidden'; });
 
+    document.getElementById('result-popup-close').addEventListener('click' , ()=>{
+        var infoBox = document.getElementById('result-info-popup'); 
+        infoBox.style.height = 0; infoBox.style.visibility = 'hidden'; 
+        if(locationMarker.obj instanceof L.Marker){removeLocationMarker(map , locationMarker.obj);}
+    });
+
     //info listener
     document.getElementById('info').addEventListener('click', () => {
         showInfoPopup();
