@@ -6,10 +6,11 @@ import VDIcon from "../icons/VD.png"
 import fireEmoji from "../icons/fireEmoji.png"
 import { addLocationMarker, getLocationIcon, removeLocationMarker } from "./map_utils";
 
+const upArrow = "M12 19V5M5 12l7-7 7 7"
+const xButton = "M6 18L18 6M6 6l12 12"
 
 export function onLoad() { //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
-    document.getElementById('result-info-popup').style.visibility = 'visible';
 
     (function () { //prevents sending a shitton of requests on every keystroke with a new event credit: Kelderic on stackoverflow
         var keystoppedTimer = null;
@@ -188,11 +189,18 @@ export async function fireForecastResultPopup(event, dbId, apiUrl) { //expects d
 
     const forecast = await getFireForecast(dbId, apiUrl);
 
+    // Moving the navigation up
+    document.getElementById('navigation-bottom-right').style.bottom = '7.5em';
+
+    // Opening the bottom menu for the first time
     document.getElementById('result-info-popup').style.visibility = 'visible';
     document.getElementById('result-info-popup').style.height = '7.5em';
+    document.getElementById("result-popup-close").style.bottom = '7.5em';
+
+    // Displaying the x for the first time
     document.getElementById('result-popup-close').style.visibility = 'visible';
-    document.getElementById('wild-fires-nearby').style.height = '7.5em';
-    document.getElementById('wild-fires-nearby').style.visibility = 'visible';
+
+
 
     var forecastTb = document.getElementById('forecast-tbody');
 
@@ -231,20 +239,20 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     const medHighRiskGradient = "highMedRiskGradient"
     const highRiskGradient = "highRiskGradient"
 
-    forecastCol.className = "flex flex-col w-24 h-full items-center justify-center gap-y-2 py-1 "
+    forecastCol.className = "flex flex-col min-w-12 h-full items-center justify-center gap-y-2 py-1 "
 
     parent.appendChild(forecastCol);
 
     // The Day and Number on top
     var daySpan = document.createElement("span");
-    daySpan.className = "lg:text-xl md:text-lg text-md text-center";
+    daySpan.className = "lg:text-xl md:text-lg text-md text-center mx-4";
     console.log(forecast);
-    daySpan.innerText = forecast['weekDay'].slice(0,3) + " " + forecast['dayOfMonth'];
+    daySpan.innerText = forecast['weekDay'].slice(0, 3) + " " + forecast['dayOfMonth'];
     forecastCol.appendChild(daySpan);
 
     // The div for the icons
     var iconDiv = document.createElement('div');
-    iconDiv.className = ("flex flex-row gap-x-1 w-full items-center justify-center h-full")
+    iconDiv.className = ("flex flex-col lg:flex-row gap-x-0.5 w-full items-center justify-center h-full")
     forecastCol.appendChild(iconDiv);
 
     var count;
@@ -281,7 +289,7 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
 
     for (var x = 0; x < count; x++) {
         var img = document.createElement('img');
-        img.className = "lg:w-6 md:w-5 w-3 aspect-square transition-all duration-200 drop-shadow-2xl hover:scale-[125%]"
+        img.className = "lg:w-4 md:w-3 w-2 aspect-square transition-all duration-200 drop-shadow-2xl hover:scale-110"
         img.src = fireEmoji;
         iconDiv.appendChild(img);
     }
@@ -293,34 +301,43 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
 
 }
 
-export async function getNearbyFires(lat, lon, apiUrl){
-    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125} });
+export async function getNearbyFires(lat, lon, apiUrl) {
+    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125 } });
     return fires.data;
 }
 
-export async function firesNearbyPopUp(event, apiUrl){
-    var lat  = event.target.getAttribute('lat');
+export async function firesNearbyPopUp(event, apiUrl) {
+    var lat = event.target.getAttribute('lat');
     var lon = event.target.getAttribute('lon');
 
     const fires = await getNearbyFires(lat, lon, apiUrl);
 
     var fireDiv = document.getElementById("wild-fires-nearby");
     // Clean old nearby stuff
-    if (fireDiv.hasChildNodes()) {while (fireDiv.firstChild) { fireDiv.removeChild(fireDiv.firstChild); }}
+    if (fireDiv.hasChildNodes()) { while (fireDiv.firstChild) { fireDiv.removeChild(fireDiv.firstChild); } }
 
 
-    console.log("GETTING FIRES NEARBY")
-    for(var fire of fires.wildfires){
+    // Nearby Fire DIVS
+
+    var nearbyDiv = document.createElement('div');
+    nearbyDiv.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4 items-center justify-center";
+
+    var nearbySpan = document.createElement('span');
+    nearbySpan.className = "text-lg font-black text-center"
+    nearbySpan.innerText = "Nearby Wild Fires";
+
+    nearbyDiv.appendChild(nearbySpan);
+    fireDiv.appendChild(nearbyDiv);
+
+    for (var fire of fires.wildfires) {
+
         var div = document.createElement('div');
-        div.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
+        div.className = "w-48 items-center justify-center h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
 
-        var lat = document.createElement('span');
-        lat.innerText = "LAT: " + fire.wildfires.geometry.coordinates[0];
-        var lon = document.createElement('span');
-        lon.innerText = "LON: " + fire.wildfires.geometry.coordinates[1];
+        var county = document.createElement('span');
+        county.innerText = fire.wildfires.properties.POOCounty + " County"
 
-        div.appendChild(lat);
-        div.appendChild(lon);
+        div.appendChild(county);
 
         fireDiv.appendChild(div)
     }

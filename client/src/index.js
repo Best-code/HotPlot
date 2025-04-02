@@ -93,4 +93,8 @@ document.getElementById('fl-conserve').addEventListener('click' , ()=>{handleFlP
 document.getElementById('viirs').addEventListener('click', ()=>{handleSmallLayer(map ,viirsLayer);});   
 document.getElementById('wfigs').addEventListener('click' , ()=>{handleSmallLayer(map , wfigsLayer)});
 document.getElementById('fl-private').addEventListener('click' , ()=>{handlePrivateTiles(map , privateLands , apiUrl)});
-document.getElementById('result-popup-close').addEventListener('click' , ()=>{var infoBox = document.getElementById('result-info-popup'); infoBox.style.height = 0; infoBox.style.visibility = 'hidden'; if(locationMarker.obj instanceof L.Marker){removeLocationMarker(map , locationMarker.obj);}});
+// document.getElementById('result-popup-close').addEventListener('click' , ()=>{
+//     // var infoBox = document.getElementById('result-info-popup'); 
+//     // infoBox.style.height = 0; infoBox.style.visibility = 'hidden';
+//      if(locationMarker.obj instanceof L.Marker){removeLocationMarker(map , locationMarker.obj);}});
+
