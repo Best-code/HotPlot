@@ -97,4 +97,26 @@ document.getElementById('fl-private').addEventListener('click' , ()=>{handlePriv
 //     // var infoBox = document.getElementById('result-info-popup'); 
 //     // infoBox.style.height = 0; infoBox.style.visibility = 'hidden';
 //      if(locationMarker.obj instanceof L.Marker){removeLocationMarker(map , locationMarker.obj);}});
+document.querySelectorAll('.basemap').forEach( element => {element.addEventListener('click' , (event)=>{
 
+    var selectors = document.getElementsByClassName('basemap');
+
+    for(var i = 0 ; i < selectors.length ; i++){
+
+        if(selectors[i].checked){
+            selectors[i].checked = false;
+        }
+    }
+
+    event.target.checked = true;
+
+    if(event.target.id == 'satellite'){
+        map.removeLayer(transitTiles);
+        map.addLayer(esriTiles);
+    }
+    else if(event.target.id == 'streets'){
+        map.removeLayer(esriTiles);
+        map.addLayer(transitTiles);
+    }
+
+})});
