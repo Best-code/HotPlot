@@ -15,18 +15,19 @@
     "file-loader": "^6.2.0",
     "nodemon": "^3.1.9",
     "nodemon-webpack-plugin": "^4.8.2",
-    "postcss": "^8.5.2",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.1.4",
     "style-loader": "^4.0.0",
-    "tailwindcss": "^4.0.7",
     "url-loader": "^4.1.1",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.21",
     "axios": "^1.7.9",
     "leaflet": "^1.9.4",
-    "leaflet-vector-tile-layer": "^0.16.1"
+    "leaflet-vector-tile-layer": "^0.16.1",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.0"
   }
 }
