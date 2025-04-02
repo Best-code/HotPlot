@@ -35,6 +35,15 @@ export function onLoad() { //simply to render tailwind componeents visible after
     document.getElementById('body').addEventListener("click", () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } });
     document.getElementById('search-input').addEventListener('blur', () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } }, {});
     document.getElementById('feature-popup-close').addEventListener('click', () => { var popupSection = document.getElementById('feature-click-popup'); popupSection.style.opacity = 0; popupSection.style.visibility = 'hidden'; });
+
+    //info listener
+    document.getElementById('info').addEventListener('click', () => {
+        showInfoPopup();
+    });
+    //stops clicking outside from the popup to close it (caused issues)
+    document.getElementById('info-popup-close').addEventListener('click', () => {
+        hideInfoPopup();
+    });
 }
 //location passed as [lat , lon] 
 export async function geoSearch(userEntry, apiUrl, location = [32.0, -84.0]) { // takes a string and tries to match it to a place name in db
@@ -315,4 +324,18 @@ export async function firesNearbyPopUp(event, apiUrl){
 
         fireDiv.appendChild(div)
     }
+}
+
+export function showInfoPopup() {
+    const popup = document.getElementById('info-popup');
+    popup.style.visibility = 'visible';
+    popup.style.opacity = '1';
+}
+
+export function hideInfoPopup() {
+    const popup = document.getElementById('info-popup');
+    popup.style.opacity = '0';
+    setTimeout(() => {
+        popup.style.visibility = 'hidden';
+    }, 300);
 }

@@ -80,7 +80,15 @@
           </g>
         </svg>
       </div>
-      <div id="info"></div>
+      <div id="info" style="pointer-events: all; cursor: pointer;">
+        <svg class="w-1/1 h-1/1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="scale(0.8, 0.8) translate(2.5, 2.5)">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 16V12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 8H12.01" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
     </div>
     <div id="basemaps-bottom-right" class="w-1/1 h-7 mt-2 rounded-full bg-[#000000] opacity-70"></div>
   </section>
@@ -133,6 +141,38 @@
       </div> -->
     </div>
   </section>
+
+  <section id="info-popup" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300"
+    style="visibility: hidden; opacity: 0;">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6 relative">
+      <button type="button" id="info-popup-close"
+        class="absolute top-3 right-3 rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none">
+        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">About HotPlot</h2>
+        <div class="text-left text-gray-700 space-y-4">
+          <p>HotPlot is an interactive wildfire mapping and forecasting tool that helps users monitor and prepare for fire risks.</p>
+          <p>Key features include:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Real-time wildfire detection from satellite data</li>
+            <li>Fire danger forecasts for your location</li>
+            <li>Information about nearby fires</li>
+            <li>Multiple data layers to visualize fire activity</li>
+          </ul>
+          <p class="mt-4">Search for your location to get started and view fire forecasts.</p>
+          <p>Feel free to check out our GitHub repository to see how HotPlot was made down below!</p>
+          <a href="https://github.com/Best-code/HotPlot.git" target="_blank" rel="noopener noreferrer" title="View HotPlot on GitHub">
+            <img src="./github.png" alt="GitHub Repository" class="mx-auto h-10 hover:opacity-80 transition-opacity">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script src="main.js"></script>
 </body>
 
