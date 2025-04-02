@@ -83,7 +83,22 @@
       </div>
       <!-- <div id="info"></div> -->
     </div>
-    <!-- <div id="basemaps-bottom-right" class="w-1/1 h-7 mt-0.5 rounded-full bg-[#000000] opacity-70"></div> -->
+    <div id="basemaps-bottom-right" class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-2 grid-rows-1 gap-2 text-white">
+      
+      <div class="basemap-selector">
+        <input type="checkbox" id="satellite" class="basemap hidden" checked/>
+        <label for="satellite" class="w-1/1 h-1/1 flex items-center justify-center cursor-pointer rounded-full">
+          Satellite
+        </label>
+      </div>
+
+      <div class="basemap-selector">
+        <input type="checkbox" id="streets" class="basemap hidden"/>
+        <label for="streets" class="w-1/1 h-1/1 flex items-center justify-center cursor-pointer rounded-full">
+          Streets
+        </label>
+      </div>
+    </div>
   </section>
 
   <button type="button" id="result-popup-close" style="visibility: hidden; bottom: 0rem"

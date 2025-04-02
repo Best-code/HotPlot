@@ -1,7 +1,4 @@
 import axios from "axios"
-import mIcon from "../icons/M.png"
-import DIcon from "../icons/D.png"
-import VDIcon from "../icons/VD.png"
 
 import fireEmoji from "../icons/fireEmoji.png"
 import { addLocationMarker, getLocationIcon, removeLocationMarker } from "./map_utils";

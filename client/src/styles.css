@@ -276,3 +276,7 @@ const highRiskGradient = "bg-[linear-gradient(to_top,_#F73718_0%,_#F9560F_25%,_#
         visibility: hidden;
     }
 }
+
+.basemap-selector input:checked + label {
+    background-color: #eb3e13;
+}
