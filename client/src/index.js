@@ -101,15 +101,16 @@ var flConserve = new layerCarry(null);
 var privateLands = new layerCarry(null);
 
 
-document.getElementById('fl-conserve').addEventListener('click', () => {
-    const currentTransform = flConserve.style.transform;
+document.getElementById('fl-conserve').addEventListener('click', (event) => {
+    const currentTransform = event.target.style.transform;
+    var fl_conserve = event.target; 
 
     if (currentTransform === 'scale(1)') {
-        flConserve.style.transform = 'scale(1.1)';
-        flConserve.style.color = "orange";
+        fl_conserve.style.transform = 'scale(1.1)';
+        fl_conserve.style.color = "orange";
     } else {
-        flConserve.style.transform = 'scale(1)';
-        flConserve.style.color = "white";
+        fl_conserve.style.transform = 'scale(1)';
+        fl_conserve.style.color = "white";
     }
 
     handleFlPublicTiles(map, flConserve, apiUrl);
