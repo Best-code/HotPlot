@@ -6,11 +6,11 @@ import { geoWrap, getUserCoords, onLoad, handleSearch, } from './utilities/utils
 //eliminates flashing of unstyled components -- could use SSR to fix but this works
 window.onload = onLoad;
 
-const mapBounds = L.latLngBounds([[-20, 0], [90, -180]]); //use for us mapbounds
-const minZoom = 4;
-const zoomStart = 4;
+const mapBounds = L.latLngBounds([L.latLng( 23 , -91), L.latLng( 35,-72)]); //use for us mapbounds
+const minZoom = 6;
+const zoomStart = 6;   
 const apiUrl = 'http://localhost:4242'; //adjust   
-const defCenter = [32, -80]; //about the cente rof the us, starting value if geoloc is declined
+const defCenter = [28.5,-81.7]; //about the cente rof the us, starting value if geoloc is declined
 
 const locationIcon = new layerCarry(getLocationIcon([40, 40])); //consistent style across iterations
 
@@ -101,16 +101,15 @@ var flConserve = new layerCarry(null);
 var privateLands = new layerCarry(null);
 
 
-document.getElementById('fl-conserve').addEventListener('click', (event) => {
-    const currentTransform = event.target.style.transform;
-    var fl_conserve = event.target; 
+document.getElementById('flconserve').addEventListener('click', (event) => {
+    const currentTransform = flconserve.style.transform;
 
     if (currentTransform === 'scale(1)') {
-        fl_conserve.style.transform = 'scale(1.1)';
-        fl_conserve.style.color = "orange";
+        flconserve.style.transform = 'scale(1.1)';
+        flconserve.style.color = "orange";
     } else {
-        fl_conserve.style.transform = 'scale(1)';
-        fl_conserve.style.color = "white";
+        flconserve.style.transform = 'scale(1)';
+        flconserve.style.color = "white";
     }
 
     handleFlPublicTiles(map, flConserve, apiUrl);
