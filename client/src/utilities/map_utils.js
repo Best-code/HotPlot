@@ -201,7 +201,7 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
         //TODO:break out bounds into config file
         privateLands.obj = vectorTileLayer(url , {s : '' , style : getPrivateStyle(), 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 12 , interactive : true , zIndex : 3
+            updateWhenZooming : false , minZoom : 12 , interactive : true , zIndex : 3 , maxDetailZoom : 16
         });
 
         privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})
@@ -254,10 +254,10 @@ function handlePrivateLandTooltip(feature , map, privateLands){
 
     map.on('zoomstart', remov);
 
+
     privateLands.obj.on('mouseout' , (feature)=>{
         toolTip.removeFrom(map); 
         map.off('zoomstart' , remov);
-        toolTip = null; 
         privateLands.obj.off('mousemove'); 
         privateLands.obj.off('mouseout');
         privateLands.obj.off('zoomstart');

@@ -54,10 +54,10 @@ map.on('locationfound' , (locationEvent)=>{map.setView(locationEvent.latlng , 11
 //hoestly may drop the below section to just use the leaflet api instead of making a new request
 var userLocation = new geoWrap(null);
 
+map.locate({maximumAge : 600000}); //sets map to userlocation if approved
+
 //try and get user location 
 getUserCoords(userLocation);
-
-map.locate({maximumAge : 600000}); //sets map to userlocation if approved
 
 //get geolocal search results if possible
 document.getElementById('search-input').addEventListener("keystopped" , ()=>{
