@@ -149,7 +149,7 @@ export async function handleFlPublicTiles(map , flConserve , apiUrl){
         //TODO:break out bounds into config file
         flConserve.obj = vectorTileLayer(url , {s : '' , style : getFlPublicStyle , 
             bounds : L.latLngBounds([24.37942 , -87.753] , [31.5692, -79.585]), updateInterval : 500 , 
-            updateWhenZooming : false , minZoom : 8 , interactive : true , zIndex : 4
+            updateWhenZooming : false , minZoom : 6 , interactive : true , zIndex : 4
         });
 
         flConserve.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Public Lands');})
