@@ -9,6 +9,9 @@ const xButton = "M6 18L18 6M6 6l12 12"
 export function onLoad() { //simply to render tailwind componeents visible after the rendering completes , stop event propogationfullout on elements, etc..
     document.getElementById('search-bar').style.visibility = 'visible';
 
+    
+    document.getElementById('layer-menu-toggle').addEventListener('click', toggleLayerMenu);
+
     (function () { //prevents sending a shitton of requests on every keystroke with a new event credit: Kelderic on stackoverflow
         var keystoppedTimer = null;
 
@@ -80,6 +83,26 @@ export function onLoad() { //simply to render tailwind componeents visible after
 
     })
 }
+function toggleLayerMenu() {
+    const layerMenu = document.getElementById('layerMenu');
+    if (layerMenu.classList.contains('opacity-0')) {
+        // Show the menu
+        layerMenu.style.display = 'block';
+        // Use setTimeout to ensure display change takes effect before adding opacity
+        setTimeout(() => {
+            layerMenu.classList.remove('opacity-0', 'pointer-events-none');
+            layerMenu.classList.add('opacity-100', 'pointer-events-auto');
+        }, 10);
+    } else {
+        //hide menu initial
+        layerMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        layerMenu.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+            layerMenu.style.display = 'none';
+        }, 300); 
+    }
+}
+
 //location passed as [lat , lon] 
 export async function geoSearch(userEntry, apiUrl, location = [32.0, -84.0]) { // takes a string and tries to match it to a place name in db
 
