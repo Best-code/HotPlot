@@ -32,7 +32,7 @@ export function onLoad() { //simply to render tailwind componeents visible after
     }());
 
     //if we have search results visible we remove them from view when map dragged/ focus out/etc
-    document.getElementById('hotplot-logo0').addEventListener('click', () => { window.location.reload(); });
+    document.getElementById('hotplot-logo0').addEventListener('click', () => { location.reload(); console.log('bo') });
     document.getElementById('body').addEventListener("click", () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } });
     document.getElementById('search-input').addEventListener('blur', () => { document.getElementById('search-input').value = ''; var results = document.getElementsByClassName('search-result'); while (results.length > 0) { results[0].remove(); } }, {});
     document.getElementById('feature-popup-close').addEventListener('click', () => {
