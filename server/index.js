@@ -112,7 +112,7 @@ app.get('/geocode-place', async ( req, res) => {
 
   try{
 
-    result = await conn(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
+    result = await conn(`select public.geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
   }catch(error){
     res.status(500);
@@ -245,7 +245,7 @@ app.get('/publicTiles' , async (req , res) =>{
 
   try{
     
-    tile = await conn('select getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
+    tile = await conn('select public.getPublicLandsTile($1::int , $2::int , $3::int , $4::real);' , [x,y,z , simplify]);
 
   }
   catch(error){
@@ -321,7 +321,7 @@ app.get('/privateTiles' , async (req , res) =>{
   var tile = null;
 
   try{
-    tile = await conn('select getPrivateLandsTile($1::int , $2::int , $3::int , $4::int , $5::int)' , [x,y,z , simplify, acresGreaterThan]);
+    tile = await conn('select public.getPrivateLandsTile($1::int , $2::int , $3::int , $4::int , $5::int)' , [x,y,z , simplify, acresGreaterThan]);
   }
   catch(eror){
     res.status(500);
@@ -369,8 +369,8 @@ app.get('/get-fires-near-me', async (req, res) => {
   var hotspots = null;
 
   try{
-    wildfires = await conn( 'select * from wildfiresNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
-    hotspots = await conn( 'select * from hotspotsNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
+    wildfires = await conn( 'select * from public.wildfiresNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
+    hotspots = await conn( 'select * from public.hotspotsNearMe($1::float , $2::float , $3::int)', [queryLat, queryLon, radius]);
   }
   catch(error){
     res.status(500);
