@@ -114,14 +114,13 @@ app.get('/geocode-place', async ( req, res) => {
 
     result = await conn(`select geomatch( $1::text , $2::float, $3::float);` , [userInput , userLat , userLon]); 
 
-  }catch(error){ 
-    console.log(error);
+  }catch(error){
     res.status(500);
     res.send();
     return;
   }
   
-
+  res.set('Cache-Control', 'public, max-age=60');
   res.json(result);
 });
 
@@ -255,7 +254,7 @@ app.get('/publicTiles' , async (req , res) =>{
     return;
   }
 
-  
+  res.set('Cache-Control', 'public, max-age=60');
   res.send(tile[0].getpubliclandstile);
 
 });
@@ -330,6 +329,7 @@ app.get('/privateTiles' , async (req , res) =>{
     return;
   }
 
+  res.set('Cache-Control', 'public, max-age=60');
   res.send(tile[0].getprivatelandstile);  
 });
 
