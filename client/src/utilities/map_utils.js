@@ -346,12 +346,21 @@ function featurePopup(feature , headerText , layer = null ){ //right now it just
         console.log(key)
 
         var featureAttr = document.createElement('div');
-        featureAttr.className = 'text-md text-left p-2';
+        featureAttr.className = 'flex flex-col text-left p-2';
         featureAttr.id = 'feature-click-attr-'+key;
 
         let formattedKey = keyTranslate(key);
-        featureAttr.innerText = formattedKey + ': ' + feature.properties[key];
 
+        var keySpan = document.createElement('span');
+        keySpan.className="w-full h-full text-lg font-black"
+        keySpan.innerText = formattedKey;
+
+        var valueSpan = document.createElement('span');
+        valueSpan.className="w-full h-full text-md"
+        valueSpan.innerText =  feature.properties[key];
+
+        featureAttr.appendChild(keySpan);
+        featureAttr.appendChild(valueSpan);
 
         body.appendChild(featureAttr);
     }
