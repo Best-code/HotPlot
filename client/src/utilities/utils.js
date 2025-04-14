@@ -92,14 +92,14 @@ export function toggleLayerMenu() {
         setTimeout(() => {
             layerMenu.classList.remove('opacity-0', 'pointer-events-none');
             layerMenu.classList.add('opacity-100', 'pointer-events-auto');
-        }, 10);
+        }, 5);
     } else {
         //hide menu initial
         layerMenu.classList.remove('opacity-100', 'pointer-events-auto');
         layerMenu.classList.add('opacity-0', 'pointer-events-none');
         setTimeout(() => {
             layerMenu.style.display = 'none';
-        }, 300); 
+        }, 5); 
     }
 }
 
