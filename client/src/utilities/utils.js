@@ -83,7 +83,7 @@ export function onLoad() { //simply to render tailwind componeents visible after
 
     })
 }
-function toggleLayerMenu() {
+export function toggleLayerMenu() {
     const layerMenu = document.getElementById('layerMenu');
     if (layerMenu.classList.contains('opacity-0')) {
         // Show the menu

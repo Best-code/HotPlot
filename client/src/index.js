@@ -1,7 +1,7 @@
 import 'leaflet'
 import { layerCarry, getViirs, getWfigs, handleSmallLayer, initialize_map, handleFlPublicTiles, handlePrivateTiles, addLocationMarker, getLocationIcon, removeLocationMarker } from "./utilities/map_utils.js"
 import './styles.css'
-import { geoWrap, getUserCoords, onLoad, handleSearch, } from './utilities/utils.js'
+import { geoWrap, getUserCoords, onLoad, handleSearch, toggleLayerMenu } from './utilities/utils.js'
 
 //eliminates flashing of unstyled components -- could use SSR to fix but this works
 window.onload = onLoad;
@@ -81,6 +81,7 @@ document.getElementById('search-input').addEventListener("keystopped", () => {
 document.getElementById('zoom-in').addEventListener('click', () => { map.zoomIn(1); });
 document.getElementById('zoom-out').addEventListener('click', () => { map.zoomOut(1); });
 document.getElementById('locate-me').addEventListener('click', () => { map.locate(600000); });
+document.getElementById('map').addEventListener('click', () => {toggleLayerMenu();});
 //end navbar events
 
 //loaded smaller geojson based layers on page load but not placed on map

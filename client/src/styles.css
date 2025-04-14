@@ -84,7 +84,8 @@
     height: 3.5em;
     border-radius: 3.5em;
     box-shadow: 0 0 10px 0 black;
-    background-color: transparent;
+    background-color: grey;
+    background-size: contain;
     pointer-events: all;
     cursor: pointer;
     z-index: 1;
@@ -97,7 +98,6 @@
     background-image: url('./icons/flame.png');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
     background-size: 60px;
 }
 
@@ -105,7 +105,6 @@
     background-image: url('./icons/viirs-layer-icon.png');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
     background-size: 60px;
 }
 
@@ -113,7 +112,6 @@
     background-image: url('./icons/fl-public-icon.png');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
     background-size: 60px;
 }
 
@@ -121,7 +119,6 @@
     background-image: url('./icons/FL_PRIVATE.png');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
     background-size: 60px;
 }
 
