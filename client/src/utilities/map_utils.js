@@ -291,7 +291,6 @@ function featurePopup(feature , headerText , layer = null ){ //right now it just
 
         if(["0", "null", null].includes(feature.properties[key]))
             continue;
-        console.log(key)
 
         var featureAttr = document.createElement('div');
         featureAttr.className = 'flex flex-col text-left p-2';
