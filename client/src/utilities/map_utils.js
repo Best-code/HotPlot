@@ -52,7 +52,7 @@ export function getFireIcon(feature, latlng){
 } 
 
 //returning fire img as L.icon - used above
-function getFirePic(size = [18,18]){return L.icon({iconUrl : fireIcon , iconSize : size});}
+function getFirePic(size = [25,25]){return L.icon({iconUrl : fireIcon , iconSize : size});}
 
 //ios-style location icon png modify L.icon options here
 export function getLocationIcon(size = [20,20]){return L.icon({iconUrl : locationIcon , iconSize : size});}
@@ -112,7 +112,7 @@ function wfigsOnEach(feature, layer){
 
     layer.on('click' , (layer)=>{ featurePopup(layer.target.feature , 'Known Wildfire' , layer);});
 
-    layer.on('mouseover', (layer)=>{ layer.target.setIcon(getFirePic([25,25]))});
+    layer.on('mouseover', (layer)=>{ layer.target.setIcon(getFirePic([30,30]))});
 
     layer.on('mouseout' , (layer)=>{layer.target.setIcon(getFirePic())});
     
@@ -191,6 +191,10 @@ function getFlPublicColors(feature){
     }
 }
 
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+  }
+
 //requests and handles on/off for vector tiled private lands data - we may combine public and private
 //into one function and let params decide behaviour....
 export async function handlePrivateTiles(map , privateLands , apiUrl){
@@ -207,7 +211,9 @@ export async function handlePrivateTiles(map , privateLands , apiUrl){
 
         privateLands.obj.on('click' , (feature)=>{featurePopup(feature.layer , 'Fl Private Lands');})
 
-        privateLands.obj.on('mouseover' , (feature)=>{ handlePrivateLandTooltip(feature , map , privateLands); });
+        if(!isMobile()){
+            privateLands.obj.on('mouseover' , (feature)=>{ handlePrivateLandTooltip(feature , map , privateLands); });
+        }
 
         privateLands.obj.addTo(map);
     }

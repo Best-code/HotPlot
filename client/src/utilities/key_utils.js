@@ -13,7 +13,7 @@ const keyMap = {
     "ControlDateTime": ["Controlled Date", 1, KeyType.DATETIME],
     "DailyAcres": ["Daily Acres", 1, KeyType.NUMBER],
     "DiscoveryAcres": ["Discovery Acres", 1, KeyType.NUMBER],
-    "estimated_area": ["Estimated Area (Acres)", 1, KeyType.NUMBER],
+    "estimated_area": ["Estimated Acres", 1, KeyType.NUMBER],
     "Fatalities": ["Fatalities", 1, KeyType.NUMBER],
     "FinalAcres": ["Final Acres", 0, KeyType.NUMBER],
     "FireCause": ["Fire Cause", 1, KeyType.NORM],
@@ -50,7 +50,10 @@ const keyMap = {
     "PrimaryFuelModel": ["Primary Fuel Model", 0, KeyType.NORM],
     "ResidencesDestroyed": ["Residences Destroyed", 1, KeyType.NORM],
     "TotalIncidentPersonnel": ["Total Incident Personnel", 1, KeyType.NORM],
-    "UniqueFireIdentifier": ["Unique Fire Identifier", 1, KeyType.NORM]
+    "UniqueFireIdentifier": ["Unique Fire Identifier", 1, KeyType.NORM],
+    "owner_name" : ["Owner Name", 1 , KeyType.NORM],
+    "owner_address" : ["Owner Address", 1 , KeyType.NORM],
+    "county_name" : ["County Name", 1 , KeyType.NORM]
 };
 
 export function importantKey(key)

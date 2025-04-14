@@ -115,7 +115,7 @@ document.getElementById('flconserve').addEventListener('click', (event) => {
     const currentTransform = flconserve.style.transform;
 
     if (currentTransform === 'scale(1)') {
-        flconserve.style.transform = 'scale(1.1)';
+        flconserve.style.transform = 'scale(1.05)';
         flconserve.style.color = "orange";
     } else {
         flconserve.style.transform = 'scale(1)';
@@ -130,7 +130,7 @@ document.getElementById('viirs').addEventListener('click', () => {
     const currentTransform = viirs.style.transform;
 
     if (currentTransform === 'scale(1)') {
-        viirs.style.transform = 'scale(1.1)';
+        viirs.style.transform = 'scale(1.05)';
         viirs.style.color = "orange";
     } else {
         viirs.style.transform = 'scale(1)';
@@ -143,7 +143,7 @@ document.getElementById('wfigs').addEventListener('click', () => {
     const currentTransform = wfigs.style.transform;
 
     if (currentTransform === 'scale(1)') {
-        wfigs.style.transform = 'scale(1.1)';
+        wfigs.style.transform = 'scale(1.05)';
         wfigs.style.color = "orange";
     } else {
         wfigs.style.transform = 'scale(1)';
@@ -155,7 +155,7 @@ document.getElementById('fl-private').addEventListener('click', () => {
     const currentTransform = flPrivate.style.transform;
 
     if (currentTransform === 'scale(1)') {
-        flPrivate.style.transform = 'scale(1.1)';
+        flPrivate.style.transform = 'scale(1.05)';
         flPrivate.style.color = "orange";
     } else {
         flPrivate.style.transform = 'scale(1)';
