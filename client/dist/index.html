@@ -11,7 +11,7 @@
   <div id="map"></div>
   <div id="search-bar" class="absolute top-3 left-20 z-5" style="visibility: hidden;">
     <div
-      class="flex rounded-full items-center border w-50 focus-within:border-red-500 focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
+      class="flex rounded-full items-center border w-50 md:w-56 lg:w-60 focus-within:border-red-500 focus-within:w-56 md:focus-within:w-64 lg:focus-within:w-80 transition-all duration-500 pr-3 gap-2 bg-white border-gray-500/30 h-[46px] overflow-hidden">
       <input type="text" autocomplete="off" id="search-input" placeholder="Find a Fire Forecast"
         class="w-full h-full pl-4 outline-none placeholder-gray-500 text-xs" />
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22" height="22" viewBox="0 0 30 30" fill="#6B7280"
@@ -25,31 +25,45 @@
   <section id="top-banner0" class="top-banner">
     <div id="hotplot-logo0" class="hotplot-logo"></div>
   </section>
-  <div id="search-result-div" class="absolute top-14 left-24 w-72 pt-0 grid-cols-1 text-left text-base overflow-auto overscroll-contain px-3 z-30 truncate overflow-x-hidden text-black rounded-b-md flex flex-col bg-white shadow-lg  transition-all duration-100 max-h-0 empty:opacity-0 empty:border-0 empty:shadow-none empty:p-0 empty:bg-transparent [&:not(:empty)]:max-h-48 [&:not(:empty)]:pt-2 [&:not(:empty)]:pb-2 [&:not(:empty)]:pointer-events-auto [&:not(:empty)]:bg-white"></div>
-  
+  <div id="search-result-div" class="absolute top-14 left-24 w-48 md:w-60 lg:w-72 pt-0 grid-cols-1 text-left 
+    text-base overflow-auto overscroll-contain px-3 z-30 truncate overflow-x-hidden
+     text-black rounded-b-md flex flex-col bg-white shadow-lg  transition-all 
+     duration-100 max-h-0 empty:opacity-0 empty:border-0 empty:shadow-none empty:p-0 
+     empty:bg-transparent [&:not(:empty)]:max-h-48 [&:not(:empty)]:pt-2 [&:not(:empty)]:pb-2
+      [&:not(:empty)]:pointer-events-auto [&:not(:empty)]:bg-white"></div>
 
-  <div id="layer-menu-toggle" class="absolute top-20 right-5 z-10 w-12 h-12 bg-[#4a4848] opacity-80 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:shadow-2xl hover:ring-2 hover:ring-white">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7">
+
+
+  <div id="layer-menu-toggle"
+    class="absolute top-3 right-5 z-10 w-12 h-12 bg-[#4a4848] opacity-80 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:shadow-2xl hover:ring-2 hover:ring-white">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7">
       <path d="M2 17h20M2 12h20M2 7h20"></path>
     </svg>
   </div>
   </section>
-  <div id="search-result-div" class="absolute top-14 left-23 w-80 pt-0 grid-cols-1 text-left text-base overflow-auto overscroll-contain px-3 z-10 truncate overflow-x-hidden text-black rounded-md flex flex-col bg-white shadow-lg  transition-all duration-300 max-h-0 empty:opacity-0 empty:border-0 empty:shadow-none empty:p-0 empty:bg-transparent [&:not(:empty)]:max-h-48 [&:not(:empty)]:pt-2 [&:not(:empty)]:pb-2 [&:not(:empty)]:pointer-events-auto [&:not(:empty)]:bg-white"></div>
+  <!-- <div id="search-result-div" class="absolute top-14 left-23 w-48 md:w-60 lg:w-72  pt-0 grid-cols-1 text-left text-base overflow-auto overscroll-contain px-3 z-10 truncate overflow-x-hidden text-black rounded-md flex flex-col bg-white shadow-lg  transition-all duration-300 max-h-0 empty:opacity-0 empty:border-0 empty:shadow-none empty:p-0 empty:bg-transparent [&:not(:empty)]:max-h-48 [&:not(:empty)]:pt-2 [&:not(:empty)]:pb-2 [&:not(:empty)]:pointer-events-auto [&:not(:empty)]:bg-white"></div> -->
 
-  <section id="layerMenu" class="absolute right-7 translate-y-1/12 top-35 z-10 bg-[#4a4848] mt-4 rounded-md opacity-0 pointer-events-none transition-all duration-300" style="display: none;">
-    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 " style="color: white; transform: scale(1)" id="viirs">
+  <section id="layerMenu"
+    class="absolute right-7 -translate-y-1/12 z-10 bg-[#4a4848] mt-4 rounded-md opacity-0 pointer-events-none transition-all duration-300"
+    style="display: none;">
+    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 "
+      style="color: white; transform: scale(1)" id="viirs">
       <div class="layerDesc w-48 text-red-500" id="viirs-desc"></div>
       <div class="layerIcon" id="viirs-icon"></div>
     </div>
-    <div class="layerSelectBox py-2  scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 " style="color: white; transform: scale(1)" id="wfigs">
+    <div class="layerSelectBox py-2  scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 "
+      style="color: white; transform: scale(1)" id="wfigs">
       <div class="layerDesc w-48" id="wfigs-desc"></div>
       <div class="layerIcon" id="wfigs-icon"></div>
     </div>
-    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 " style="color: white; transform: scale(1)" id="flconserve">
+    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 "
+      style="color: white; transform: scale(1)" id="flconserve">
       <div class="layerDesc w-48" id="fl-conserve-desc"></div>
       <div class="layerIcon" id="fl-conserve-icon"></div>
     </div>
-    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 " style="color: white; transform: scale(1)"  id="fl-private">
+    <div class="layerSelectBox py-2 scale-80 translate-x-1/12 md:translate-x-0 md:scale-90 lg:scale-100 "
+      style="color: white; transform: scale(1)" id="fl-private">
       <div class="layerDesc w-48" id="fl-private-desc"></div>
       <div class="layerIcon" id="fl-private-icon"></div>
     </div>
@@ -92,24 +106,27 @@
       <div id="info" style="pointer-events: all; cursor: pointer;">
         <svg class="w-1/1 h-1/1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="scale(0.7, 0.7) translate(-5, 5)">
-            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 16V12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 8H12.01" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path
+              d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+              stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 16V12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 8H12.01" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </g>
         </svg>
       </div>
     </div>
-    <div id="basemaps-bottom-right" class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-2 grid-rows-1 gap-2 text-white">
-      
+    <div id="basemaps-bottom-right"
+      class="w-1/1 h-6 mb-3 rounded-full bg-[#4a4848] opacity-80 grid grid-cols-2 grid-rows-1 gap-2 text-white">
+
       <div class="basemap-selector">
-        <input type="checkbox" id="satellite" class="basemap hidden" checked/>
+        <input type="checkbox" id="satellite" class="basemap hidden" checked />
         <label for="satellite" class="w-1/1 h-1/1 flex items-center justify-center cursor-pointer rounded-full">
           Satellite
         </label>
       </div>
 
       <div class="basemap-selector">
-        <input type="checkbox" id="streets" class="basemap hidden"/>
+        <input type="checkbox" id="streets" class="basemap hidden" />
         <label for="streets" class="w-1/1 h-1/1 flex items-center justify-center cursor-pointer rounded-full">
           Streets
         </label>
@@ -117,6 +134,7 @@
     </div>
   </section>
 
+  <!-- Result pop up close -->
   <button type="button" id="result-popup-close" style="visibility: hidden; bottom: 0rem"
     class="transition-all duration-700 absolute left-0 rounded-t-lg p-1 text-gray-800 hover:text-red-500 bg-white focus:outline-none">
     <span class="sr-only">Close menu</span>
@@ -128,7 +146,7 @@
 
   <div id="result-info-popup"
     class="result-popup result-info-popup-height w-full h-full absolute flex flex-row bottom-0 transition-all ease-in-out duration-700 overflow-x-scroll bg-white"
-    style="height: 0; visibility: hidden;"> 
+    style="height: 0; visibility: hidden;">
 
     <div id="forecast-tbody"
       class="flex flex-col w-screen h-full items-center justify-center transition-all duration-200">
@@ -140,7 +158,8 @@
   </div>
   </div>
 
-  <section id="feature-click-popup" class="h-fit lg:max-w-[18rem] md:max-w-[15rem] max-w-[13rem] absolute left-5 top-1/5 transition-all duration-200"
+  <section id="feature-click-popup"
+    class="h-fit lg:max-w-[18rem] md:max-w-[15rem] max-w-[13rem] absolute left-5 top-1/5 transition-all duration-200"
     style="display: none;">
     <button type="button" id="feature-popup-close"
       class="z-20 absolute lg:right-[.75em] right-0 m-1 rounded-md items-center justify-center text-black hover:text-gray-500 hover:bg-gray-100 hover:opacity-25 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
@@ -159,7 +178,7 @@
       <div id="feature-click-body"
         class="h-full w-full overflow-y-auto overflow-x-hidden text-black scrollbar-hide lg:p-2 p-1 lg:px-6 px-3"></div>
     </div>
-    
+
   </section>
 
   <section id="info-popup" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300"
@@ -175,7 +194,8 @@
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">About HotPlot</h2>
         <div class="text-left text-gray-700 space-y-4">
-          <p>HotPlot is an interactive wildfire mapping and forecasting tool that helps users monitor and prepare for fire risks.</p>
+          <p>HotPlot is an interactive wildfire mapping and forecasting tool that helps users monitor and prepare for
+            fire risks.</p>
           <p>Key features include:</p>
           <ul class="list-disc pl-5 space-y-2">
             <li>Real-time wildfire detection from satellite data</li>
@@ -185,7 +205,8 @@
           </ul>
           <p class="mt-4">Search for your location to get started and view fire forecasts.</p>
           <p>Feel free to check out our GitHub repository to see how HotPlot was made down below!</p>
-          <a href="https://github.com/Best-code/HotPlot.git" target="_blank" rel="noopener noreferrer" title="View HotPlot on GitHub">
+          <a href="https://github.com/Best-code/HotPlot.git" target="_blank" rel="noopener noreferrer"
+            title="View HotPlot on GitHub">
             <img src="./github.png" alt="GitHub Repository" class="mx-auto h-10 hover:opacity-80 transition-opacity">
           </a>
         </div>
