@@ -271,7 +271,7 @@ export async function fireForecastResultPopup(event, dbId, apiUrl) { //expects d
 function createForecastPane(parent, forecast) { //appends forecast header as children of parent , content is dict
 
     var row = document.createElement('div');
-    row.className = "w-full h-full flex flex-row text-md justify-between items-center "
+    row.className = "w-screen lg:w-full h-full flex flex-row text-md justify-between items-center "
 
     parent.appendChild(row);
 
@@ -296,13 +296,13 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     const medHighRiskGradient = "highMedRiskGradient"
     const highRiskGradient = "highRiskGradient"
 
-    forecastCol.className = "flex flex-col min-w-12 h-full items-center justify-center gap-y-2 py-1 "
+    forecastCol.className = "flex flex-col w-full h-full items-center justify-center gap-y-2 py-1 "
 
     parent.appendChild(forecastCol);
 
     // The Day and Number on top
     var daySpan = document.createElement("span");
-    daySpan.className = "lg:text-xl md:text-lg text-md text-center mx-4";
+    daySpan.className = "lg:text-xl md:text-lg text-md text-center px-2";
     console.log(forecast);
     daySpan.innerText = forecast['weekDay'].slice(0, 3) + " " + forecast['dayOfMonth'];
     forecastCol.appendChild(daySpan);
