@@ -12,11 +12,11 @@ export class layerCarry{
     }
 }      
  
-export function initialize_map (id = null, tileUrl = null, attribution = null , minZoom = null , maxBounds = null, zoom = null, center = null){
+export function initialize_map (id = null, tileUrl = null, attribution = null , minZoom = null, maxZoom = null , maxBounds = null, zoom = null, center = null){
     var map = null;
 
     if(id != null){
-        map = L.map(id , {zoomDelta : 1, minZoom : minZoom , maxBounds : maxBounds,
+        map = L.map(id , {zoomDelta : 1, minZoom : minZoom , maxBounds : maxBounds, maxZoom: maxZoom,
             zoom : zoom , center: center , style : { height: "100vh", width: "100vw" } , zoomControl: false});
     }
 

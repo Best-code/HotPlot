@@ -8,6 +8,7 @@ window.onload = onLoad;
 
 const mapBounds = L.latLngBounds([L.latLng( 23 , -91), L.latLng( 35,-72)]); //use for us mapbounds
 const minZoom = 6;
+const maxZoom = 18; 
 const zoomStart = 6;   
 const apiUrl = 'http://localhost:4242'; //adjust   
 const defCenter = [28.5,-81.7]; //about the cente rof the us, starting value if geoloc is declined
@@ -41,6 +42,7 @@ const satMap = initialize_map('map',
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     'Tiles &copy; Esri and the GIS User Community',
     minZoom,
+    maxZoom,
     mapBounds,
     zoomStart,
     defCenter
