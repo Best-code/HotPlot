@@ -4,6 +4,8 @@ const KeyType = Object.freeze({
     NORM: 0,
     NUMBER: 1,
     DATETIME: 2,
+    DATE: 3,
+    TIME: 4
   });
 
 const keyMap = {
@@ -33,8 +35,8 @@ const keyMap = {
     "Injuries": ["Injuries", 1, KeyType.NUMBER],
     "IrwinID": ["Irwin ID", 0, KeyType.NORM],
     "IsValid": ["Is Valid", 0, KeyType.NORM],
-    "last_active_on" : ["Last Active Date", 1, KeyType.DATETIME],
-    "last_active_time" : ["Last Active Time", 0, KeyType.DATETIME],
+    "last_active_on" : ["Last Active Date", 1, KeyType.DATE],
+    "last_active_time" : ["Last Active Time", 1, KeyType.TIME],
     "managing_agency_type" : ["Mangaging Agency", 1, KeyType.NORM],
     "ModifiedOnAge": ["Modified On Age", 0, KeyType.NORM],
     "ModifiedOnDateTime": ["Modified On Date Time", 0, KeyType.DATETIME],
@@ -71,6 +73,7 @@ function twelveHourTime(hour) {
 
 
 function timestampToDate(timestamp){
+
     const date = new Date(timestamp);
 
     const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -87,6 +90,33 @@ function timestampToDate(timestamp){
     return formattedDate;
 }
 
+function toDate(dt){
+
+    var last_act = new Date(dt + 'T00:00:00');
+
+    const mm = String(last_act.getMonth() + 1).padStart(2, '0');
+    const dd = String(last_act.getDate()).padStart(2, '0'); 
+    const yyyy = last_act.getFullYear();
+    const formattedDate = `${mm}/${dd}/${yyyy}`;
+
+    return formattedDate;
+}
+
+function toTime(tm){
+
+    var tmInt = parseInt(tm);
+
+    if(isNaN(tmInt)) return tm;
+
+    var hours = Math.floor(tmInt / 60);
+    var minutes = tmInt % 60;
+
+    const amOrPm = (hours < 12) ? "AM" : "PM";
+    hours = twelveHourTime(hours);
+    minutes = String(minutes).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes} ${amOrPm}`;
+    return formattedTime;
+}
 
 export function ValueFormat(key, value){
     if(!keyMap.hasOwnProperty(key))
@@ -94,6 +124,14 @@ export function ValueFormat(key, value){
         
     if(keyMap[key][2] == KeyType.DATETIME){
         return timestampToDate(value);
+    }
+
+    if(keyMap[key][2] == KeyType.DATE){
+        return toDate(value);
+    }
+
+    if(keyMap[key][2] == KeyType.TIME){
+        return toTime(value);
     }
     
     if(keyMap[key][2] == KeyType.NUMBER){
