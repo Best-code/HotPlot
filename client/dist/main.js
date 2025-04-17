@@ -301,7 +301,7 @@ eval("module.exports = __webpack_require__.p + \"56be189bac2a1a70f4ee.png\";\n\n
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-eval("module.exports = __webpack_require__.p + \"cac7a0987624f7551852.png\";\n\n//# sourceURL=webpack://client/./src/icons/hotplot-demo-icon.png?");
+eval("module.exports = __webpack_require__.p + \"955f3a0ce543c6a766da.png\";\n\n//# sourceURL=webpack://client/./src/icons/hotplot-demo-icon.png?");
 
 /***/ }),
 
