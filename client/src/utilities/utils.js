@@ -279,7 +279,7 @@ function createForecastPane(parent, forecast) { //appends forecast header as chi
 
         var col = document.createElement('div');
 
-        col.className = "flex flex-col w-full h-full gap-y-1 items-center justify-center"
+        col.className = "flex flex-col w-1/7 lg:w-24 h-full gap-y-1 items-center justify-center"
 
         createForecastCol(col, forecast['weeklyForecast'][key]);
         row.appendChild(col);
@@ -389,17 +389,20 @@ export async function firesNearbyPopUp(event, apiUrl) {
     for (var fire of fires.wildfires) {
 
         var div = document.createElement('div');
-        div.className = "w-48 h-full flex flex-col text-md text-left text-gray-800 font-md py-2 px-4";
-
-        var lat = document.createElement('span');
-        lat.innerText = "LAT: " + fire.wildfires.geometry.coordinates[0];
-        var lon = document.createElement('span');
-        lon.innerText = "LON: " + fire.wildfires.geometry.coordinates[1];
-
-        div.appendChild(lat);
-        div.appendChild(lon);
-
-        fireDiv.appendChild(div)
+        div.className = "w-60 bg-white border border-gray-300 shadow-md py-1 px-2 hover:shadow-lg transition-shadow duration-300 overflow-y-scroll";
+        
+        var county = document.createElement('span');
+        county.className = "block text-lg font-semibold mb-1";
+        county.innerText = fire.wildfires.properties.POOCounty + " County";
+        
+        var fireID = document.createElement('span');
+        fireID.className = "block text-sm text-gray-700";
+        fireID.innerText = "Fire ID: " + fire.wildfires.properties.UniqueFireIdentifier;
+        
+        div.appendChild(county);
+        div.appendChild(fireID);
+        fireDiv.appendChild(div);
+        
     }
 }
 
