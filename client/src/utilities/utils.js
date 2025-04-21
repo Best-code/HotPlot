@@ -303,7 +303,7 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
     // The Day and Number on top
     var daySpan = document.createElement("span");
     daySpan.className = "lg:text-xl md:text-lg text-md text-center px-2";
-    console.log(forecast);
+
     daySpan.innerText = forecast['weekDay'].slice(0, 3) + " " + forecast['dayOfMonth'];
     forecastCol.appendChild(daySpan);
 
@@ -359,7 +359,7 @@ function createForecastCol(parent, forecast) { //adds forecast icon to table bas
 }
 
 export async function getNearbyFires(lat, lon, apiUrl) {
-    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 125 } });
+    const fires = await axios.get(apiUrl + '/get-fires-near-me', { params: { "lat": lat, "lon": lon, "distance": 50 } });
     return fires.data;
 }
 
@@ -389,7 +389,7 @@ export async function firesNearbyPopUp(event, apiUrl) {
     for (var fire of fires.wildfires) {
 
         var div = document.createElement('div');
-        div.className = "w-60 bg-white border border-gray-300 shadow-md py-1 px-2 hover:shadow-lg transition-shadow duration-300 overflow-y-scroll";
+        div.className = "w-60 bg-white border min-w-[175px] border-gray-300 shadow-md py-1 px-2 hover:shadow-lg transition-shadow duration-300 overflow-y-scroll";
         
         var county = document.createElement('span');
         county.className = "block text-lg font-semibold mb-1";
